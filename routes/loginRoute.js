@@ -7,7 +7,12 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
-
+//Login page
+router.get("/", async (req, res) => {
+    res.render("login", {
+        title:"Login"
+    })
+})
 
 
 
