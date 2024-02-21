@@ -31,7 +31,7 @@ export const getAllmenu = async (mAm) => {
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// create menu 
+// Create Menu 
 
 export const saveMenu = async (sMen) => {
 	const result = await pool.query(
@@ -53,13 +53,13 @@ export const updateMenu = async (uMen) => {
         UPDATE menu SET item_name = ?, quantity = ?, description  = ?, img = ?
         WHERE id = ?
     `,
-		[uMen.item_name, uMen.quantity, uMen.description, uRes.uMen]
+		[uMen.item_name, uMen.quantity, uMen.description, uMen.img]
 	);
 	return result;
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Delete menu
+//Delete Menu
 
 export const deleteMenu = async (dMen) => {
 	const [row] = await pool.query(
@@ -73,11 +73,25 @@ export const deleteMenu = async (dMen) => {
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Get Single Menu 
+
+export const getSingledmenu = async (aID) => {
+	const result = await pool.query(
+		`
+        SELECT * FROM menu WHERE id = ?
+    `,
+		[aID]
+	);
+	const rows = result[0];
+	return rows;
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 ///////////////////////////////////////////////////////////////////////////////All of Drinks //////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Get all Drinks 
+// Get All Drinks 
 
 export const getAlldrinks = async (dRi) => {
     const [result] = await pool.query(
@@ -94,10 +108,10 @@ export const getAlldrinks = async (dRi) => {
 export const saveDrinks = async (sDri) => {
 	const result = await pool.query(
 		`
-        INSERT INTO menu(id, beverage, quantity, description, img)
+        INSERT INTO drinks(id, beverage, quantity, img, description)
          VALUES(?, ?, ?, ?, ?) 
     `,
-		[sDri.id, sDri.beverage, sDri.quantity, sDri.description, sDri.img]
+		[sDri.id, sDri.beverage, sDri.quantity, sDri.img, sDri.description]
 	);
 	return result;
 };
@@ -108,10 +122,10 @@ export const saveDrinks = async (sDri) => {
 export const updateDrinks = async (uDri) => {
 	const result = await pool.query(
 		`
-        UPDATE menu SET beverage = ?, quantity = ?, description  = ?, img = ?
+        UPDATE drinks SET beverage = ?, quantity = ?,  img = ?, description  = ?,
         WHERE id = ?
     `,
-		[uDri.beverage, uDri.quantity, uDri.description, uDri.img]
+		[uDri.beverage, uDri.quantity, uDri.img, uDri.description]
 	);
 	return result;
 };
@@ -128,6 +142,20 @@ export const deleteDrinks = async (dDri) => {
 		[dDri]
 	);
 	return row;
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Get Single Drink
+
+export const getSingledrink = async (aID) => {
+	const result = await pool.query(
+		`
+        SELECT * FROM drinks WHERE id = ?
+    `,
+		[aID]
+	);
+	const rows = result[0];
+	return rows;
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -155,7 +183,7 @@ export const saveUser = async (sUse) => {
         INSERT INTO user(id, first_name, last_name, email, location, phone_num, trn, roles, password)
          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
     `,
-		[sUse.id, sUse.first_name, sUse.last_name, sUse.email, sUse.location, sUse.phone_num, sUse.trn, sUse.roles, sUse.password,]
+		[sUse.id, sUse.first_name, sUse.last_name, sUse.email, sUse.location, sUse.phone_num, sUse.trn, sUse.roles, sUse.password]
 	);
 	return result;
 };
@@ -169,14 +197,13 @@ export const updateUser = async (uUse) => {
         UPDATE user SET first_name = ?, last_name = ?, email  = ?, location = ?, phone_num = ?, trn = ?, roles = ?, password = ?
         WHERE id = ?
     `,
-		[uUse.first_name, uUse.last_name, uUse.email, uUse.location, uUse.phone_num, uUse.trn, uUse.roles, uUse.password,]
+		[uUse.first_name, uUse.last_name, uUse.email, uUse.location, uUse.phone_num, uUse.trn, uUse.roles, uUse.password]
 	);
 	return result;
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete User
-
 
 export const deleteUser = async (dUse) => {
 	const [row] = await pool.query(
@@ -188,7 +215,20 @@ export const deleteUser = async (dUse) => {
 	);
 	return row;
 };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Get Single User
+
+export const getSingleuser = async (aID) => {
+	const result = await pool.query(
+		`
+        SELECT * FROM user WHERE id = ?
+    `,
+		[aID]
+	);
+	const rows = result[0];
+	return rows;
+};
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////All of Menu Schedule ////////////////////////////////////////////////////////////////////////
@@ -207,13 +247,66 @@ export const getAllschedule = async (sSch) => {
         date
     FROM
         meals_schedule;`,
-		[sSch.id, sSch.item_name, sSch.quantity, sSch.description, sSch.img]
+		[sSch.id, sSch.item_name, sSch.quantity, sSch.description, sSch.img, sSch.date]
 	);
 	return result;
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Create Schedule 
 
+// export const saveSchedule = async (sSch) => {
+// 	const result = await pool.query(
+// 		`
+//         INSERT INTO meals_schedule(id, user_id, menu_id, drink_id, date)
+//          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+//     `,
+// 		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+// 	);
+// 	return result;
+// };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+//Update Schedule
+
+// export const updateSchedule = async (uSch) => {
+// 	const result = await pool.query(
+// 		`
+//         UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
+//         WHERE id = ?
+//     `,
+// 		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date]
+// 	);
+// 	return result;
+// };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// //Delete Schedule
+
+// export const deleteSchedule = async (dSch) => {
+// 	const [row] = await pool.query(
+// 		`
+//         DELETE FROM meals_schedule
+//         WHERE id=?
+//     `,
+// 		[dSch]
+// 	);
+// 	return row;
+// };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//Get Single Schedule
+
+// export const getSingleschedule = async (gSs) => {
+// 	const result = await pool.query(
+// 		`
+//         SELECT * FROM meals_schedule WHERE id = ?
+//     `,
+// 		[gSs]
+// 	);
+// 	const rows = result[0];
+// 	return rows;
+// };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 

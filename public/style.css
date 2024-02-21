@@ -1,6 +1,138 @@
 :root {
-    --dark-blue: #11235a;
-    --steel-blue: #596FB7;
-    --pale-chartreuse: #C6CF9B;
-    --light-pastel-yellow: #F6ECA9;
+    --crimson: #F94144;
+    --vermillion-orange: #F3722C;
+    --orange-peel: #F8961E;
+    --pumpkin-orange: #F9844A;
+    --gold-amber: #F9C74F;
+    --medium-olive-green: #90BE6D;
+    --torquoise: #43AA8B;
+    --teal-green: #4D908E;
+    --steel-blue: #577590;
+    --dark-cyan-blue: #277DA1;
+}
+
+body {
+    margin: 0;
+    font-family: "Fredoka", sans-serif;
+}
+
+/* =================================== NAVIGATION BAR STYLES =================================== */
+nav {
+    display: flex;
+    height: 50px;
+    margin: 50px 0;
+    justify-content: space-around;
+    align-items: center;
+    /* border-bottom: 1px solid var(--steel-blue); */
+    box-shadow: 0 0 20px -10px  var(--steel-blue);
+}
+
+nav .logo img {
+    width: 100px;
+}
+
+nav .logo img:hover {
+    transform: scale(.95);
+}
+
+nav .nav-links {
+    display: flex;
+    list-style-type: none;
+    /* background-color: var(--dark-cyan-blue); */
+}
+
+/* nav .nav-links li {
+} */
+
+nav .nav-links li a {
+    display: inline-block;
+    padding: 15px 50px;
+    text-decoration: none;
+    color: #000000;
+}
+
+nav .nav-links li a:hover {
+    background-color: var(--teal-green);
+    color: #fff;
+}
+
+nav .login-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 2px solid var(--steel-blue);
+}
+
+nav .login-icon a {
+    color: var(--steel-blue);
+    text-decoration: none;
+    font-size: 22px;
+}
+
+nav .login-icon:hover {
+    background-color: var(--steel-blue);
+}
+
+nav .login-icon:hover a {
+    color: #fff;
+}
+
+/* =================================== FOOTER STYLES =================================== */
+footer {
+    margin-top: 100px;
+    border-top: 1px solid var(--steel-blue);
+    padding: 20px 0 0;
+    background-color: var(--dark-cyan-blue);
+    color: #fff;
+}
+
+footer .footer-grid {
+    display: flex;
+    justify-content: space-around;
+}
+
+footer .copyright-text {
+    text-align: center;
+    font-weight: 100;
+    background-color: #000000;
+    padding: 10px 0;
+}
+
+.footer-grid form {
+    display: block;
+    background-color: #000000;
+    padding: 25px 50px;
+    border-radius: 10px;
+}
+
+footer .footer-grid form .send-a-message {
+    display: block;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.footer-grid form label {
+    display: block;
+}
+
+.footer-grid form input, .message {
+    font-family: "Fredoka", sans-serif;
+    display: block;
+    width: 100%;
+    padding: 10px 5px;
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+footer .footer-grid .input-container {
+    margin-bottom: 10px;
+}
+
+footer .footer-grid .input-container:last-of-type() {
+    margin-bottom: none;
 }
