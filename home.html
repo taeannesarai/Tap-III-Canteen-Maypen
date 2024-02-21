@@ -6,19 +6,31 @@
 		<title><%= locals.title ? title : 'USF-AMBER-HEART TAP III LUNCH SYSTEM' %></title>
 
 		<!-- GOOGLE FONTS LINK -->
+		<!-- font-family: "Fredoka", sans-serif; -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet" />
 
+		<!-- font-family: "Quicksand", sans-serif; -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
+
+		<!-- font-family: "Work Sans", sans-serif; -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
 		<!-- FONT AWESOME CDN -->
 		<link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
 
+		<!-- LOCAL STYLESHEET -->
 		<link rel="stylesheet" href="../../public/style.css" />
 	</head>
 	<body>
 		<nav>
 			<a href="#" class="logo">
-				<img src="../../public/logo.png" alt="logo" />
+				<img src="../../public/assets/logo.png" alt="logo" />
 			</a>
 
 			<ul class="nav-links">
@@ -34,10 +46,97 @@
 				</a>
 			</span>
 		</nav>
+
+		<section class="page-body">
+			<h1 class="page-heading">Menu</h1>
+			<div class="menu-card-container">
+				<div class="menu-card">
+					<div class="card-img"></div>
+					<span class="menu-item-name">A Meal Name</span>
+					<span class="item-quantity">Qty: 12</span>
+					<span class="item-description">
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum quo iure voluptas ducimus reprehenderit amet, repellat veniam delectus, ab reiciendis culpa iste illum?
+						Sit voluptates aperiam vero sint perferendis ipsam.
+					</span>
+					<div class="card-buttons">
+						<div class="admin-buttons">
+							<a href="#" class="btn item-card-view">View Item</a>
+							<a href="#" class="btn item-card-edit">Edit Item</a>
+							<a href="#" class="btn item-card-delete">Delete Item</a>
+						</div>
+						<div class="user-buttons">
+							<a href="#" class="btn item-card-select-meal">Select Meal</a>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="card-img"></div>
+					<span class="menu-item-name">A Meal Name</span>
+					<span class="item-quantity">Qty: 12</span>
+					<span class="item-description">
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum quo iure voluptas ducimus reprehenderit amet, repellat veniam delectus, ab reiciendis culpa iste illum?
+						Sit voluptates aperiam vero sint perferendis ipsam.
+					</span>
+					<div class="card-buttons">
+						<div class="admin-buttons">
+							<a href="#" class="btn item-card-view">View Item</a>
+							<a href="#" class="btn item-card-edit">Edit Item</a>
+							<a href="#" class="btn item-card-delete">Delete Item</a>
+						</div>
+						<div class="user-buttons">
+							<a href="#" class="btn item-card-select-meal">Select Meal</a>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="card-img"></div>
+					<span class="menu-item-name">A Meal Name</span>
+					<span class="item-quantity">Qty: 12</span>
+					<span class="item-description">
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum quo iure voluptas ducimus reprehenderit amet, repellat veniam delectus, ab reiciendis culpa iste illum?
+						Sit voluptates aperiam vero sint perferendis ipsam.
+					</span>
+					<div class="card-buttons">
+						<div class="admin-buttons">
+							<a href="#" class="btn item-card-view">View Item</a>
+							<a href="#" class="btn item-card-edit">Edit Item</a>
+							<a href="#" class="btn item-card-delete">Delete Item</a>
+						</div>
+						<div class="user-buttons">
+							<a href="#" class="btn item-card-select-meal">Select Meal</a>
+						</div>
+					</div>
+				</div>
+				<div class="menu-card">
+					<div class="card-img"></div>
+					<span class="menu-item-name">A Meal Name</span>
+					<span class="item-quantity">Qty: 12</span>
+					<span class="item-description">
+						Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rerum quo iure voluptas ducimus reprehenderit amet, repellat veniam delectus, ab reiciendis culpa iste illum?
+						Sit voluptates aperiam vero sint perferendis ipsam.
+					</span>
+					<div class="card-buttons">
+						<div class="admin-buttons">
+							<a href="#" class="btn item-card-view">View Item</a>
+							<a href="#" class="btn item-card-edit">Edit Item</a>
+							<a href="#" class="btn item-card-delete">Delete Item</a>
+						</div>
+						<div class="user-buttons">
+							<a href="#" class="btn item-card-select-meal">Select Meal</a>
+						</div>
+					</div>
+				</div>
+				
+				<a href="" class="new-item">
+					<i class="fi fi-sr-add"></i>
+				</a>
+			</div>
+		</section>
+
 		<footer>
 			<div class="footer-grid">
 				<form action="" method="post">
-                    <span class="send-a-message">Send us a message</span>
+					<span class="send-a-message">Send us a message</span>
 					<div class="input-container">
 						<label for="messenger-name">Name</label>
 						<input type="text" name="messenger-name" placeholder="Han Solo" />
