@@ -1,17 +1,21 @@
 <%-include('../partials/header'); %>
 
-    <h1>Contact Us</h1>
-    <form action="" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required><br><br>
-        
-        <label for="message">Message:</label><br>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea><br><br>
-        
-        <button type="submit">Submit</button>
-    </form>
+<section class="page-body">
+	<h1 class="page-heading">Menu</h1>
+
+    <span class="h1 mb-3"><%= locals.title ? title : 'TAP Canteen' %></span>
+
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Location Name</th>
+                <th>Address</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th class="action">View on Map</th>
+            </tr>
+        </thead>
+        <tbody>
 
 <%-include('../partials/footer'); %>
