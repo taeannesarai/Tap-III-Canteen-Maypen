@@ -3,6 +3,8 @@ import morgan from 'morgan';
 
 //ROUTES
 import { loginRoute } from './routes/loginRoute.js';
+import { userRoute } from './routes/userRoute.js';
+import { adminRoute } from './routes/adminRoute.js';
 
 //configuration
 const PORT = 4400;
@@ -20,11 +22,21 @@ app.use(express.urlencoded({ extended: true, limit: '1kb' }));
 app.use(morgan('dev'));
 
 //Route Middleware
+// route for login
 app.use('/', loginRoute);
 
-//static folder for styles images etc
-app.use('/', express.static('public'));
+// route for user
+app.use('/', userRoute);
 
+// route for admin
+app.use('/', adminRoute);
+
+// route for about
+
+
+//static folder for styles images etc
+app.use('/public', express.static('public'));
+app.use('/util', express.static('util'));
  
 app.listen(PORT, () => {
     console.log(`Listening ... http://localhost:${PORT}`);
