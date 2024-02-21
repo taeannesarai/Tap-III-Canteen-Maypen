@@ -22,7 +22,7 @@ const pool = mysql
 
 // Get All Menu
 
-export const getAllmenu = async () => {
+export const getAllMenu = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM menu 
@@ -94,7 +94,7 @@ export const getSingledMenu = async (aID) => {
 
 // Get All Drinks 
 
-export const getAlldrinks = async () => {
+export const getAllDrinks = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM drinks
@@ -147,7 +147,7 @@ export const deleteDrinks = async (dDri) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Get Single Drink
 
-export const getSingleDrink = async (aID) => {
+export const getSingleDrinks = async (aID) => {
 	const result = await pool.query(
 		`
         SELECT * FROM drinks WHERE id = ?
