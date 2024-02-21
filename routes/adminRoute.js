@@ -7,10 +7,10 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
-// Homepage
+//Admin page
 router.get("/", async (req, res) => {
-    res.render("index", {
-        title:"Home"
+    res.render("admin", {
+        title:"Admin"
     })
 })
 

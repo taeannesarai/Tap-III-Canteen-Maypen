@@ -5,6 +5,8 @@ import morgan from 'morgan';
 import { loginRoute } from './routes/loginRoute.js';
 import { userRoute } from './routes/userRoute.js';
 import { adminRoute } from './routes/adminRoute.js';
+import { contactRoute} from './routes/adminRoute.js';
+import { menuRoute} from './routes/adminRoute.js';
 
 //configuration
 const PORT = 4400;
@@ -32,6 +34,14 @@ app.use('/', userRoute);
 app.use('/', adminRoute);
 
 // route for about
+app.use('/', aboutRoute);
+
+// route for menu
+app.use('/', menuRoute);
+
+// route for contact
+app.use('/', contactRoute);
+
 
 
 //static folder for styles images etc
