@@ -5,8 +5,6 @@ import morgan from 'morgan';
 import { loginRoute } from './routes/loginRoute.js';
 import { userRoute } from './routes/userRoute.js';
 import { adminRoute } from './routes/adminRoute.js';
-import { contactRoute} from './routes/adminRoute.js';
-import { menuRoute} from './routes/adminRoute.js';
 
 //configuration
 const PORT = 4400;
@@ -33,20 +31,11 @@ app.use('/', userRoute);
 // route for admin
 app.use('/', adminRoute);
 
-// route for about
-app.use('/', aboutRoute);
-
-// route for menu
-app.use('/', menuRoute);
-
-// route for contact
-app.use('/', contactRoute);
-
 
 
 //static folder for styles images etc
-app.use('/public', express.static('public'));
-app.use('/util', express.static('util'));
+app.use('/', express.static('public'));
+
  
 app.listen(PORT, () => {
     console.log(`Listening ... http://localhost:${PORT}`);
