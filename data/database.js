@@ -36,7 +36,7 @@ export const getAllmenu = async (mAm) => {
 export const saveMenu = async (sMen) => {
 	const result = await pool.query(
 		`
-        INSERT INTO menu(id, item_name, quantity, description, img)
+        INSERT INTO menu(item_name, quantity, description, img)
          VALUES(?, ?, ?, ?, ?) 
     `,
 		[sMen.id, sMen.item_name, sMen.quantity, sMen.description, sMen.img]
@@ -53,7 +53,7 @@ export const updateMenu = async (uMen) => {
         UPDATE menu SET item_name = ?, quantity = ?, description  = ?, img = ?
         WHERE id = ?
     `,
-		[uMen.item_name, uMen.quantity, uMen.description, uMen.img]
+		[uMen.item_name, uMen.quantity, uMen.description, uMen.img, uMen.id]
 	);
 	return result;
 };
@@ -108,7 +108,7 @@ export const getAlldrinks = async (dRi) => {
 export const saveDrinks = async (sDri) => {
 	const result = await pool.query(
 		`
-        INSERT INTO drinks(id, beverage, quantity, img, description)
+        INSERT INTO drinks(beverage, quantity, img, description)
          VALUES(?, ?, ?, ?, ?) 
     `,
 		[sDri.id, sDri.beverage, sDri.quantity, sDri.img, sDri.description]
@@ -125,7 +125,7 @@ export const updateDrinks = async (uDri) => {
         UPDATE drinks SET beverage = ?, quantity = ?,  img = ?, description  = ?,
         WHERE id = ?
     `,
-		[uDri.beverage, uDri.quantity, uDri.img, uDri.description]
+		[uDri.beverage, uDri.quantity, uDri.img, uDri.description, uDri.id]
 	);
 	return result;
 };
@@ -180,7 +180,7 @@ export const getAlluser = async (uSe) => {
 export const saveUser = async (sUse) => {
 	const result = await pool.query(
 		`
-        INSERT INTO user(id, first_name, last_name, email, location, phone_num, trn, roles, password)
+        INSERT INTO user(first_name, last_name, email, location, phone_num, trn, roles, password)
          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
     `,
 		[sUse.id, sUse.first_name, sUse.last_name, sUse.email, sUse.location, sUse.phone_num, sUse.trn, sUse.roles, sUse.password]
@@ -197,7 +197,7 @@ export const updateUser = async (uUse) => {
         UPDATE user SET first_name = ?, last_name = ?, email  = ?, location = ?, phone_num = ?, trn = ?, roles = ?, password = ?
         WHERE id = ?
     `,
-		[uUse.first_name, uUse.last_name, uUse.email, uUse.location, uUse.phone_num, uUse.trn, uUse.roles, uUse.password]
+		[uUse.first_name, uUse.last_name, uUse.email, uUse.location, uUse.phone_num, uUse.trn, uUse.roles, uUse.password, uUse.id]
 	);
 	return result;
 };
@@ -258,7 +258,7 @@ export const getAllschedule = async (sSch) => {
 // export const saveSchedule = async (sSch) => {
 // 	const result = await pool.query(
 // 		`
-//         INSERT INTO meals_schedule(id, user_id, menu_id, drink_id, date)
+//         INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
 //          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
 //     `,
 // 		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
@@ -275,7 +275,7 @@ export const getAllschedule = async (sSch) => {
 //         UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
 //         WHERE id = ?
 //     `,
-// 		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date]
+// 		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date, uSch.id]
 // 	);
 // 	return result;
 // };
