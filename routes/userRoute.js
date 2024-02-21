@@ -1,9 +1,7 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-// <<<<<<< HEAD
-// import {  } from "../data/database.js";
-// =======
-import {getAllUsers, saveUser, updateUser, getSingleUser, deleteUser  } from "../data/database.js";
+
+import {getAllUser, saveUser, updateUser, getSingleUser, deleteUser  } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
