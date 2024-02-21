@@ -23,7 +23,8 @@ app.use(morgan('dev'));
 app.use('/', loginRoute);
 
 //static folder for styles images etc
-app.use('/', express.static('public'));
+app.use('/public', express.static('public'));
+app.use('/util', express.static('util'));
 
  
 app.listen(PORT, () => {
