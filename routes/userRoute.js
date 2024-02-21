@@ -1,8 +1,7 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
 // <<<<<<< HEAD
-import { getAllmenu, getAlldrinks } from "../data/database.js";
-// import {getAllUsers, saveUser, updateUser, getSingleUser, deleteUser  } from "../data/database.js";
+import { getAllmenu, getAlldrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
