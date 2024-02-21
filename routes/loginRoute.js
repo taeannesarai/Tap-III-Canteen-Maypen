@@ -7,16 +7,10 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
-//Login page
+// route for login
 router.get("/", async (req, res) => {
-    res.render("login", {
-        title:"Login"
-    })
-})
-
-
-
-
+    res.render("login", { title: "Login" })
+});
 
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
