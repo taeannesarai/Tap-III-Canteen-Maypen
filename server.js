@@ -35,6 +35,7 @@ app.use('/admin', adminRoute);
 
 //static folder for styles images etc
 app.use('/public', express.static('public'));
+app.use('/util', express.static('util'));
 
  
 app.listen(PORT, () => {
