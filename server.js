@@ -23,20 +23,21 @@ app.use(morgan('dev'));
 
 //Route Middleware
 // route for login
-app.use('/', loginRoute);
+app.use('/tap-canteen/authentication', loginRoute);
 
 // route for user
-app.use('/', userRoute);
+app.use('/tap-canteen', userRoute);
 
 // route for admin
-app.use('/', adminRoute);
+app.use('/tap-canteen/admin', adminRoute);
 
 
 
 //static folder for styles images etc
-app.use('/', express.static('public'));
+app.use('/public', express.static('public'));
+app.use('/util', express.static('util'));
 
  
 app.listen(PORT, () => {
-    console.log(`Listening ... http://localhost:${PORT}`);
+    console.log(`Listening ... http://localhost:${PORT}/tap-canteen`);
 });
