@@ -7,6 +7,12 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
+//Admin page
+router.get("/", async (req, res) => {
+    res.render("admin", {
+        title:"Admin"
+    })
+})
 
 
 
@@ -15,4 +21,4 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
-export const loginRoute = router;
+export const adminRoute = router;

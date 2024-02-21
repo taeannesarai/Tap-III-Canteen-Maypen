@@ -1,5 +1,8 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
+// <<<<<<< HEAD
+// import {  } from "../data/database.js";
+// =======
 import {getAllUsers, saveUser, updateUser, getSingleUser, deleteUser  } from "../data/database.js";
 
 const router = express.Router();
@@ -7,19 +10,12 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
-
-//route for home page ------------ path: '/'
+// <<<<<<< HEAD
+// Homepage
 router.get("/", async (req, res) => {
-  res.render("index")
-});
-
-// student users
-
-// route for to view all users
-router.get("/all-users", async (req, res) => {
-  const results = await getAllUsers();
-  console.log(results);
-  res.render("users/all-users", {title: "All users", resData: results});
+    res.render("index", {
+        title: "Home"
+    });
 });
 
 

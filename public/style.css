@@ -13,7 +13,8 @@
 
 body {
     margin: 0;
-    font-family: "Fredoka", sans-serif;
+    /* font-family: "Fredoka", sans-serif; */
+    font-family: "Work Sans", sans-serif;
 }
 
 /* =================================== NAVIGATION BAR STYLES =================================== */
@@ -78,6 +79,111 @@ nav .login-icon:hover {
 
 nav .login-icon:hover a {
     color: #fff;
+}
+
+
+/* ========================= MENU ITEM CARD STYLES ===================================== */
+.page-body {
+    margin: 0 50px;
+    border-radius: 10px;
+    background-color: #57759044;
+    padding: 10px;
+}
+
+.page-heading {
+    font-size: 30px;
+    text-align: center;
+}
+
+.menu-card-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: 30px;
+    column-gap: 1%;
+}
+.menu-card {
+    width: 30%;
+    padding: 10px;
+    /* border: 1px solid var(--dark-cyan-blue); */
+    border-radius: 5px;
+    position: relative;
+    background-color: var(--teal-green);
+}
+.card-img {
+    width: 100%;
+    aspect-ratio: 5/3;
+    background-color: var(--dark-cyan-blue);
+    border-radius: 5px;
+    position: relative;
+}
+.menu-item-name {
+    margin: 10px 0;
+    display: block;
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.item-quantity {
+    display: block;
+    font-weight: 300;
+    margin-bottom: 5px;
+}
+.item-description {
+}
+.card-buttons {
+    margin: 20px 0;
+    display: flex;
+    justify-content: flex-end;
+     font-family: "Work Sans", sans-serif;
+}
+.admin-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.btn {
+    text-decoration: none;
+    padding: 10px 5px;
+    border-radius: 5px;
+    font-weight: 500;
+    display: block;
+    font-size: 15px;
+}
+.item-card-edit {
+    background-color: var(--vermillion-orange);
+    color: #fff;
+}
+.item-card-view {
+    background-color: var(--torquoise);
+    color: #fff;
+}
+.item-card-delete {
+    background-color: #f00;
+    color: #fff;
+}
+.user-buttons {
+}
+.item-card-select-meal {
+    background-color: var(--medium-olive-green);
+    color: #000000;
+}
+
+.new-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    border-radius: 5px;
+    background-color: #57759034;
+    text-decoration: none;
+    font-size: 50px;
+    color: #577590;
+    transition: .3s ease-in-out;
+}
+
+.new-item:hover {
+    transform: scale(.97);
 }
 
 /* =================================== FOOTER STYLES =================================== */
