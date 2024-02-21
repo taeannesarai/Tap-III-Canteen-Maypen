@@ -7,7 +7,11 @@ const app = express();
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
-
+//route to create new user
+router.post('/',(req,res)=>{
+    const { username, password } = req.body;
+    res.send('user created successfully');
+});
 
 
 
