@@ -23,18 +23,18 @@ app.use(morgan('dev'));
 
 //Route Middleware
 // route for login
-app.use('/', loginRoute);
+app.use('/authentication', loginRoute);
 
 // route for user
 app.use('/', userRoute);
 
 // route for admin
-app.use('/', adminRoute);
+app.use('/admin', adminRoute);
 
 
 
 //static folder for styles images etc
-app.use('/', express.static('public'));
+app.use('/public', express.static('public'));
 
  
 app.listen(PORT, () => {

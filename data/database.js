@@ -21,12 +21,12 @@ const pool = mysql
 
 // Get All Menu
 
-export const getAllmenu = async (mAm) => {
+export const getAllmenu = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM menu 
       `);
-      const rows = result[mAm];
+      const rows = result;
       return rows; 
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -93,12 +93,12 @@ export const getSingledmenu = async (aID) => {
 
 // Get All Drinks 
 
-export const getAlldrinks = async (dRi) => {
+export const getAlldrinks = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM drinks
       `);
-      const rows = result[dRi];
+      const rows = result;
       return rows; 
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
