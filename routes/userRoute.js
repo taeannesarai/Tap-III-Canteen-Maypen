@@ -27,7 +27,7 @@ router.get("/lunch-menu", async (req, res) => {
     console.log(drinks);
     res.render("menu", {
         title: "Menu",
-        MealData: meals,
+        mealData: meals,
         drinkData: drinks
     });
 });
