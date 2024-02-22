@@ -18,7 +18,7 @@ app.set('view engine', 'ejs');
 app.use(express.json({ limit: '1kb' }));
 app.use(express.urlencoded({ extended: true, limit: '1kb' }));
 
-// ENDPOINT ANATYLICS
+// ENDPOINT ANALYTICS
 app.use(morgan('dev'));
 
 //Route Middleware
@@ -36,6 +36,7 @@ app.use('/tap-canteen/admin', adminRoute);
 //static folder for styles images etc
 app.use('/public', express.static('public'));
 app.use('/util', express.static('util'));
+app.use('/uploads', express.static('uploads'));
 
  
 app.listen(PORT, () => {
