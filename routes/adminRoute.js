@@ -10,9 +10,11 @@ app.use(BodyParser.urlencoded({ extended: true }));
 //Admin page
 router.get("/", async (req, res) => {
     res.render("admin", {
-        title:"Admin"
-    })
-})
+        title: "Admin"
+    });
+});
+
+
 
 
 
