@@ -192,6 +192,18 @@ nav .login-icon:hover a {
     transform: scale(.97);
 }
 
+.warning-icon i {
+    display: block;
+    width: max-content;
+    margin: 0 auto;
+    font-size: 30px;
+}
+
+.cancel-delete {
+    display: flex;
+    justify-content: flex-end;
+}
+
 /* =================================== FOOTER STYLES =================================== */
 footer {
     margin-top: 100px;

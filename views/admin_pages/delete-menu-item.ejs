@@ -1,0 +1,38 @@
+<%- include('../partials/header') %>
+<section class="page-body">
+	<h1 class="page-heading">Delete Menu Item</h1>
+	<div class="alert alert-warning" role="alert">
+		<div class="row">
+			<div class="col warning-icon">
+				<i class="fi fi-ss-diamond-exclamation"></i>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>You are about to delete lunch menu item: <%= mealItem.item_name %>! Select Cancel to abort or Delete to continue.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="card mx-auto" style="width: 18rem">
+		<img src="<%= mealItem.img %>" class="card-img-top" alt="<%= mealItem.item_name %>_image" />
+		<div class="card-body">
+			<h5 class="card-title"><%= mealItem.item_name %></h5>
+			<p class="card-text"><%= mealItem.description %></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">Qty: <%= mealItem.quantity %></li>
+			<!-- <li class="list-group-item">A second item</li>
+				<li class="list-group-item">A third item</li> -->
+		</ul>
+		<div class="card-body"></div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col cancel-delete">
+			<a href="/tap-canteen/menu" class="btn btn-secondary mx-3">Cancel</a>
+			<a href="/tap-canteen/admin/delete-menu-item/<%= mealItem.id %>" class="btn btn-danger">Delete</a>
+		</div>
+	</div>
+</section>
+<%- include('../partials/footer') %>

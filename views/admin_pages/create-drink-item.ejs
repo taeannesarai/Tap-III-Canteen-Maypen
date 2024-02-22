@@ -1,0 +1,37 @@
+<%- include('../partials/header') %>
+<section class="page-body">
+	<h1 class="page-heading">Create New Drink Item</h1>
+
+	<form action="/tap-canteen/admin/create-drink-item/submit" method="post">
+		<div class="row mb-3">
+			<div class="col-8">
+				<label class="form-label" for="drink_name">Drink Name</label>
+				<input type="text" name="drink_name" class="form-control" />
+			</div>
+			<div class="col-4">
+				<label class="form-label" for="quantity">Quantity</label>
+				<input type="number" name="quantity" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="desc">Description</label>
+				<textarea name="desc" id="" cols="30" rows="10" class="form-control"></textarea>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="drink_img">Add Drink Image</label>
+				<input type="file" name="drink_img" id="" class="form-control" id="formFile" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<input type="submit" value="Save Drink Item" class="btn btn-primary"/>
+			</div>
+		</div>
+	</form>
+</section>
+<%- include('../partials/footer') %>
