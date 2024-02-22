@@ -1,6 +1,26 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-import { getAllMenu, saveMenu, updateMenu, deleteMenu, getSingledMenu, getAllDrinks, saveDrinks, updateDrinks, deleteDrinks, getSingleDrinks, getAllUser, saveUser, updateUser, deleteUser, getSingleUser, createAdmin, adminUserExists, isLoginCorrect, getAllSchedule} from "../data/database.js";
+import {
+	getAllMenu,
+	saveMenu,
+	updateMenu,
+	deleteMenu,
+	getSingledMenu,
+	getAllDrinks,
+	saveDrinks,
+	updateDrinks,
+	deleteDrinks,
+	getSingleDrinks,
+	getAllUser,
+	saveUser,
+	updateUser,
+	deleteUser,
+	getSingleUser,
+	createAdmin,
+	adminUserExists,
+	isLoginCorrect,
+	getAllSchedule,
+} from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -14,24 +34,30 @@ app.use(BodyParser.urlencoded({ extended: true }));
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
-router.get('/create-menu-item', async(req, res) =>{
-
-    res.render('admin_pages/create-menu-item', {title: 'Create Menu Item'});
+router.get("/create-menu-item", async (req, res) => {
+	res.render("admin_pages/create-menu-item", { title: "Create Menu Item" });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Menu
-router.get('/update-menu', async(req, res) =>{
-    
-    res.render('admin_pages/menu-update', {title: 'Update Menu'});
+router.get("/update-menu-item/:id", async (req, res) => {
+	const mealItem = await getSingledMenu(req.params.id);
+	res.render("admin_pages/update-meal-item", {
+		title: "Update Menu",
+		mealItem,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Delete Menu 
-router.get('/delete-menu-delete/:id', async (req, res)=>{
-   
-    res.render('admin_pages/driver-delete',{ title: 'Confirm Deletion', id})
+//Delete Menu
+router.get("/delete-menu-item/:id", async (req, res) => {
+	const mealItem = await getSingledMenu(req.params.id);
+
+	res.render("admin_pages/driver-delete", {
+		title: "Confirm Deletion",
+		mealItem,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -40,50 +66,35 @@ router.get('/delete-menu-delete/:id', async (req, res)=>{
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Drink
-router.get('/create-drink-item', async(req, res) =>{
-   
-    res.render('admin_pages/drink-item', {title: 'Create Drink Item'});
+router.get("/create-drink-item", async (req, res) => {
+	res.render("admin_pages/drink-item", { title: "Create Drink Item" });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
-router.get('/update-drink', async(req, res) =>{
-    
-    res.render('admin_pages/drink-update', {title: 'Update Drink'});
+router.get("/update-drink", async (req, res) => {
+	res.render("admin_pages/drink-update", { title: "Update Drink" });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
-router.get('/delete-drink-delete/:id', async (req, res)=>{
-   
-    res.render('admin_pages/drink-delete',{ title: 'Confirm Deletion', id})
+router.get("/delete-drink-delete/:id", async (req, res) => {
+	res.render("admin_pages/drink-delete", { title: "Confirm Deletion", id });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 ////////////////////////////////////////////////////////////////////////////   All of Menu Schedule    //////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Create Meal Schedule
-router.get('/create-meal-schedule', async(req, res) =>{
-   
-    res.render('admin_pages/meal-schedule', {title: 'Create meal schedule'});
+router.get("/create-meal-schedule", async (req, res) => {
+	res.render("admin_pages/meal-schedule", { title: "Create meal schedule" });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
 // ============== DATABASE ACTIONS ==================
-
-
-
-
-
-
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;

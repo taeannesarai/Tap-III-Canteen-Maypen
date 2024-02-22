@@ -11,6 +11,10 @@
     --dark-cyan-blue: #277DA1;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     /* font-family: "Fredoka", sans-serif; */
@@ -36,23 +40,24 @@ nav .logo img:hover {
     transform: scale(.95);
 }
 
-nav .nav-links {
+nav .nav-menu-links {
     display: flex;
     list-style-type: none;
     /* background-color: var(--dark-cyan-blue); */
+    margin: 0;
 }
 
-/* nav .nav-links li {
+/* nav .nav-menu-links li {
 } */
 
-nav .nav-links li a {
+nav .nav-menu-links li a {
     display: inline-block;
     padding: 15px 50px;
     text-decoration: none;
     color: #000000;
 }
 
-nav .nav-links li a:hover {
+nav .nav-menu-links li a:hover {
     background-color: var(--teal-green);
     color: #fff;
 }
@@ -86,7 +91,7 @@ nav .login-icon:hover a {
 .page-body {
     margin: 0 50px;
     border-radius: 10px;
-    background-color: #57759044;
+    background-color: #57759028;
     padding: 10px;
 }
 

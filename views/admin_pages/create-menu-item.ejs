@@ -1,2 +1,37 @@
 <%- include('../partials/header') %>
+<section class="page-body">
+	<h1 class="page-heading">Create New Menu Item</h1>
+
+	<form action="/tap-canteen/admin/create-menu-item/submit" method="post">
+		<div class="row mb-3">
+			<div class="col-8">
+				<label class="form-label" for="meal_name">Meal Name</label>
+				<input type="text" name="meal_name" class="form-control" />
+			</div>
+			<div class="col-4">
+				<label class="form-label" for="quantity">Quantity</label>
+				<input type="number" name="quantity" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="desc">Description</label>
+				<textarea name="desc" id="" cols="30" rows="10" class="form-control"></textarea>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="meal_img">Add Meal Image</label>
+				<input type="file" name="meal_img" id="" class="form-control" id="formFile" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col">
+				<input type="submit" value="Save Meal Item" class="btn btn-primary"/>
+			</div>
+		</div>
+	</form>
+</section>
 <%- include('../partials/footer') %>
