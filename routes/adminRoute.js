@@ -54,8 +54,8 @@ router.get("/update-menu-item/:id", async (req, res) => {
 router.get("/delete-menu-item/:id", async (req, res) => {
 	const mealItem = await getSingledMenu(req.params.id);
 
-	res.render("admin_pages/driver-delete", {
-		title: "Confirm Deletion",
+	res.render("admin_pages/delete-menu-item", {
+		title: "Delete Menu Item",
 		mealItem,
 	});
 });
@@ -79,8 +79,12 @@ router.get("/update-drink", async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
-router.get("/delete-drink-delete/:id", async (req, res) => {
-	res.render("admin_pages/drink-delete", { title: "Confirm Deletion", id });
+router.get("/delete-drink-item/:id", async (req, res) => {
+    const drinkItem = await getSingleDrinks(req.params.id);
+    res.render("admin_pages/delete-drink-item", {
+        title: "Confirm Deletion",
+        drinkItem
+    });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
