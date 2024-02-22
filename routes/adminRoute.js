@@ -1,7 +1,19 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
 
-import { getAllMenu, saveMenu, updateMenu, deleteMenu, getSingledMenu, getAllDrinks, saveDrinks, updateDrinks, deleteDrinks, getSingleDrinks, getAllUser, saveUser, updateUser, deleteUser, getSingleUser, createAdmin, adminUserExists, isLoginCorrect, getAllSchedule} from "../data/database.js";
+import { getAllMenu, saveMenu, updateMenu, deleteMenu, getSingledMenu,
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     getAllDrinks, saveDrinks, updateDrinks, deleteDrinks, getSingleDrinks,
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     getAllSchedule, getSingleSchedule,
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     getAllUser, saveUser, updateUser, deleteUser, getSingleUser,
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+     createAdmin, adminUserExists, isLoginCorrect
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+   
+} from "../data/database.js";
+
 import fileUpload from 'express-fileupload';
 const router = express.Router();
 const app = express();
@@ -32,7 +44,7 @@ router.get("/create-menu-item", async (req, res) => {
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
-	const mealItem = await getSingledMenu(req.params.id);
+	const mealItem = await getAllMenu(req.params.id);
 	res.render("admin_pages/update-meal-item", {
 		title: "Update Menu",
 		mealItem,
@@ -42,8 +54,7 @@ router.get("/update-menu-item/:id", async (req, res) => {
 
 //Delete Menu
 router.get("/delete-menu-item/:id", async (req, res) => {
-	const mealItem = await getSingledMenu(req.params.id);
-
+	const mealItem = await getAllMenu(req.params.id);
 	res.render("admin_pages/driver-delete", {
 		title: "Confirm Deletion",
 		mealItem,
@@ -63,6 +74,7 @@ router.get("/create-drink-item", async (req, res) => {
 
 // Update Drinks
 router.get("/update-drink", async (req, res) => {
+    const mealItem = await getAllDrinks(req.params.id);
 	res.render("admin_pages/drink-update", { title: "Update Drink" });
 
 });
@@ -70,6 +82,7 @@ router.get("/update-drink", async (req, res) => {
 
 //Delete Drink
 router.get("/delete-drink-delete/:id", async (req, res) => {
+    const mealItem = await getAllDrinks(req.params.id);
 	res.render("admin_pages/drink-delete", { title: "Confirm Deletion", id });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,6 +94,7 @@ router.get("/delete-drink-delete/:id", async (req, res) => {
 
 // Create Meal Schedule
 router.get("/create-meal-schedule", async (req, res) => {
+    const mealItem = await getAllSchedule(req.params.id);
 	res.render("admin_pages/meal-schedule", { title: "Create meal schedule" });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -268,18 +282,18 @@ router.post('/get-single-drink-item', async (req, res) => {
 
 //Create Meal Schedule
 
-router.post('/create-mealschedule', async (req, res) => {
-    const menuItemData = {
-        item_name: req.body.item_name,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.body.img
-    }
+// router.post('/create-mealschedule', async (req, res) => {
+//     const menuItemData = {
+//         item_name: req.body.item_name,
+//         quantity: req.body.quantity,
+//         description: req.body.description,
+//         img: req.body.img
+//     }
 
-    console.log(menuItemData);
-    await saveMenu(menuItemData);
-    res.redirect('/');
-});
+//     console.log(menuItemData);
+//     await saveMenu(menuItemData);
+//     res.redirect('/');
+// });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
