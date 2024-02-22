@@ -8,10 +8,15 @@ const app = express();
 app.use(BodyParser.urlencoded({ extended: true }));
 
 // route for login
-router.get("/", async (req, res) => {
-    res.render("login", { title: "Login" })
+router.get('/auth/login', async (req, res) => {
+    res.render('auth/login', { title: 'LOGIN' });
 });
 
+//LOGOUT
+app.get('/auth/logout', async (req, res) => {
+    req.session.destroy();
+    res.redirect('/')
+});
 
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
