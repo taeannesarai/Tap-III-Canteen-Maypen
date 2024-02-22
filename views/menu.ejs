@@ -3,7 +3,7 @@
 	<h1 class="page-heading">Menu</h1>
 	<div class="menu-card-container">
 		<% for( let i = 0; i < mealData.length; i++ ) { %>
-		<div class="card" style="width: 18rem">
+		<div class="card" style="width: 24rem">
 			<img src="<%= mealData[i].img %>" class="card-img-top" alt="<%= mealData[i].item_name %>_image" />
 			<div class="card-body">
 				<h5 class="card-title"><%= mealData[i].item_name %></h5>
@@ -27,7 +27,7 @@
 		</div>
 		<% } %>
 
-		<a href="/tap-canteen/admin/create-menu-item" class="new-item card">
+		<a href="/tap-canteen/admin/create-menu-item" style="width: 24rem" class="new-item card">
 			<i class="fi fi-sr-add"></i>
 		</a>
 	</div>

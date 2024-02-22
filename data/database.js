@@ -2,7 +2,6 @@ import mysql from "mysql2";
 import dotenv from "dotenv";
 //  import {encryptPW , decryptPW} from "../util/auth.js";
 
-
 dotenv.config({ path: "./config.env" });
 
 const pool = mysql
@@ -12,7 +11,7 @@ const pool = mysql
 		password: process.env.DB_PASS,
 		database: process.env.DB_NAME,
 	})
-.promise();
+	.promise();
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -21,18 +20,18 @@ const pool = mysql
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Get All Menu
-
 export const getAllMenu = async () => {
-    const [result] = await pool.query(
-        `
+	const [result] = await pool.query(
+		`
       SELECT * FROM menu 
-      `);
-      const rows = result;
-      return rows; 
+      `
+	);
+	const rows = result;
+	return rows;
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Create Menu 
+// Create Menu
 
 export const saveMenu = async (sMen) => {
 	const result = await pool.query(
@@ -74,7 +73,7 @@ export const deleteMenu = async (dMen) => {
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Get Single Menu 
+//Get Single Menu
 
 export const getSingledMenu = async (aID) => {
 	const result = await pool.query(
@@ -92,15 +91,16 @@ export const getSingledMenu = async (aID) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Get All Drinks 
+// Get All Drinks
 
 export const getAllDrinks = async () => {
-    const [result] = await pool.query(
-        `
+	const [result] = await pool.query(
+		`
       SELECT * FROM drinks
-      `);
-      const rows = result;
-      return rows; 
+      `
+	);
+	const rows = result;
+	return rows;
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -166,12 +166,13 @@ export const getSingleDrinks = async (aID) => {
 // Get All Users
 
 export const getAllUser = async () => {
-    const [result] = await pool.query(
-        `
+	const [result] = await pool.query(
+		`
       SELECT * FROM user
-      `);
-      const rows = result;
-      return rows; 
+      `
+	);
+	const rows = result;
+	return rows;
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -235,57 +236,63 @@ export const getSingleUser = async (aID) => {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// export const 
+// export const
 
 //Method to Create an Admin User
-export const createAdmin = async() =>{
-    const encodedPW = await encryptPW("Password123");
-    const user = {
-        first_name: "Admin",
-        last_name: "User",
-        email:"admin@mail.com",
-        password: encodedPW,
-        roles:"ADMIN",
-    }
-    const result = await pool.query(`
+export const createAdmin = async () => {
+	const encodedPW = await encryptPW("Password123");
+	const user = {
+		first_name: "Admin",
+		last_name: "User",
+		email: "admin@mail.com",
+		password: encodedPW,
+		roles: "ADMIN",
+	};
+	const result = await pool.query(
+		`
         INSERT INTO user(first_name, last_name, email, location, phone_num, trn, roles, password)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-    `, [user.first_name, user.last_name, user.email, user.location, user.phone_num, user.trn, user.roles, user.password]);
-   return result;    
-}
+    `,
+		[user.first_name, user.last_name, user.email, user.location, user.phone_num, user.trn, user.roles, user.password]
+	);
+	return result;
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Admin User Exists
 
-export const adminUserExists = async ()=>{
-    let bRet = false;
-    const result = await pool.query(`
+export const adminUserExists = async () => {
+	let bRet = false;
+	const result = await pool.query(`
         SELECT * FROM user WHERE roles = 'ADMIN' AND email = 'admin@mail.com'
     `);
-    console.log(result);
-    const rows = result[0];
+	console.log(result);
+	const rows = result[0];
 
-    if(rows.length > 0){
-        bRet = true;
-    }else{
-        bRet = false;
-    }
-    return bRet;
-}
+	if (rows.length > 0) {
+		bRet = true;
+	} else {
+		bRet = false;
+	}
+	return bRet;
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Is Login Correct
 
-export const isLoginCorrect = async (user, pass)=>{
-    let bRet = false;
-    const result = await pool.query(`
+export const isLoginCorrect = async (user, pass) => {
+	let bRet = false;
+	const result = await pool.query(
+		`
         SELECT * FROM user WHERE email = ?
-    `,[user]);
-   
-    const rows = result[0];
-   
-    return rows;
-}
+    `,
+		[user]
+	);
+
+	const rows = result[0];
+
+	return rows;
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////   All of Menu Schedule    //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -328,13 +335,13 @@ export const getAllSchedule = async () => {
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Create Schedule 
+//Create Schedule
 
 // export const saveSchedule = async (sSch) => {
 // 	const result = await pool.query(
 // 		`
 //         INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
-//          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+//          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
 //     `,
 // 		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
 // 	);
@@ -383,5 +390,3 @@ export const getSingleSchedule = async (gSs) => {
 	return rows;
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
