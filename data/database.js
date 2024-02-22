@@ -165,12 +165,12 @@ export const getSingleDrinks = async (aID) => {
 
 // Get All Users
 
-export const getAllUser = async (uSe) => {
+export const getAllUser = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM user
       `);
-      const rows = result[uSe];
+      const rows = result;
       return rows; 
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,7 +294,7 @@ export const isLoginCorrect = async (user, pass)=>{
 
 // Get All schedule
 
-export const getAllSchedule = async (sSch) => {
+export const getAllSchedule = async () => {
 	const result = await pool.query(
 		`SELECT
         id,
@@ -304,7 +304,7 @@ export const getAllSchedule = async (sSch) => {
         date
     FROM
         meals_schedule;`,
-		[sSch.id, sSch.item_name, sSch.quantity, sSch.description, sSch.img, sSch.date]
+		
 	);
 	return result;
 };
