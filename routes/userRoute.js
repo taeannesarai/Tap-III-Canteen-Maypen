@@ -1,7 +1,7 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
 // <<<<<<< HEAD
-import { getAllmenu, getAlldrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
+import { getAllMenu, getAllDrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -19,15 +19,15 @@ router.get("/", async (req, res) => {
 
 // Menu
 router.get("/lunch-menu", async (req, res) => {
-    const meals = await getAllmenu();
-    const drinks = await getAlldrinks();
+    const meals = await getAllMenu();
+    const drinks = await getAllDrinks();
     console.log('===================== MEALS ==================');
     console.log(meals);
     console.log('===================== DRINKS ==================');
     console.log(drinks);
     res.render("menu", {
         title: "Menu",
-        MealData: meals,
+        mealData: meals,
         drinkData: drinks
     });
 });
