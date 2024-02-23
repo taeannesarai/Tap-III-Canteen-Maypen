@@ -93,6 +93,7 @@ nav .login-icon:hover a {
     border-radius: 10px;
     background-color: #57759028;
     padding: 10px;
+    position: relative;
 }
 
 .page-heading {
@@ -134,8 +135,7 @@ nav .login-icon:hover a {
     font-weight: 300;
     margin-bottom: 5px;
 }
-.item-description {
-}
+
 .card-buttons {
     margin: 20px 0;
     display: flex;
@@ -167,8 +167,7 @@ nav .login-icon:hover a {
     background-color: #f00;
     color: #fff;
 }
-.user-buttons {
-}
+
 .item-card-select-meal {
     background-color: var(--medium-olive-green);
     color: #000000;
@@ -189,6 +188,7 @@ nav .login-icon:hover a {
 }
 
 .new-item:hover {
+    background-color: #57759056;
     transform: scale(.97);
 }
 
@@ -259,4 +259,66 @@ footer .footer-grid .input-container {
 
 footer .footer-grid .input-container:last-of-type() {
     margin-bottom: none;
+}
+/* =================================== ABOUT PAGE STYLES =================================== */
+
+.contain {
+    display: flex;
+    flex-direction: row;
+}
+.wrap img {
+    background-color:var(--vermillion-orange);
+    height: 200PX;
+    width: 200PX;
+    max-width: 100%;
+    object-fit:cover;
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.wrap img:nth-child(3n+1) {
+    /* background: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK6dJZakXGXerNY7qrBHUlq6uGo6zk-uRgL0T42rDpVw&s); */
+    grid-column: 4; 
+    grid-row: 3; /* Place the first image in the first row */
+    transform: translateY(-30%); /* Move the first image up */
+}
+
+.wrap img:nth-child(3n+2) {
+    background-color:var(--dark-cyan-blue);
+    grid-column: 3; /* Place the second image in the left column */
+    grid-row: 2; /* Place the second image in the second row */
+    transform: translateY(15%) translateX(40%); /* Move the second image down and to the left */
+}
+
+.wrap img:nth-child(3n+3) {
+    background-color:var(--dark-cyan-blue);
+    grid-column: 5; /* Place the third image in the right column */
+    grid-row: 2; /* Place the third image in the second row */
+    transform: translateY(15%) translateX(-40%); /* Move the third image down and to the right */
+}
+
+.wrap {
+    background-color: #fff;
+    width: 40%;
+    padding: 0;
+    display: grid;
+    grid-template-columns:repeat(6, 1fr); /* Adjust the number of columns */
+    grid-template-rows:repeat(3, auto); /* Adjust the number of rows */
+    gap: 2px; /* Adjust the gap between images */
+    justify-content: flex-start; /* Center the grid horizontally */
+    align-self: flex-start;
+    
+}
+.text {
+    align-self: flex-end;
+    padding: 45px;
+    text-align: justify;
+    background-color: #fff;
+}
+/* =================================== CONTACT PAGE STYLES =================================== */
+
+#myFrame{
+    width: 95%;
+    height: 450px;
+    margin: 0 50px;
+    padding: 15px;
 }
