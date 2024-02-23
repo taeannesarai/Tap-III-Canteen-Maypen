@@ -32,28 +32,35 @@
                 <td style="line-height: 1.5;">
                 <h2> Dear <%= f_name %></h2>
                 <p>
-                    Thank you for registering with the TAP III Lunch System! We are excited to have you join us in selecting your meal
-                    options for the upcoming weeks.
+                    Thank you for registering with the TAP III Canteen System! We are excited to have you join us in selecting your meal
+                    options for the upcoming weeks. With your registration complete, you now have access to the system using your TRN (Trainee Registration Number) as your
+                    username. Please log in to the system using your TRN and the password you provided during registration to begin
+                    selecting your meal options for each day. 
                 </p>
                 <p>
                     Your registration details have been successfully received, and you are now a member of our system. Here are your
                     registration details:
-
                 </p>
                 <% var reservedDate=new Date(date).toLocaleDateString('en-US',{month: 'short' , day:'numeric', year:'numeric',
                     timeZone: 'UTC' }); %>
 
                 <p>
-                    Name: <%= f_name  %> <%= l_name  %> <br>
-                    TRN: <%= trn  %> <br>
-                    Location: <%= location %>
+                    Name: <%= user_f_name  %> <%= user_l_name  %> <br>
+                    TRN: <%= user_trn  %> <br>
+                    Location: <%= user_location %>
                 </p>
+                <br><br>
+                <%- include('_endnote')  %>
             </td>
-            </tr>
-    
-    </tr>
+        </tr>  
     </table>
+</td>
+    <!-- cell for padding -->
+        <td class="padding"></td>
 
+</tr>
+
+</table>
 </center>
     
 </body>
