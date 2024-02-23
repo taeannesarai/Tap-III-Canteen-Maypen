@@ -1,8 +1,10 @@
 <%- include('../partials/header') %>
 <section class="page-body">
+	<a href="<%= prevUrl %>" class="prev-page">Back</a>
+
 	<h1 class="page-heading">Create New Drink Item</h1>
 
-	<form action="/tap-canteen/admin/create-drink-item/submit" method="post">
+	<form action="/tap-canteen/admin/create-drink-item/submit" method="post" enctype="multipart/form-data">
 		<div class="row mb-3">
 			<div class="col-8">
 				<label class="form-label" for="drink_name">Drink Name</label>
@@ -17,7 +19,7 @@
 		<div class="row mb-3">
 			<div class="col">
 				<label class="form-label" for="desc">Description</label>
-				<textarea name="desc" id="" cols="30" rows="10" class="form-control"></textarea>
+				<textarea name="desc" id="" cols="30" rows="10" class="form-control" maxlength="255"></textarea>
 			</div>
 		</div>
 		<div class="row mb-3">

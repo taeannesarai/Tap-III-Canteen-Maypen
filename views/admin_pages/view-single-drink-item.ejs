@@ -1,28 +1,26 @@
-<%- include('./partials/header') %>
+<%- include('../partials/header') %>
 <section class="page-body">
-	<h1 class="page-heading">View Menu Item</h1>
+	<a href="<%= prevUrl %>" class="prev-page"><i class="fi fi-rr-angle-small-left"></i><span>Back</span></a>
 
-	<div class="card" style="width: 18rem">
-		<img src="<%= mealData[i].img %>" class="card-img-top" alt="<%= mealData[i].item_name %>_image" />
+	<h1 class="page-heading">View Drink Item</h1>
+
+	<div class="card mx-auto" style="width: 40rem">
+		<img src="/uploads/<%= data.img %>" class="card-img-top" alt="<%= data.item_name %>_image" />
 		<div class="card-body">
-			<h5 class="card-title"><%= mealData[i].item_name %></h5>
-			<p class="card-text"><%= mealData[i].description %></p>
+			<h5 class="card-title"><%= data.beverage %></h5>
+			<p class="card-text"><%= data.description %></p>
 		</div>
 		<ul class="list-group list-group-flush">
-			<li class="list-group-item">Qty: <%= mealData[i].quantity %></li>
+			<li class="list-group-item">Qty: <%= data.quantity %></li>
 			<!-- <li class="list-group-item">A second item</li>
 				<li class="list-group-item">A third item</li> -->
 		</ul>
 		<div class="card-body">
 			<div class="admin-buttons">
-				<a href="/tap-canteen/admin/view-menu-item/<%= mealData[i].id %>" class="btn item-card-view">View Item</a>
-				<a href="/tap-canteen/admin/update-menu-item/<%= mealData[i].id %>" class="btn item-card-edit">Edit Item</a>
-				<a href="/tap-canteen/admin/delete-menu-item/<%= mealData[i].id %>" class="btn item-card-delete">Delete Item</a>
-			</div>
-			<div class="user-buttons">
-				<a href="#" class="btn item-card-select-meal">Select Meal</a>
+				<a href="/tap-canteen/admin/update-menu-item/<%= data.id %>" class="btn btn-warning">Edit Item</a>
+				<a href="/tap-canteen/admin/lunch-menu/delete-drink-item/<%= data.id %>" class="btn btn-danger">Delete Item</a>
 			</div>
 		</div>
 	</div>
 </section>
-<%- include('./partials/footer') %>
+<%- include('../partials/footer') %>

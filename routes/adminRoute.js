@@ -1,76 +1,116 @@
 import express, { Router } from "express";
-import BodyParser from "body-parser";
+import fileUpload from "express-fileupload";
+import multer from "multer";
+import findRemoveSync from "find-remove";
 
-import { getAllMenu, saveMenu, updateMenu, deleteMenu, getSingledMenu,
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     getAllDrinks, saveDrinks, updateDrinks, deleteDrinks, getSingleDrinks,
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     getAllSchedule, getSingleSchedule,
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     getAllUser, saveUser, updateUser, deleteUser, getSingleUser,
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-     createAdmin, adminUserExists, isLoginCorrect
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-   
+let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" }); // generate a random string of characters to attach to name of files
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./uploads");
+	},
+	filename: function (req, file, cb) {
+		cb(null, `${ranVal}_${file.originalname}`);
+	},
+});
+
+const upload = multer({ storage });
+
+import {
+	getAllMenu,
+	saveMenu,
+	updateMenu,
+	deleteMenu,
+	getSingledMenu,
+	getAllDrinks,
+	saveDrink,
+	updateDrinks,
+	deleteDrinks,
+	getSingleDrinks,
+	getAllSchedule,
+	getSingleSchedule,
+	getAllUser,
+	saveUser,
+	updateUser,
+	deleteUser,
+	getSingleUser,
+	createAdmin,
+	adminUserExists,
+	isLoginCorrect,
 } from "../data/database.js";
 
-import fileUpload from 'express-fileupload';
+import cryptoRandomString from "crypto-random-string";
 const router = express.Router();
 const app = express();
 
-app.use(BodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 app.use(
-    fileUpload({
-        limits:{
-            fileSize: 2 * 1024 * 1024
-        },
-        abortOnLimit: true,
-    })
+	fileUpload({
+		limits: {
+			fileSize: 50 * 1024 * 1024,
+		},
+		abortOnLimit: true,
+	})
 );
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ===============================================================================================================================================================================================
 
 ///////////////////////////////////////////   ============ All of Menu ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// ===============================================================================================================================================================================================
 
 //Get Single Menu
 
-app.get('/menu/menu-item-view/:id', async(req, res) =>{
-    const id = req.params.id;
-    const results = await getSingledMenu(id);
-    console.log('=====================================================');
-    console.log(results);
-    console.log('=====================================================');
-    res.render('/', {data: results, title: 'Menu Detail'});
+router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
+	const id = req.params.id;
+	const [results] = await getSingledMenu(id);
+	console.log("=====================================================");
+	console.log(results);
+	console.log("=====================================================");
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	res.render("admin_pages/view-single-menu-item", {
+		title: "Menu Item Detail",
+		data: results,
+		prevUrl,
+	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
 router.get("/create-menu-item", async (req, res) => {
-	res.render("admin_pages/create-menu-item", { title: "Create Menu Item" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	res.render("admin_pages/create-menu-item", {
+		title: "Create Menu Item",
+		prevUrl,
+	});
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
 	const mealItem = await getAllMenu(req.params.id);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
 	res.render("admin_pages/update-meal-item", {
 		title: "Update Menu",
 		mealItem,
+		prevUrl,
 	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Menu
-router.get("/delete-menu-item/:id", async (req, res) => {
-	const mealItem = await getSingledMenu(req.params.id);
+router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
+	const [mealItem] = await getSingledMenu(req.params.id);
+	console.log(mealItem);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
-	res.render("admin_pages/driver-delete", {
-		title: "Confirm Deletion",
+	res.render("admin_pages/delete-menu-item", {
+		title: "Delete Menu Item",
 		mealItem,
+		prevUrl,
 	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -81,34 +121,56 @@ router.get("/delete-menu-item/:id", async (req, res) => {
 
 //Get Single Drink
 
-app.get('/drinks/drink-item-view/:id', async(req, res) =>{
-    const id = req.params.id;
-    const results = await getSingleDrinks(id);
-    console.log('=====================================================');
-    console.log(results);
-    console.log('=====================================================');
-    res.render('/', {data: results, title: 'Drinks Detail'});
+router.get("/lunch-menu/view-drink-item/:id", async (req, res) => {
+	const id = req.params.id;
+	const [results] = await getSingleDrinks(id);
+	console.log("=====================================================");
+	console.log(results);
+	console.log("=====================================================");
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/view-single-drink-item", {
+		data: results,
+		title: "Drinks Detail",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Drink
 
 router.get("/create-drink-item", async (req, res) => {
-	res.render("admin_pages/drink-item", { title: "Create Drink Item" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/create-drink-item", {
+		title: "Create Drink Item",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
 router.get("/update-drink", async (req, res) => {
-    const mealItem = await getAllDrinks(req.params.id);
-	res.render("admin_pages/drink-update", { title: "Update Drink" });
+	const mealItem = await getAllDrinks(req.params.id);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
+	res.render("admin_pages/drink-update", {
+		title: "Update Drink",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
-router.get("/delete-drink-delete/:id", async (req, res) => {
-	res.render("admin_pages/drink-delete", { title: "Confirm Deletion", id });
+router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	const [drinkItemData] = await getSingleDrinks(req.params.id);
+	console.log(drinkItemData);
+	res.render("admin_pages/delete-drink-item", {
+		title: "Delete Drink Item",
+		drinkItemData,
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -118,13 +180,13 @@ router.get("/delete-drink-delete/:id", async (req, res) => {
 
 //Get Single User
 
-app.get('/users/user-person-view/:id', async(req, res) =>{
-    const id = req.params.id;
-    const results = await getSingleUser(id);
-    console.log('=====================================================');
-    console.log(results);
-    console.log('=====================================================');
-    res.render('/', {data: results, title: 'User Detail'});
+app.get("/users/user-person-view/:id", async (req, res) => {
+	const id = req.params.id;
+	const results = await getSingleUser(id);
+	console.log("=====================================================");
+	console.log(results);
+	console.log("=====================================================");
+	res.render("/", { data: results, title: "User Detail" });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -138,16 +200,15 @@ router.get("/create-user-person", async (req, res) => {
 // Update User
 
 router.get("/update-user", async (req, res) => {
-    const mealItem = await getAllUser(req.params.id);
+	const mealItem = await getAllUser(req.params.id);
 	res.render("admin_pages/user-update", { title: "Update User" });
-
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete User
 
 router.get("/delete-user-delete/:id", async (req, res) => {
-    const mealItem = await getAllUser(req.params.id);
+	const mealItem = await getAllUser(req.params.id);
 	res.render("admin_pages/user-delete", { title: "Confirm Deletion", id });
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -158,43 +219,22 @@ router.get("/delete-user-delete/:id", async (req, res) => {
 
 //Get Single Drink
 
-app.get('/schedules/schedule-item-view/:id', async(req, res) =>{
-    const id = req.params.id;
-    const results = await getSingleSchedule(id);
-    console.log('=====================================================');
-    console.log(results);
-    console.log('=====================================================');
-    res.render('/', {data: results, title: 'Schedule Detail'});
+app.get("/schedules/schedule-item-view/:id", async (req, res) => {
+	const id = req.params.id;
+	const results = await getSingleSchedule(id);
+	console.log("=====================================================");
+	console.log(results);
+	console.log("=====================================================");
+	res.render("/", { data: results, title: "Schedule Detail" });
 });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Create Meal Schedule
-router.get("/create-meal-schedule", async (req, res) => {
-    const mealItem = await getAllSchedule(req.params.id);
-	res.render("admin_pages/meal-schedule", { title: "Create meal schedule" });
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////   ============== DATABASE ACTIONS ==============   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -204,25 +244,31 @@ router.get("/create-meal-schedule", async (req, res) => {
 
 // Create Menu Post
 
-router.post('/create-menu-item', async (req, res) => {
-    const menuItemData = {
-        item_name: req.body.item_name,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : ''
-    };
+router.post("/create-menu-item/submit", upload.single("meal_img"), async (req, res) => {
+	const menuItemData = {
+		item_name: req.body.meal_name,
+		quantity: req.body.quantity,
+	};
 
-    if (req.files) {
-        req.files.image.mv('./uploads/' + menuItemData.img);
-    }
+	if (req.body.desc.length > 255) {
+		menuItemData.description = req.body.desc.slice(0, 255);
+	} else {
+		menuItemData.description = req.body.desc;
+	}
 
-    console.log(menuItemData);
-    await saveMenu(menuItemData);
-    res.redirect('/');
+	if (req.file) {
+		menuItemData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		menuItemData.img = "";
+	}
+
+	console.log(menuItemData);
+	await saveMenu(menuItemData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 
-router.get('/create-menu-item', async (req, res) => {
-    res.render('admin_pages/create-menu-item', { title: 'Create Menu Item' });
+router.get("/create-menu-item", async (req, res) => {
+	res.render("admin_pages/create-menu-item", { title: "Create Menu Item" });
 });
 
 // id, beverage, quantity, img, description
@@ -231,54 +277,57 @@ router.get('/create-menu-item', async (req, res) => {
 
 //Update Menu Post
 
-router.post('/update-menu', async (req, res) => {
-    const menuItemData = {
-        id: req.body.id,
-        item_name: req.body.item_name,
-        quantity: req.body.quantity,
-        description: req.body.description,
-    };
+router.post("/update-menu", async (req, res) => {
+	const menuItemData = {
+		id: req.body.id,
+		item_name: req.body.item_name,
+		quantity: req.body.quantity,
+		description: req.body.description,
+	};
 
-    menuItemData.img = req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : '';
+	menuItemData.img = req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "";
 
-    if (req.files) {
-        req.files.image.mv('./uploads/' + menuItemData.img);
-    }
+	if (req.files) {
+		req.files.image.mv("./uploads/" + menuItemData.img);
+	}
 
-    console.log(menuItemData);
-    await updateMenu(menuItemData);
-    res.redirect('/menu');
+	console.log(menuItemData);
+	await updateMenu(menuItemData);
+	res.redirect("/menu");
 });
 
-router.get('/update-menu', async (req, res) => {
-    res.render('admin_pages/menu-update', { title: 'Update Menu' });
+router.get("/update-menu", async (req, res) => {
+	res.render("admin_pages/menu-update", { title: "Update Menu" });
 });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Menu Post
 
-router.post('/delete-menu-item', async (req, res) => {
-    const menuItemId = req.body.id;
-
-    console.log("Deleting menu item with ID:", menuItemId);
-    await deleteMenu(menuItemId);
-    res.redirect('/');
+router.get("/delete-menu-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingledMenu(id);
+	if (record.img) {
+		findRemoveSync("./uploads", { files: record.img });
+	}
+	console.log("Deleting menu item with ID:", id);
+	console.log(record);
+	await deleteMenu(id);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Get a Single Menu Post 
+// Get a Single Menu Post
 
-router.post('/get-single-menu-item/:id', async (req, res) => {
-    const menuId = req.body.id;
+router.post("/get-single-menu-item/:id", async (req, res) => {
+	const menuId = req.body.id;
 
-    console.log("getting the menu", menuId);
-    const menuItem = await getSingledMenu(menuId);
-    console.log("getting  menu item:", menuItem);
-    res.redirect('/');
+	console.log("getting the menu", menuId);
+	const menuItem = await getSingledMenu(menuId);
+	console.log("getting  menu item:", menuItem);
+	res.redirect("/");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -288,69 +337,77 @@ router.post('/get-single-menu-item/:id', async (req, res) => {
 
 // Create Drinks Post
 
-router.post('/create-drink-item', async (req, res) => {
-    const drinkItemData = {
-        id: req.body.id,
-        beverage: req.body.beverage,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : ''
-       
-    };
+router.post("/create-drink-item/submit", upload.single("drink_img"), async (req, res) => {
+	const drinkItemData = {
+		beverage: req.body.drink_name,
+		quantity: req.body.quantity,
+	};
 
-    if (req.files) {
-        req.files.image.mv('./uploads/' + drinkItemData.img);
-    }
+	if (req.body.desc.length > 255) {
+		drinkItemData.description = req.body.desc.slice(0, 255);
+	} else {
+		drinkItemData.description = req.body.desc;
+	}
 
-    console.log(drinkItemData);
-    await saveDrinks(drinkItemData);
-    res.redirect('/');
+	if (req.file) {
+		drinkItemData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		drinkItemData.img = "";
+	}
+
+	console.log(drinkItemData);
+	await saveDrink(drinkItemData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drink Post
-router.post('/update-drink-item', async (req, res) => {
-    const drinkItemData = {
-        id: req.body.id,
-        beverage: req.body.beverage,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : ''
-    };
+router.post("/update-drink-item", async (req, res) => {
+	const drinkItemData = {
+		id: req.body.id,
+		beverage: req.body.beverage,
+		quantity: req.body.quantity,
+		description: req.body.description,
+		img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "",
+	};
 
-    if (req.files) {
-        req.files.image.mv('./uploads/' + drinkItemData.img);
-    }
- 
-    console.log(drinkItemData);
-    await updateDrinks(drinkItemData);
-    res.redirect('/');
+	if (req.files) {
+		req.files.image.mv("./uploads/" + drinkItemData.img);
+	}
+
+	console.log(drinkItemData);
+	await updateDrinks(drinkItemData);
+	res.redirect("/");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drinks Post
 
-router.post('/delete-drink-item', async (req, res) => {
-    const menuItemId = req.body.id;
+router.get("/delete-drink-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingleDrinks(id);
+	if (record.img) {
+		findRemoveSync("./uploads", { files: record.img });
+	}
 
-    console.log("Deleting drink item with ID:", menuItemId);
-    await deleteDrinks(menuItemId);
-    res.redirect('/');
+	console.log(record);
+	console.log("Deleting drink item with ID:", id);
+	await deleteDrinks(id);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Get a Single drink Post 
+// Get a Single drink Post
 
-router.post('/get-single-drink-item', async (req, res) => {
-    const menuId = req.body.id;
+router.post("/get-single-drink-item", async (req, res) => {
+	const menuId = req.body.id;
 
-    console.log("getting the drink", menuId);
-    const menuItem = await getSingleDrinks(menuId);
-    console.log("getting  menu item:", menuItem);
-    res.redirect('/');
+	console.log("getting the drink", menuId);
+	const menuItem = await getSingleDrinks(menuId);
+	console.log("getting  menu item:", menuItem);
+	res.redirect("/");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -374,78 +431,5 @@ router.post('/get-single-drink-item', async (req, res) => {
 // });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////   ============== Post For User ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Create User(Save) Post
-router.post('/create-user', async (req, res) => {
-    const userDataId = {
-        id: req.body.id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.description,
-        location: req.body.location,
-       phone_num: req.body.phone_num,
-        trn: req.body.trn,
-        roles: req.body.roles,
-        password: req.body.password
-    }
-
-    console.log(userDataId);
-    await saveUser(userDataId);
-    res.redirect('/');
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Update User Post
-router.post('/update-user', async (req, res) => {
-    const userDataId = {
-        id: req.body.id,
-        first_name: req.body.first_name,
-        last_name: req.body.last_name,
-        email: req.body.description,
-        location: req.body.location,
-       phone_num: req.body.phone_num,
-        trn: req.body.trn,
-        roles: req.body.roles,
-        password: req.body.password
-    }
- 
-    console.log(userDataId);
-    await updateUser(userDataId);
-    res.redirect('/');
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Delete User Post
-
-router.post('/delete-user', async (req, res) => {
-    const id = req.body.id;
-
-    console.log("Deleting user with ID:", userDataId);
-    await deleteUser(id);
-    res.redirect('/');
-});
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// Get a Single User Post 
-
-router.post('/get-single-user', async (req, res) => {
-    const userData = req.body.id;
-
-    console.log("getting the user", userDataId);
-    const userDataId = await getSingleUser(userDataId);
-    console.log("getting  user id:", userData);
-    res.redirect('/');
-});//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;
-
