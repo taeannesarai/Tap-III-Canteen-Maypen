@@ -22,7 +22,7 @@ app.use(morgan("dev"));
 
 //Route Middleware
 // route for login
-app.use("/tap-canteen/authentication", loginRoute);
+app.use("/tap-canteen/auth", loginRoute);
 
 // route for user
 app.use("/tap-canteen", userRoute);

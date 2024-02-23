@@ -8,7 +8,7 @@ const app = express();
 app.use(BodyParser.urlencoded({ extended: true }));
 
 // route for login
-router.get('/auth/login', async (req, res) => {
+router.get('/login', async (req, res) => {
     res.render('auth/login', { title: 'LOGIN' });
 });
 
