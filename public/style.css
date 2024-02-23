@@ -93,6 +93,7 @@ nav .login-icon:hover a {
     border-radius: 10px;
     background-color: #57759028;
     padding: 10px;
+    position: relative;
 }
 
 .page-heading {
@@ -134,8 +135,7 @@ nav .login-icon:hover a {
     font-weight: 300;
     margin-bottom: 5px;
 }
-.item-description {
-}
+
 .card-buttons {
     margin: 20px 0;
     display: flex;
@@ -167,8 +167,7 @@ nav .login-icon:hover a {
     background-color: #f00;
     color: #fff;
 }
-.user-buttons {
-}
+
 .item-card-select-meal {
     background-color: var(--medium-olive-green);
     color: #000000;
@@ -189,6 +188,7 @@ nav .login-icon:hover a {
 }
 
 .new-item:hover {
+    background-color: #57759056;
     transform: scale(.97);
 }
 
@@ -450,3 +450,14 @@ img{
     background: rgba(37, 156, 45, 0.937);
     color: #fff;
 } */
+
+.prev-page {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    text-decoration: none;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

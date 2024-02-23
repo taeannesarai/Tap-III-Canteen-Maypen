@@ -1,0 +1,26 @@
+<%- include('../partials/header') %>
+<section class="page-body">
+	<a href="<%= prevUrl %>" class="prev-page">Back</a>
+
+	<h1 class="page-heading">View Menu Item</h1>
+
+	<div class="card mx-auto" style="width: 40rem">
+		<img src="/uploads/<%= data.img %>" class="card-img-top" alt="<%= data.item_name %>_image" />
+		<div class="card-body">
+			<h5 class="card-title"><%= data.item_name %></h5>
+			<p class="card-text"><%= data.description %></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">Qty: <%= data.quantity %></li>
+			<!-- <li class="list-group-item">A second item</li>
+				<li class="list-group-item">A third item</li> -->
+		</ul>
+		<div class="card-body">
+			<div class="admin-buttons">
+				<a href="/tap-canteen/admin/update-menu-item/<%= data.id %>" class="btn btn-warning">Edit Item</a>
+				<a href="/tap-canteen/admin/lunch-menu/delete-menu-item/<%= data.id %>" class="btn btn-danger">Delete Item</a>
+			</div>
+		</div>
+	</div>
+</section>
+<%- include('../partials/footer') %>

@@ -37,9 +37,9 @@ export const saveMenu = async (sMen) => {
 	const result = await pool.query(
 		`
         INSERT INTO menu(item_name, quantity, description, img)
-         VALUES(?, ?, ?, ?, ?) 
+         VALUES(?, ?, ?, ?) 
     `,
-		[sMen.id, sMen.item_name, sMen.quantity, sMen.description, sMen.img]
+		[sMen.item_name, sMen.quantity, sMen.description, sMen.img]
 	);
 	return result;
 };
@@ -106,13 +106,13 @@ export const getAllDrinks = async () => {
 
 // Create Drinks
 
-export const saveDrinks = async (sDri) => {
+export const saveDrink = async (sDri) => {
 	const result = await pool.query(
 		`
         INSERT INTO drinks(beverage, quantity, img, description)
-         VALUES(?, ?, ?, ?, ?) 
+         VALUES(?, ?, ?, ?) 
     `,
-		[sDri.id, sDri.beverage, sDri.quantity, sDri.img, sDri.description]
+		[sDri.beverage, sDri.quantity, sDri.img, sDri.description]
 	);
 	return result;
 };

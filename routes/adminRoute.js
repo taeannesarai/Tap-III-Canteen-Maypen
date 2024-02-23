@@ -1,5 +1,20 @@
 import express, { Router } from "express";
 import fileUpload from "express-fileupload";
+import multer from "multer";
+import findRemoveSync from "find-remove";
+
+let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" }); // generate a random string of characters to attach to name of files
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "./uploads");
+	},
+	filename: function (req, file, cb) {
+		cb(null, `${ranVal}_${file.originalname}`);
+	},
+});
+
+const upload = multer({ storage });
 
 import {
 	getAllMenu,
@@ -8,7 +23,7 @@ import {
 	deleteMenu,
 	getSingledMenu,
 	getAllDrinks,
-	saveDrinks,
+	saveDrink,
 	updateDrinks,
 	deleteDrinks,
 	getSingleDrinks,
@@ -47,19 +62,28 @@ app.use(
 
 //Get Single Menu
 
-app.get("/menu/menu-item-view/:id", async (req, res) => {
+router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 	const id = req.params.id;
-	const results = await getSingledMenu(id);
+	const [results] = await getSingledMenu(id);
 	console.log("=====================================================");
 	console.log(results);
 	console.log("=====================================================");
-	res.render("/", { data: results, title: "Menu Detail" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	res.render("admin_pages/view-single-menu-item", {
+		title: "Menu Item Detail",
+		data: results,
+		prevUrl,
+	});
 });
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
 router.get("/create-menu-item", async (req, res) => {
-	res.render("admin_pages/create-menu-item", { title: "Create Menu Item" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	res.render("admin_pages/create-menu-item", {
+		title: "Create Menu Item",
+		prevUrl,
+	});
 });
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -67,20 +91,26 @@ router.get("/create-menu-item", async (req, res) => {
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
 	const mealItem = await getAllMenu(req.params.id);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
 	res.render("admin_pages/update-meal-item", {
 		title: "Update Menu",
 		mealItem,
+		prevUrl,
 	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Menu
-router.get("/delete-menu-item/:id", async (req, res) => {
-	const mealItem = await getSingledMenu(req.params.id);
+router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
+	const [mealItem] = await getSingledMenu(req.params.id);
+	console.log(mealItem);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
-	res.render("admin_pages/driver-delete", {
-		title: "Confirm Deletion",
+	res.render("admin_pages/delete-menu-item", {
+		title: "Delete Menu Item",
 		mealItem,
+		prevUrl,
 	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -91,33 +121,56 @@ router.get("/delete-menu-item/:id", async (req, res) => {
 
 //Get Single Drink
 
-app.get("/drinks/drink-item-view/:id", async (req, res) => {
+router.get("/lunch-menu/view-drink-item/:id", async (req, res) => {
 	const id = req.params.id;
-	const results = await getSingleDrinks(id);
+	const [results] = await getSingleDrinks(id);
 	console.log("=====================================================");
 	console.log(results);
 	console.log("=====================================================");
-	res.render("/", { data: results, title: "Drinks Detail" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/view-single-drink-item", {
+		data: results,
+		title: "Drinks Detail",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Drink
 
 router.get("/create-drink-item", async (req, res) => {
-	res.render("admin_pages/drink-item", { title: "Create Drink Item" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/create-drink-item", {
+		title: "Create Drink Item",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
 router.get("/update-drink", async (req, res) => {
 	const mealItem = await getAllDrinks(req.params.id);
-	res.render("admin_pages/drink-update", { title: "Update Drink" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/drink-update", {
+		title: "Update Drink",
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
-router.get("/delete-drink-delete/:id", async (req, res) => {
-	res.render("admin_pages/drink-delete", { title: "Confirm Deletion", id });
+router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	const [drinkItemData] = await getSingleDrinks(req.params.id);
+	console.log(drinkItemData);
+	res.render("admin_pages/delete-drink-item", {
+		title: "Delete Drink Item",
+		drinkItemData,
+		prevUrl,
+	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -174,13 +227,7 @@ app.get("/schedules/schedule-item-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Create Meal Schedule
-router.get("/create-meal-schedule", async (req, res) => {
-	const mealItem = await getAllSchedule(req.params.id);
-	res.render("admin_pages/meal-schedule", { title: "Create meal schedule" });
-});
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,26 +244,26 @@ router.get("/create-meal-schedule", async (req, res) => {
 
 // Create Menu Post
 
-router.post("/create-menu-item/submit", async (req, res) => {
+router.post("/create-menu-item/submit", upload.single("meal_img"), async (req, res) => {
 	const menuItemData = {
 		item_name: req.body.meal_name,
 		quantity: req.body.quantity,
-		description: req.body.desc,
 	};
 
-    if (req.files) {
-        console.log(req.files);
-		let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" });
-		menuItemData.img = `${ranVal}_${req.files.meal_img.name}`;
-		req.files.meal_img.mv("./uploads/" + menuItemData.img);
+	if (req.body.desc.length > 255) {
+		menuItemData.description = req.body.desc.slice(0, 255);
 	} else {
-        menuItemData.img = "";
-    }
-    
-    // console.log(req.body);
+		menuItemData.description = req.body.desc;
+	}
+
+	if (req.file) {
+		menuItemData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		menuItemData.img = "";
+	}
 
 	console.log(menuItemData);
-	// await saveMenu(menuItemData);
+	await saveMenu(menuItemData);
 	res.redirect("/tap-canteen/lunch-menu");
 });
 
@@ -257,12 +304,16 @@ router.get("/update-menu", async (req, res) => {
 
 //Delete Menu Post
 
-router.post("/delete-menu-item", async (req, res) => {
-	const menuItemId = req.body.id;
-
-	console.log("Deleting menu item with ID:", menuItemId);
-	await deleteMenu(menuItemId);
-	res.redirect("/");
+router.get("/delete-menu-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingledMenu(id);
+	if (record.img) {
+		findRemoveSync("./uploads", { files: record.img });
+	}
+	console.log("Deleting menu item with ID:", id);
+	console.log(record);
+	await deleteMenu(id);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -286,22 +337,27 @@ router.post("/get-single-menu-item/:id", async (req, res) => {
 
 // Create Drinks Post
 
-router.post("/create-drink-item", async (req, res) => {
+router.post("/create-drink-item/submit", upload.single("drink_img"), async (req, res) => {
 	const drinkItemData = {
-		id: req.body.id,
-		beverage: req.body.beverage,
+		beverage: req.body.drink_name,
 		quantity: req.body.quantity,
-		description: req.body.description,
-		img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "",
 	};
 
-	if (req.files) {
-		req.files.image.mv("./uploads/" + drinkItemData.img);
+	if (req.body.desc.length > 255) {
+		drinkItemData.description = req.body.desc.slice(0, 255);
+	} else {
+		drinkItemData.description = req.body.desc;
+	}
+
+	if (req.file) {
+		drinkItemData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		drinkItemData.img = "";
 	}
 
 	console.log(drinkItemData);
-	await saveDrinks(drinkItemData);
-	res.redirect("/");
+	await saveDrink(drinkItemData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -327,12 +383,17 @@ router.post("/update-drink-item", async (req, res) => {
 
 //Delete Drinks Post
 
-router.post("/delete-drink-item", async (req, res) => {
-	const menuItemId = req.body.id;
+router.get("/delete-drink-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingleDrinks(id);
+	if (record.img) {
+		findRemoveSync("./uploads", { files: record.img });
+	}
 
-	console.log("Deleting drink item with ID:", menuItemId);
-	await deleteDrinks(menuItemId);
-	res.redirect("/");
+	console.log(record);
+	console.log("Deleting drink item with ID:", id);
+	await deleteDrinks(id);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -372,4 +433,3 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;
-
