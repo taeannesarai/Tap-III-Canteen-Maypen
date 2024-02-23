@@ -80,5 +80,6 @@ router.post('/auth', async(req,res)=>{
 );
 
 
+
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const loginRoute = router;
