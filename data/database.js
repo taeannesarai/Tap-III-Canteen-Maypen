@@ -22,7 +22,7 @@ const pool = mysql
 
 // Get All Menu
 
-export const getAllmenu = async () => {
+export const getAllMenu = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM menu 
@@ -94,7 +94,7 @@ export const getSingledMenu = async (aID) => {
 
 // Get All Drinks 
 
-export const getAlldrinks = async () => {
+export const getAllDrinks = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM drinks
@@ -147,7 +147,7 @@ export const deleteDrinks = async (dDri) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Get Single Drink
 
-export const getSingleDrink = async (aID) => {
+export const getSingleDrinks = async (aID) => {
 	const result = await pool.query(
 		`
         SELECT * FROM drinks WHERE id = ?
@@ -165,12 +165,12 @@ export const getSingleDrink = async (aID) => {
 
 // Get All Users
 
-export const getAllUser = async (uSe) => {
+export const getAllUser = async () => {
     const [result] = await pool.query(
         `
       SELECT * FROM user
       `);
-      const rows = result[uSe];
+      const rows = result;
       return rows; 
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -294,17 +294,35 @@ export const isLoginCorrect = async (user, pass)=>{
 
 // Get All schedule
 
-export const getAllSchedule = async (sSch) => {
+export const getAllSchedule = async () => {
 	const result = await pool.query(
 		`SELECT
-        id,
-        user_id,
-        menu_id,
-        drink_id,
-        date
+        ms.id AS schedule_id,
+        ms.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.location,
+        u.phone_num,
+        ms.menu_id,
+        m.item_name AS menu_item,
+        m.quantity AS menu_quantity,
+        m.description AS menu_description,
+        m.img AS menu_image,
+        ms.drink_id,
+        d.beverage AS drink_name,
+        d.quantity AS drink_quantity,
+        d.description AS drink_description,
+        d.img AS drink_image,
+        ms.date
     FROM
-        meals_schedule;`,
-		[sSch.id, sSch.item_name, sSch.quantity, sSch.description, sSch.img, sSch.date]
+        meals_schedule AS ms
+    JOIN
+        menu AS m ON ms.menu_id = m.id
+    JOIN
+        drinks AS d ON ms.drink_id = d.id
+    JOIN
+        users AS u ON ms.user_id = u.id;`
 	);
 	return result;
 };
@@ -354,16 +372,16 @@ export const getAllSchedule = async (sSch) => {
 
 //Get Single Schedule
 
-// export const getSingleSchedule = async (gSs) => {
-// 	const result = await pool.query(
-// 		`
-//         SELECT * FROM meals_schedule WHERE id = ?
-//     `,
-// 		[gSs]
-// 	);
-// 	const rows = result[0];
-// 	return rows;
-// };
+export const getSingleSchedule = async (gSs) => {
+	const result = await pool.query(
+		`
+        SELECT * FROM meals_schedule WHERE id = ?
+    `,
+		[gSs]
+	);
+	const rows = result[0];
+	return rows;
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
