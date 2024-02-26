@@ -297,7 +297,6 @@ footer .footer-grid .input-container:last-of-type() {
 }
 
 .wrap {
-    background-color: #fff;
     width: 40%;
     padding: 0;
     display: grid;
@@ -312,7 +311,6 @@ footer .footer-grid .input-container:last-of-type() {
     align-self: flex-end;
     padding: 45px;
     text-align: justify;
-    background-color: #fff;
 }
 /* =================================== CONTACT PAGE STYLES =================================== */
 

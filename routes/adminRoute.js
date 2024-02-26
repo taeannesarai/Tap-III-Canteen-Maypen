@@ -60,7 +60,7 @@ app.use(
 
 // ===============================================================================================================================================================================================
 
-//Get Single Menu
+//Get Single Menu Item
 
 router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 	const id = req.params.id;
@@ -90,15 +90,16 @@ router.get("/create-menu-item", async (req, res) => {
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
-	const mealItem = await getAllMenu(req.params.id);
+	const [mealData] = await getSingledMenu(req.params.id);
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
 	res.render("admin_pages/update-meal-item", {
 		title: "Update Menu",
-		mealItem,
+		mealData,
 		prevUrl,
 	});
 });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Menu
@@ -157,6 +158,7 @@ router.get("/update-drink", async (req, res) => {
 	res.render("admin_pages/drink-update", {
 		title: "Update Drink",
 		prevUrl,
+		mealItem,
 	});
 });
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -275,28 +277,40 @@ router.get("/create-menu-item", async (req, res) => {
 
 //Update Menu Post
 
-router.post("/update-menu", async (req, res) => {
-	const menuItemData = {
+router.post("/update-menu-item-submit",upload.single("meal_img"), async (req, res) => {
+	const mealData = {
 		id: req.body.id,
-		item_name: req.body.item_name,
+		item_name: req.body.meal_name,
 		quantity: req.body.quantity,
-		description: req.body.description,
+		description: req.body.desc,
 	};
-
-	menuItemData.img = req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "";
-
-	if (req.files) {
-		req.files.image.mv("./uploads/" + menuItemData.img);
+ 
+	
+	if (req.body.desc.length > 255) {
+		mealData.description = req.body.desc.slice(0, 255);
+	} else {
+		mealData.description = req.body.desc;
 	}
 
-	console.log(menuItemData);
-	await updateMenu(menuItemData);
-	res.redirect("/menu");
+	if (req.file) {
+		mealData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		mealData.img = "";
+	}
+
+
+
+	console.log(mealData);
+	await updateMenu(mealData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 
-router.get("/update-menu", async (req, res) => {
-	res.render("admin_pages/menu-update", { title: "Update Menu" });
-});
+
+// router.get("/update-menu/:id", async (req, res) => {
+// 	const id = req.params.id;
+// 	const [mealData] = await getSingledMenu(id); 
+// 	res.render("admin_pages/menu-update",mealData,{ title: "Update Menu" });
+// });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

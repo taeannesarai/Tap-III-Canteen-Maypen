@@ -1,35 +1,44 @@
 <%- include('../partials/header') %>
 <section class="page-body">
-	<h1 class="page-heading">Menu</h1>
-	<div class="menu-card-container">
-		<% for( let i = 0; i < mealData.length; i++ ) { %>
-		<div class="card" style="width: 18rem">
-			<img src="<%= mealData[i].img %>" class="card-img-top" alt="<%= mealData[i].item_name %>_image" />
-			<div class="card-body">
-				<h5 class="card-title"><%= mealData[i].item_name %></h5>
-				<p class="card-text"><%= mealData[i].description %></p>
+	<a href="<%= prevUrl %>" class="prev-page">Back</a>
+
+	<h1 class="page-heading">Update Menu Item</h1>
+
+	<form action="/tap-canteen/admin/update-menu-item-submit" method="POST" enctype="multipart/form-data">
+		<input type="number" name="id" value="<%= mealData.id %>" hidden class="form-control" />
+
+		<div class="card mx-auto" style="width: 30rem">
+			<img src="/uploads/<%= mealData.img %>" class="card-img-top" alt="<%= mealData.item_name %>_image" />
 			</div>
-			<ul class="list-group list-group-flush">
-				<li class="list-group-item">Qty: <%= mealData[i].quantity %></li>
-				<!-- <li class="list-group-item">A second item</li>
-				<li class="list-group-item">A third item</li> -->
-			</ul>
-			<div class="card-body">
-				<div class="admin-buttons">
-					<a href="/tap-canteen/admin/view-menu-item/<%=  %>" class="btn item-card-view">View Item</a>
-					<a href="/tap-canteen/admin/update-menu-item/<%=  %>" class="btn item-card-edit">Edit Item</a>
-					<a href="/tap-canteen/admin/delete-menu-item/<%=  %>" class="btn item-card-delete">Delete Item</a>
-				</div>
-				<div class="user-buttons">
-					<a href="#" class="btn item-card-select-meal">Select Meal</a>
-				</div>
+	<div class="row mb-3">		
+			<div class="col-4">
+				<label class="form-label" for="meal_name">Meal Name</label>
+				<input type="text" name="meal_name" value="<%= mealData.item_name %>" class="form-control" />
+				<label class="form-label" for="quantity">Quantity</label>
+				<input type="number" name="quantity"  value="<%= mealData.quantity %>" class="form-control" />
+			</div>
+
+		
+			<div class="col">
+				<label class="form-label" for="desc">Description</label>
+				<textarea name="desc" cols="20" rows="5" class="form-control" maxlength="255"><%= mealData.description %></textarea>
+			</div>
+			
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="meal_img">Change Meal Image</label>
+				<input type="file" name="meal_img" class="form-control" id="formFile" />
 			</div>
 		</div>
-		<% } %>
+		</div>
 
-		<a href="/tap-canteen/admin/create-menu-item" class="new-item card">
-			<i class="fi fi-sr-add"></i>
-		</a>
-	</div>
+		<div class="card-body">
+			<div class="admin-buttons">
+				<input type="submit" value="Save Changes" class="btn btn-primary"/>
+				<a href="/tap-canteen/admin/lunch-menu/delete-menu-item/<%= mealData.id %>" class="btn btn-danger">Delete Item</a>
+			</div>
+		</div>
+	</form>
 </section>
-<%- include('./partials/footer') %>
+<%- include('../partials/footer') %>
