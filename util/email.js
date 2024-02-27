@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 
 const ___dirname = dirname(fileURLToPath(import.meta.url));
 
-export class Email {
+export class Email{
     #templateURL = path.join(___dirname, '../views/emails/');
 
     constructor(user) {

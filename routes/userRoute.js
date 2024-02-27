@@ -2,6 +2,8 @@ import express, { Router } from "express";
 import BodyParser from "body-parser";
 // <<<<<<< HEAD
 import { getAllMenu, getAllDrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
+import { emit } from "nodemon";
+import { Email } from "../util/email.js";
 
 const router = express.Router();
 const app = express();
@@ -71,11 +73,11 @@ router.post("/new-user", async (req, res) => {
 		const uId = result[0].insertId;
 		const data = await getSingleUser(uId);
 
-		const email = new Email(data[0]);
+		const email = new Email (data[0]);
 		await email.sendMail("signup_email", "New User", data[0]);
 	}
 
-	res.redirect("/all-users");
+	res.redirect("/");
 });
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
