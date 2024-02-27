@@ -151,16 +151,19 @@ router.get("/create-drink-item", async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
-router.get("/update-drink", async (req, res) => {
-	const mealItem = await getAllDrinks(req.params.id);
+router.get("/update-drink-item/:id", async (req, res) => {
+	const [drinkItemData] = await getSingleDrinks(req.params.id);
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
-	res.render("admin_pages/drink-update", {
+	res.render("admin_pages/update-drink-item", {
 		title: "Update Drink",
 		prevUrl,
-		mealItem,
+		drinkItemData,
 	});
 });
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
@@ -299,7 +302,6 @@ router.post("/update-menu-item-submit",upload.single("meal_img"), async (req, re
 	}
 
 
-
 	console.log(mealData);
 	await updateMenu(mealData);
 	res.redirect("/tap-canteen/lunch-menu");
@@ -374,23 +376,37 @@ router.post("/create-drink-item/submit", upload.single("drink_img"), async (req,
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drink Post
-router.post("/update-drink-item", async (req, res) => {
-	const drinkItemData = {
-		id: req.body.id,
-		beverage: req.body.beverage,
-		quantity: req.body.quantity,
-		description: req.body.description,
-		img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "",
-	};
+router.post("/update-drink-item-submit", upload.single("img"), async (req, res) => {
+    const drinkItemData = {
+        id: req.body.id,
+        beverage: req.body.beverage,
+        quantity: req.body.quantity,
+        description: req.body.description,
+    };
 
-	if (req.files) {
-		req.files.image.mv("./uploads/" + drinkItemData.img);
-	}
+    // Check if description is provided and not null before updating
+    if (req.body.description && req.body.description.length > 255) {
+        drinkItemData.description = req.body.description.slice(0, 255);
+    }
 
-	console.log(drinkItemData);
-	await updateDrinks(drinkItemData);
-	res.redirect("/");
+    // Check if there's a file attached to the request
+    if (req.file) {
+        drinkItemData.img = `${ranVal}_${req.file.originalname}`;
+    } else {
+        // No new image uploaded, retain the old image
+        const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
+        drinkItemData.img = oldDrinkItem.img;
+    }
+
+    console.log(drinkItemData);
+
+    // Update only the fields that are provided in the request
+    await updateDrinks(drinkItemData);
+
+    res.redirect("/tap-canteen/lunch-menu");
 });
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drinks Post

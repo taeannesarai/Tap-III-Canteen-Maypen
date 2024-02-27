@@ -1,0 +1,44 @@
+<%- include('../partials/header') %>
+<section class="page-body">
+	<a href="<%= prevUrl %>" class="prev-page">Back</a>
+
+	<h1 class="page-heading">Update Drink Item</h1>
+
+	<form action="/tap-canteen/admin/update-drink-item-submit" method="POST" enctype="multipart/form-data">
+		<input type="number" name="id" value="<%= drinkItemData.id %>" hidden class="form-control" />
+
+		<div class="card mx-auto" style="width: 30rem">
+			<img src="/uploads/<%= drinkItemData.img %>" class="card-img-top" alt="<%= drinkItemData.item_name %>_image" />
+			</div>
+	<div class="row mb-3">		
+			<div class="col-4">
+				<label class="form-label" for="beverage">Drink Name</label>
+				<input type="text" name="beverage" value="<%= drinkItemData.beverage %>" class="form-control" />
+				<label class="form-label" for="quantity">Quantity</label>
+				<input type="number" name="quantity"  value="<%= drinkItemData.quantity %>" class="form-control" />
+			</div>
+
+		
+			<div class="col">
+				<label class="form-label" for="description">Description</label>
+				<textarea name="description" cols="20" rows="5" class="form-control" maxlength="255"><%= drinkItemData.description %></textarea>
+			</div>
+			
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<label class="form-label" for="img">Change Drink Image</label>
+				<input type="file" name="img" class="form-control" id="formFile" />
+			</div>
+		</div>
+		</div>
+
+		<div class="card-body">
+			<div class="admin-buttons">
+				<input type="submit" value="Save Changes" class="btn btn-primary"/>
+				<a href="/tap-canteen/admin/lunch-menu/delete-menu-item/<%= drinkItemData.id %>" class="btn btn-danger">Delete Item</a>
+			</div>
+		</div>
+	</form>
+</section>
+<%- include('../partials/footer') %>
