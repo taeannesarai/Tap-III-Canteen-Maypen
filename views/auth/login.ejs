@@ -1,52 +1,39 @@
 <%- include('../partials/header'); %>
-<div class="wrapper">
-    <div class="container main">
-        <div class="row">
-            <div class="col-md-6 side-image">
+ 
+<div class="home-header">
+    Our Star Meals
+</div>
 
-                <!-------------     logo image     ------------->
+<!-- login form -->
+<div class="page-body">
+    <h3>Sign In</h3>
+    <div class="form-container">
+        <div class="col-xl-4 d-none d-xl-block">
+            <img src="/public/Login.png" class="img-fluid" alt="Sample image">
+        </div>
 
-                <!-- <img src="/public/Student-registration-form.jpg" alt="">
-                    <div class="text">
-                    </div> -->
-
-            </div>
-            <div class="col-md-6 right">
-                <div class="input-box">
-
-                    <header>LOGIN </header>
-                    <hr>
-
-                    <form>
-                        <div class="form-group">
-                            <label for="userName" class="form-label"></label>
-                            <input type="text" id="userName" name="userName" placeholder="Enter Username" required
-                                class="form-control" />
-                        </div>
-                        <br>
-
-                        <div class="form-group">
-                            <label for="password" class="form-label"></label>
-                            <input type="text" id="password" name="password" placeholder="Password" required
-                                class="form-control" />
-                        </div>
-
-
-                        <div class="signin">
-                            <input type="submit" class="submit" value="LOGIN">
-
-                        </div>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-5 m-3">
+                    <label for="userName" class="form-label">User Name</label>
+                    <input type="text" id="userName" name="userName" required class="form-control" />
                 </div>
-                </form>
-
-
             </div>
+
+            <div class="row">
+                <div class="col-5 m-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="text" id="password" name="password" required class="form-control" />
+                </div>
+            </div>
+
+
+            <button type="button" class="btn btn-primary btn-block mb-6 m-3">LOGIN</button>
+
+
         </div>
     </div>
 </div>
-</div>
-
 
 
 

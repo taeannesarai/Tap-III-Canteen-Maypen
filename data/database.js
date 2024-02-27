@@ -123,7 +123,7 @@ export const saveDrink = async (sDri) => {
 export const updateDrinks = async (uDri) => {
 	const result = await pool.query(
 		`
-        UPDATE drinks SET beverage = ?, quantity = ?,  img = ?, description  = ?,
+        UPDATE drinks SET beverage = ?, quantity = ?,  img = ?, description  = ?
         WHERE id = ?
     `,
 		[uDri.beverage, uDri.quantity, uDri.img, uDri.description, uDri.id]

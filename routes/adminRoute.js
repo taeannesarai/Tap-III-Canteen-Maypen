@@ -60,7 +60,7 @@ app.use(
 
 // ===============================================================================================================================================================================================
 
-//Get Single Menu
+//Get Single Menu Item
 
 router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 	const id = req.params.id;
@@ -90,15 +90,16 @@ router.get("/create-menu-item", async (req, res) => {
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
-	const mealItem = await getAllMenu(req.params.id);
+	const [mealData] = await getSingledMenu(req.params.id);
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
 	res.render("admin_pages/update-meal-item", {
 		title: "Update Menu",
-		mealItem,
+		mealData,
 		prevUrl,
 	});
 });
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Menu
@@ -150,15 +151,19 @@ router.get("/create-drink-item", async (req, res) => {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
-router.get("/update-drink", async (req, res) => {
-	const mealItem = await getAllDrinks(req.params.id);
+router.get("/update-drink-item/:id", async (req, res) => {
+	const [drinkItemData] = await getSingleDrinks(req.params.id);
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
-	res.render("admin_pages/drink-update", {
+	res.render("admin_pages/update-drink-item", {
 		title: "Update Drink",
 		prevUrl,
+		drinkItemData,
 	});
 });
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drink
@@ -275,28 +280,39 @@ router.get("/create-menu-item", async (req, res) => {
 
 //Update Menu Post
 
-router.post("/update-menu", async (req, res) => {
-	const menuItemData = {
+router.post("/update-menu-item-submit",upload.single("meal_img"), async (req, res) => {
+	const mealData = {
 		id: req.body.id,
-		item_name: req.body.item_name,
+		item_name: req.body.meal_name,
 		quantity: req.body.quantity,
-		description: req.body.description,
+		description: req.body.desc,
 	};
-
-	menuItemData.img = req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "";
-
-	if (req.files) {
-		req.files.image.mv("./uploads/" + menuItemData.img);
+ 
+	
+	if (req.body.desc.length > 255) {
+		mealData.description = req.body.desc.slice(0, 255);
+	} else {
+		mealData.description = req.body.desc;
 	}
 
-	console.log(menuItemData);
-	await updateMenu(menuItemData);
-	res.redirect("/menu");
+	if (req.file) {
+		mealData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		mealData.img = "";
+	}
+
+
+	console.log(mealData);
+	await updateMenu(mealData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
 
-router.get("/update-menu", async (req, res) => {
-	res.render("admin_pages/menu-update", { title: "Update Menu" });
-});
+
+// router.get("/update-menu/:id", async (req, res) => {
+// 	const id = req.params.id;
+// 	const [mealData] = await getSingledMenu(id); 
+// 	res.render("admin_pages/menu-update",mealData,{ title: "Update Menu" });
+// });
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -360,23 +376,37 @@ router.post("/create-drink-item/submit", upload.single("drink_img"), async (req,
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drink Post
-router.post("/update-drink-item", async (req, res) => {
-	const drinkItemData = {
-		id: req.body.id,
-		beverage: req.body.beverage,
-		quantity: req.body.quantity,
-		description: req.body.description,
-		img: req.files ? `${getRandomHexValues(8)}_${req.files.image.name}` : "",
-	};
+router.post("/update-drink-item-submit", upload.single("img"), async (req, res) => {
+    const drinkItemData = {
+        id: req.body.id,
+        beverage: req.body.beverage,
+        quantity: req.body.quantity,
+        description: req.body.description,
+    };
 
-	if (req.files) {
-		req.files.image.mv("./uploads/" + drinkItemData.img);
-	}
+    // Check if description is provided and not null before updating
+    if (req.body.description && req.body.description.length > 255) {
+        drinkItemData.description = req.body.description.slice(0, 255);
+    }
 
-	console.log(drinkItemData);
-	await updateDrinks(drinkItemData);
-	res.redirect("/");
+    // Check if there's a file attached to the request
+    if (req.file) {
+        drinkItemData.img = `${ranVal}_${req.file.originalname}`;
+    } else {
+        // No new image uploaded, retain the old image
+        const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
+        drinkItemData.img = oldDrinkItem.img;
+    }
+
+    console.log(drinkItemData);
+
+    // Update only the fields that are provided in the request
+    await updateDrinks(drinkItemData);
+
+    res.redirect("/tap-canteen/lunch-menu");
 });
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drinks Post
