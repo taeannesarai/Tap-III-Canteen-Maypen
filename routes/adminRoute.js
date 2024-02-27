@@ -30,7 +30,6 @@ import {
 	getAllSchedule,
 	getSingleSchedule,
 	getAllUser,
-	saveUser,
 	updateUser,
 	deleteUser,
 	getSingleUser,
