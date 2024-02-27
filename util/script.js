@@ -21,3 +21,16 @@ window.onscroll = () => {
 function toTop() {
 	scrollTo(0, 0);
 }
+
+// CHECK IF USER PASWORD ENTIES ARE THE SAME
+let userPW = document.querySelector("user-pw");
+let userPWConfirm = document.querySelector("user-pw-confirm");
+let signupBtn = document.querySelector("signup-submit-btn");
+
+userPWConfirm.addEventListener('keyup', () => {
+	if (userPWConfirm.value > 0 && userPW.value == userPWConfirm.value) {
+		signupBtn.setAttribute(disabled, false);
+	} else {
+		signupBtn.setAttribute(disabled, true);
+	}
+})

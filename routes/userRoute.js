@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import BodyParser from "body-parser";
 // <<<<<<< HEAD
 import { getAllMenu, getAllDrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
-import { emit } from "nodemon";
+
 import { Email } from "../util/email.js";
 
 const router = express.Router();
