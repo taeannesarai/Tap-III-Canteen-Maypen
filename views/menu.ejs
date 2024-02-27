@@ -1,7 +1,7 @@
 <%- include('./partials/header') %>
 <section class="page-body">
 	<h1 class="page-heading">Menu</h1>
-	<div class="menu-card-container mb-3">
+	<div class="menu-card-container mb-4">
 		<% for( let i = 0; i < mealData.length; i++ ) { %>
 		<div class="card" style="width: 24rem">
 			<img src="../uploads/<%= mealData[i].img %>" class="card-img-top" alt="<%= mealData[i].item_name %>_image" />
@@ -31,7 +31,7 @@
 			<i class="fi fi-sr-add"></i>
 		</a>
 	</div>
-
+	
 	<h1 class="page-heading">Drinks</h1>
 	<div class="menu-card-container">
 		<% for( let i = 0; i < drinkData.length; i++ ) { %>
