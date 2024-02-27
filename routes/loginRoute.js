@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-import { } from "../data/database.js";
+import { createUserAcc } from "../data/database.js";
 import session from "express-session";
 
 const router = express.Router();
@@ -13,8 +13,14 @@ router.get('/login', async (req, res) => {
     res.render('auth/login', { title: 'LOGIN' });
 });
 
+// route for signup
+router.get('/signup', async (req, res) => {
+    
+    res.render('auth/signup', { title: 'SIGNUP' });
+});
+
 //LOGOUT
-app.get('/auth/logout', async (req, res) => {
+app.get('/logout', async (req, res) => {
     req.session.destroy();
     res.redirect('/')
 });
@@ -47,10 +53,30 @@ router.get('/', async(req, res )=>{
 
 
 // not sure if you need the line below 
-let loggedIn = false;         
+let loggedIn = false;    
+
+// SIGNUP USER FORM SUBMIT
+router.post('/signup/sumbit', async (req, res) => {
+    const newUser = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        location: req.body.location,
+        phone_num: req.body.phone_num,
+        trn: req.body.trn,
+        roles: 'USER',
+    } 
+    console.log(newUser);
+
+    // To encrypt
+    // password: req.body.password,
+        
+    // const createUser = await createUserAcc(newUser);
+    res.redirect('/tap-canteen')
+})
 
 
-router.post('/auth', async(req,res)=>{
+router.post('/', async(req,res)=>{
     const pass = req.body.password
     const username = req.body.username;
     const user = await isLoginCorrect(username, pass);

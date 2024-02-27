@@ -1,6 +1,6 @@
 import mysql from "mysql2";
 import dotenv from "dotenv";
-//  import {encryptPW , decryptPW} from "../util/auth.js";
+ import {encryptPW , decryptPW} from "../util/auth.js"; 
 
 dotenv.config({ path: "./config.env" });
 
@@ -177,13 +177,13 @@ export const getAllUser = async () => {
 
 // Create User
 
-export const saveUser = async (sUse) => {
+export const createUserAcc = async (sUse) => {
 	const result = await pool.query(
 		`
-        INSERT INTO user(first_name, last_name, email, location, phone_num, trn, roles, password)
-         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?) 
+        INSERT INTO users(first_name, last_name, email, location, phone_num, trn, roles, password)
+         VALUES(?, ?, ?, ?, ?, ?, ?, ?) 
     `,
-		[sUse.id, sUse.first_name, sUse.last_name, sUse.email, sUse.location, sUse.phone_num, sUse.trn, sUse.roles, sUse.password]
+		[sUse.first_name, sUse.last_name, sUse.email, sUse.location, sUse.phone_num, sUse.trn, sUse.roles, sUse.password]
 	);
 	return result;
 };
