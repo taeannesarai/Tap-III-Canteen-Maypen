@@ -1,6 +1,6 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-import {  } from "../data/database.js";
+import { doesAdminExist } from "../data/database.js";
 
 const router = express.Router();
 const app = express();

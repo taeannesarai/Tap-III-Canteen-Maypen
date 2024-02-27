@@ -9,66 +9,57 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD
 
 <%- include('_style') -%>
 
-    <title>
-        <%= locals.subject ? subject : 'Meal Confirmation for TAP III Canteen System' %>
-    </title>
+<title>
+<%= locals.subject ? subject : 'Meal Confirmation for TAP III Canteen System' %>
+</title>
 </head>
 
 <body>
 
 <center class="wrapper">
-    <table class="main">
-        <tr>
-            <!-- padding cell space -->
-            <td class="padding"></td>
-            <td>
+<table class="main">
+<tr>
+    <!-- padding cell space -->
+    <td class="padding"></td>
+    <td>
 
-                <table width="100%">
-                    <tr>
-                        <!-- background color -->
-                        <table style="background-color: #fff;">
-                            <%- include('email_header') %>
-                                <tr>
-                                    <td style="line-height: 1.5;">
-                                        <h2> Dear <%= user_f_name %>
-                                        </h2>
-                                        <p>
-                                            Thank you for registering with the TAP III Canteen System! We are
-                                            excited to have you join us in selecting your meal
-                                            options for the upcoming weeks. With your registration complete, you now
-                                            have access to the system using your TRN (Trainee Registration Number)
-                                            as your
-                                            username. Please log in to the system using your TRN and the password
-                                            you provided during registration to begin
-                                            selecting your meal options for each day.
-                                        </p>
-                                        <p>
-                                            Your registration details have been successfully received, and you are
-                                            now a member of our system. Here are your
-                                            registration details:
-                                        </p>
-                                        <% var reservedDate=new
-                                            Date(date).toLocaleDateString('en-US',{month: 'short' , day:'numeric',
-                                            year:'numeric', timeZone: 'UTC' }); %>
+        <table width="100%">
+            <tr>
+                <!-- background color -->
+                <table style="background-color: #fff;">
+                    <%- include('email_header') %>
+                        <tr>
+                            <td style="line-height: 1.5;">
+                                <h2> Dear <%= user_f_name %>
+                                </h2>
+                                <p>
+                                This is to confirm that your meal selection for the TAP III Lunch System has been successfully received. Thank you for
+                                choosing your meals for the upcoming days.
+                                
+                                Here are the details of your meal selection:
+                                </p>
+                                
+                                    <p>
+                                        Meal: <%= user_meal %><br>
+                                        Description : <%= user_description %> 
+                                    </p>
+                                    <p>
+                                        Your choices have been recorded, and our canteen staff will ensure that your selected meal is prepared and available
+                                        for
+                                        you on the specified date.
+                                    </p>
+                                    <br><br>
+                                    <%- include('_endnote') %>
+                            </td>
+                        </tr>
+                </table>
+    </td>
+    <!-- cell for padding -->
+    <td class="padding"></td>
 
-                                            <p>
-                                                Name: <%= user_f_name %>
-                                                    <%= user_l_name %> <br>
-                                                        TRN: <%= user_trn %> <br>
-                                                Location: <%= user_location %>
-                                            </p>
-                                            <br><br>
-                                            <%- include('_endnote') %>
-                                    </td>
-                                </tr>
-                        </table>
-            </td>
-            <!-- cell for padding -->
-            <td class="padding"></td>
+</tr>
 
-        </tr>
-
-    </table>
+</table>
 </center>
 
 </body>
