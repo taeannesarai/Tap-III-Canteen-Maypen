@@ -220,14 +220,14 @@ export const deleteUser = async (dUse) => {
 //Get Single User
 
 export const getSingleUser = async (aID) => {
-	const result = await pool.query(
+	const [result] = await pool.query(
 		`
-        SELECT * FROM user WHERE id = ?
+        SELECT * FROM users
+		WHERE email = ?
     `,
 		[aID]
 	);
-	const rows = result[0];
-	return rows;
+	return result[0];
 };
 
 
