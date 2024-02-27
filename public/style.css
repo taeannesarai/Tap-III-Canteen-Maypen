@@ -34,10 +34,11 @@ nav {
 
 nav .logo img {
 	width: 100px;
+	transition: all ease-in-out .3s;
 }
 
 .logoStyle {
-	width: 50px;
+	transform: scale(.45);
 }
 
 nav .logo img:hover {
@@ -257,13 +258,28 @@ footer .footer-grid form .send-a-message {
 	border-radius: 5px;
 }
 
-footer .footer-grid .input-container {
-	/* margin-bottom: 10px; */
-}
-
 footer .footer-grid .input-container:last-of-type() {
 	margin-bottom: none;
 }
+
+.to-top-btn {
+	/* display: none; */
+	font-size: 20px;
+	position: fixed;
+	bottom: 1rem;
+	left: 95%;
+	transform: scale(0);
+	transition: all ease-in-out .3s;
+	border: none;
+	background: none;
+	color: #85b3dc;
+}
+
+.not-at-top {
+	transform: scale(2.5);
+	/* display: block; */
+}
+
 /* =================================== ABOUT PAGE STYLES =================================== */
 
 .contain {
