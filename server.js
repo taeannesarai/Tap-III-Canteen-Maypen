@@ -1,6 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 
+import { decryptPW } from './utils/auth.js';
+
 //configuration
 const PORT = 4400;
 const app = express();

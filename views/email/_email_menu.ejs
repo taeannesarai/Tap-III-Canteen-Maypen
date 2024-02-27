@@ -1,0 +1,67 @@
+<!DOCTYPE html
+PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<%- include('_style') -%>
+
+<title>
+<%= locals.subject ? subject : 'Meal Confirmation for TAP III Canteen System' %>
+</title>
+</head>
+
+<body>
+
+<center class="wrapper">
+<table class="main">
+<tr>
+    <!-- padding cell space -->
+    <td class="padding"></td>
+    <td>
+
+        <table width="100%">
+            <tr>
+                <!-- background color -->
+                <table style="background-color: #fff;">
+                    <%- include('email_header') %>
+                        <tr>
+                            <td style="line-height: 1.5;">
+                                <h2> Dear <%= user_f_name %>
+                                </h2>
+                                <p>
+                                This is to confirm that your meal selection for the TAP III Lunch System has been successfully received. Thank you for
+                                choosing your meals for the upcoming days.
+                                
+                                Here are the details of your meal selection:
+                                </p>
+                                
+                                    <p>
+                                        Meal: <%= user_meal %><br>
+                                        Description : <%= user_description %> 
+                                    </p>
+                                    <p>
+                                        Your choices have been recorded, and our canteen staff will ensure that your selected meal is prepared and available
+                                        for
+                                        you on the specified date.
+                                    </p>
+                                    <br><br>
+                                    <%- include('_endnote') %>
+                            </td>
+                        </tr>
+                </table>
+    </td>
+    <!-- cell for padding -->
+    <td class="padding"></td>
+
+</tr>
+
+</table>
+</center>
+
+</body>
+
+</html>
