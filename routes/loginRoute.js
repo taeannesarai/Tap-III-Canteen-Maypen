@@ -4,6 +4,7 @@ import { createUserAcc, getSingleUser } from "../data/database.js";
 import session from "express-session";
 
 import {encryptPW} from "../util/auth.js"
+import { Email } from "../util/email.js";
 
 const router = express.Router();
 const app = express();
@@ -67,15 +68,26 @@ router.post('/signup/sumbit', async (req, res) => {
         phone_num: req.body.phone_num,
         trn: req.body.trn,
         roles: 'USER',
-    } 
+    }
     
     // To encrypt
     newUser.password = await encryptPW(req.body.password);
+
     console.log(newUser);
-        
+         
     const createUser = await createUserAcc(newUser);
+
+    if (createUser.insertId) {
+        const uId = createUser.insertId;
+
+        const data = await getSingleUser(uId);
+
+        const email = new Email(data[0]);
+        await email.sendMail("signup_rmail", "New User", data[0]);
+    }
+
     res.redirect('/tap-canteen')
-})
+});  
 
 router.get('/login-submit', async (req, res) => {
     const username = req.body.userName;
@@ -121,7 +133,6 @@ router.post('/', async(req,res)=>{
         }
     }
 );
-
 
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT

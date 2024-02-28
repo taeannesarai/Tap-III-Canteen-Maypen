@@ -49,8 +49,6 @@ router.get('/about', async (req, res) => {
 });
 
 
-
-
 // user create
 
 router.post("/new-user", async (req, res) => {
