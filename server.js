@@ -1,7 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 
-// import { decryptPW } from './util/auth.js';
+import { decryptPW } from './util/auth.js';
+import { adminUserExists, createAdmin } from './data/database.js';
 
 //configuration
 const PORT = 4400;
@@ -21,6 +22,19 @@ import { adminRoute } from "./routes/adminRoute.js";
 
 // ENDPOINT ANALYTICS
 app.use(morgan("dev"));
+
+// app.all("/tap-canteen/*", async (req, res) => {
+// 	if (1 != 1) {
+// 		loggedIn = true;
+// 		let session = req.session.username;
+// 	}
+// 	const bRet = await adminUserExists();
+// 	if (bRet == false) {
+// 		await createAdmin();
+// 	}
+	
+// 	res.redirect("/tap-canteen/");
+// });
 
 //Route Middleware
 // route for login

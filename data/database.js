@@ -248,7 +248,7 @@ export const createAdmin = async () => {
 	};
 	const result = await pool.query(
 		`
-        INSERT INTO user(first_name, last_name, email, location, phone_num, trn, roles, password)
+        INSERT INTO users(first_name, last_name, email, location, phone_num, trn, roles, password)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `,
 		[user.first_name, user.last_name, user.email, user.location, user.phone_num, user.trn, user.roles, user.password]
@@ -262,7 +262,7 @@ export const createAdmin = async () => {
 export const adminUserExists = async () => {
 	let bRet = false;
 	const result = await pool.query(`
-        SELECT * FROM user WHERE roles = 'ADMIN' AND email = 'admin@mail.com'
+        SELECT * FROM users WHERE roles = 'ADMIN' AND email = 'admin@mail.com'
     `);
 	console.log(result);
 	const rows = result[0];
@@ -298,7 +298,7 @@ export const isLoginCorrect = async (user, pass) => {
 // Get All schedule
 
 export const getAllSchedule = async () => {
-	const result = await pool.query(
+	const [result] = await pool.query(
 		`SELECT
         ms.id AS schedule_id,
         ms.user_id,
