@@ -229,19 +229,20 @@ footer .copyright-text {
 	padding: 10px 0;
 }
 
-.footer-grid form {
+/* .footer-grid form {
 	display: block;
 	background-color: #ffffff3b;
 	padding: 10px;
 	border-radius: 10px;
-}
+} */
 
-footer .footer-grid form .send-a-message {
+/* footer .footer-grid form .send-a-message {
 	display: block;
 	font-size: 24px;
 	font-weight: 600;
 	margin-bottom: 20px;
-}
+	color: #f00;
+} */
 
 .footer-grid form label {
 	display: block;
@@ -352,6 +353,80 @@ footer .footer-grid .input-container:last-of-type() {
     font-size: larger;
 }
 
+/* hero image */
+ .hero-section {
+	position: relative;
+	height: 60vh;
+	background: center/cover url('/public/lunchroom-hero\ image.jpg');
+ }
+
+ .hero-img {
+	display: inline-block;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+ }
+
+ .z-10 {
+	z-index: 10;
+ }
+
+/* image container for star meals */
+.main-page-body {
+	margin: 0 30px;
+	border-radius: 10px;
+	background-color: #28639628;
+	padding: 5px;
+	position: relative;
+	width: 96%;
+}
+
+.menu-card-main {
+	display: flex;
+	justify-content: flex-start;
+	flex-wrap: wrap;
+	row-gap: 30px;
+	/* column-gap: 1%; */
+}
+ 
+.main-image {
+    width: 200px;
+    height: 190px;
+    border: 3px solid #141313;
+    overflow: hidden;  
+	margin-top: 5%;
+	margin-left: 5.5%;
+	margin-bottom: 5%;
+	/* column-gap: 1%; */
+
+
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+    display: block;  
+	aspect-ratio: 5/5;
+	background-color: var(--dark-cyan-blue);
+	border-radius: 2px;
+	position: relative;
+}
+/*for Hover Effect for main page images */
+.main-image img {
+    transition: transform 0.4s ease;
+}
+
+.main-image img:hover {
+    transform: scale(1.1);
+ 
+}
+
+
 /* login-in */
 .rounded-t-5 {
             border-top-left-radius: 0.2rem;
@@ -371,5 +446,54 @@ footer .footer-grid .input-container:last-of-type() {
  /* sign up form        */
  .form-container{
     display: flex;
-
  }
+
+ /*======== new footer============ */
+ /* footer links */
+ .footer2-information {
+  text-align: center;
+}
+
+.footer2-information ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer2-information li {
+  display: inline-block;
+  margin: 0 8px; /* Adjust spacing between items */
+}
+
+.footer2-information li a {
+  text-decoration: none;
+  color: #000; /* Set the desired color */
+}
+
+/* form-container footer */
+.form-container {
+  margin: 0 auto; 
+  width: 50%;
+    
+}
+
+.page-body2 {
+	font-size: 15px;  
+ 	height: 280px;
+    }
+
+	.send-a-message {
+  display: block;
+  color: white; /* Example text color */
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+
+   
+}
+
+/* .send-a-message:hover {
+  background-color: #0056b3;  
+} */
+
+ 
