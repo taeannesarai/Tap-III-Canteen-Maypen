@@ -105,8 +105,8 @@ router.post("/login-submit", async (req, res) => {
 				message: "Incorrect password",
 				classes: "alert alert-warning",
 			});
-        } else {
-            isLoggedIn = true;
+		} else {
+			isLoggedIn = true;
 			req.session.isLoggedIn = true;
 			req.session.user = {
 				name: `${user.first_name} ${user.last_name}`,
@@ -116,8 +116,8 @@ router.post("/login-submit", async (req, res) => {
 				trn: user.trn,
 				role: user.roles,
 			};
-            console.log(req.session);
-            const sessionData = req.session;
+			console.log(req.session);
+			const sessionData = req.session;
 			res.redirect("/tap-canteen/");
 		}
 	}
