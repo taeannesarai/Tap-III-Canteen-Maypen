@@ -48,9 +48,7 @@ router.get('/about', async (req, res) => {
     });
 });
 
-router.get("/auth/signup", async (req, res) => {
-	res.render("auth/signup", { title: "Create User" });
-});
+
 
 
 // user create

@@ -1,10 +1,21 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-import { createUserAcc } from "../data/database.js";
+import { createUserAcc, getSingleUser } from "../data/database.js";
 import session from "express-session";
+
+import {encryptPW} from "../util/auth.js"
 
 const router = express.Router();
 const app = express();
+
+app.use(session({
+    secret: 'may pen canteen',
+    resave: true, 
+    saveUninitialized:true,
+    cookie: {
+        maxAge: 60000 * 2
+    }
+}));
 
 app.use(BodyParser.urlencoded({ extended: true }));
 
@@ -25,15 +36,6 @@ app.get('/logout', async (req, res) => {
     res.redirect('/')
 });
 
-//delete if not needed
-app.use(session({
-    secret: 'may pen canteen',
-    resave: true, 
-    saveUninitialized:true,
-    cookie: {
-        maxAge: 60000 * 2
-    }
-}));
 
 // Am not sure where to put the (trn) For the student or that should be in a whole other post by it self 
 
@@ -66,14 +68,29 @@ router.post('/signup/sumbit', async (req, res) => {
         trn: req.body.trn,
         roles: 'USER',
     } 
-    console.log(newUser);
-
+    
     // To encrypt
-    // password: req.body.password,
+    newUser.password = await encryptPW(req.body.password);
+    console.log(newUser);
         
-    // const createUser = await createUserAcc(newUser);
+    const createUser = await createUserAcc(newUser);
     res.redirect('/tap-canteen')
 })
+
+router.get('/login-submit', async (req, res) => {
+    const username = req.body.userName;
+    const user = await getSingleUser(username);
+    console.log(username);
+    console.log(user);
+    // if (condition) {
+        
+    // } else {
+    //     res.render('auth/login', {
+    //         title: 'LOGIN',
+    //         message: 'Invalid Username or Password'
+    //     });
+    // }
+});
 
 
 router.post('/', async(req,res)=>{
