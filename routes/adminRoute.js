@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import fileUpload from "express-fileupload";
 import multer from "multer";
 import findRemoveSync from "find-remove";
+import session from "express-session";
 
 let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" }); // generate a random string of characters to attach to name of files
 
@@ -27,6 +28,9 @@ import {
 	updateDrinks,
 	deleteDrinks,
 	getSingleDrinks,
+	saveSchedule,
+	updateSchedule,
+	deleteSchedule,
 	getAllSchedule,
 	getSingleSchedule,
 	getAllUser,
@@ -45,6 +49,19 @@ const app = express();
 
 router.use(express.urlencoded({ extended: true }));
 
+router.use(
+	session({
+		secret: "tap canteen",
+		resave: true,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 60000 * 10,
+		},
+	})
+);
+
+router.use(express.urlencoded({ extended: true }));
+
 // router.use(
 // 	fileUpload({
 // 		limits: {
@@ -54,25 +71,8 @@ router.use(express.urlencoded({ extended: true }));
 // 	})
 // );
 
-const authenticate = (req, res, next) => {
-    if (1 == 1) {
-		return next();
-    } else {
-		return res.redirect("/tap-canteen/auth/login");
-	}
-};
-
-router.all("/*", authenticate, (req, res, next) => {
-	next();
-});
-
-// =================================================================================
-// =================================================================================
-// =================================================================================
-
-
 // =================================================================
-//   ============ All of Menu ==============
+//   ============ All Menu ==============
 // =================================================================
 //Get Single Menu Item
 
@@ -89,7 +89,6 @@ router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
 router.get("/create-menu-item", async (req, res) => {
@@ -99,8 +98,6 @@ router.get("/create-menu-item", async (req, res) => {
 		prevUrl,
 	});
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
@@ -127,7 +124,7 @@ router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 	});
 });
 
-///////////////////////////////////////////   ============ All of Drinks ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All Drinks ==============  
 
 //Get Single Drink
 
@@ -181,7 +178,7 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 	});
 });
 
-///////////////////////////////////////////   ============ All of User ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All User ==============   
 
 //Get Single User
 
@@ -202,6 +199,9 @@ router.get("/update-user", async (req, res) => {
 	const mealItem = await getAllUser(req.params.id);
 	res.render("admin_pages/user-update", { title: "Update User" });
 });
+
+///////////////////////////////////////////   ============ All of Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 // VIEW ALL MEAL SCHEDULE
 router.get("/schedules", async (req, res) => {
@@ -226,6 +226,11 @@ router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
+
+
+
+
+
 
 // ============== DATABASE ACTIONS ==============
 // Create Menu Post
@@ -397,18 +402,18 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //Create Meal Schedule
 
-// router.post('/create-mealschedule', async (req, res) => {
-//     const menuItemData = {
-//         item_name: req.body.item_name,
-//         quantity: req.body.quantity,
-//         description: req.body.description,
-//         img: req.body.img
-//     }
+router.post('/create-mealschedule', async (req, res) => {
+    const menuItemData = {
+        item_name: req.body.item_name,
+        quantity: req.body.quantity,
+        description: req.body.description,
+        img: req.body.img
+    }
 
-//     console.log(menuItemData);
-//     await saveMenu(menuItemData);
-//     res.redirect('/');
-// });
+    console.log(menuItemData);
+    await saveMenu(menuItemData);
+    res.redirect('/');
+});
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;

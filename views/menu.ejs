@@ -15,23 +15,27 @@
 				<li class="list-group-item">A third item</li> -->
 			</ul>
 			<div class="card-body">
+				<% if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'ADMIN' : false)) { %>
 				<div class="admin-buttons my-2">
 					<a href="/tap-canteen/admin/lunch-menu/menu-item-view/<%= mealData[i].id %>" class="btn btn-info">View Item</a>
 					<a href="/tap-canteen/admin/update-menu-item/<%= mealData[i].id %>" class="btn btn-warning">Edit Item</a>
 					<a href="/tap-canteen/admin/lunch-menu/delete-menu-item/<%= mealData[i].id %>" class="btn btn-danger">Delete Item</a>
 				</div>
+
+				<% } else if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'USER' : false)) { %>
 				<div class="user-buttons my-2">
 					<a href="#" class="btn btn-primary">Select Meal</a>
 				</div>
+				<% } %>
 			</div>
 		</div>
-		<% } %>
-
-		<a href="/tap-canteen/admin/create-menu-item" style="width: 24rem" class="new-item card">
+		<% } %> <% if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'ADMIN' : false)) { %>
+		<a href="/tap-canteen/admin/create-menu-item" style="width: 24rem" class="new-item card" id="newItem">
 			<i class="fi fi-sr-add"></i>
 		</a>
+		<% } %>
 	</div>
-	
+
 	<h1 class="page-heading">Drinks</h1>
 	<div class="menu-card-container">
 		<% for( let i = 0; i < drinkData.length; i++ ) { %>
@@ -46,22 +50,26 @@
 				<!-- <li class="list-group-item">A second item</li>
 				<li class="list-group-item">A third item</li> -->
 			</ul>
-			<div class="card-body">
+
+			<div class="card-body" id="buttons">
+				<% if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'ADMIN' : false)) { %>
 				<div class="admin-buttons my-2">
 					<a href="/tap-canteen/admin/lunch-menu/view-drink-item/<%= drinkData[i].id %>" class="btn btn-info">View Item</a>
 					<a href="/tap-canteen/admin/update-drink-item/<%= drinkData[i].id %>" class="btn btn-warning">Edit Item</a>
 					<a href="/tap-canteen/admin/lunch-menu/delete-drink-item/<%= drinkData[i].id %>" class="btn btn-danger">Delete Item</a>
 				</div>
+				<% } else if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'USER' : false)) { %>
 				<div class="user-buttons my-2">
 					<a href="#" class="btn btn-primary">Select Meal</a>
 				</div>
+				<% } %>
 			</div>
 		</div>
-		<% } %>
-
+		<% } %> <% if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'ADMIN' : false)) { %>
 		<a href="/tap-canteen/admin/create-drink-item" style="width: 24rem" class="new-item card">
 			<i class="fi fi-sr-add"></i>
 		</a>
+		<% } %>
 	</div>
 </section>
 <%- include('./partials/footer') %>
