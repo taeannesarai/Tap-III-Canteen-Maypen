@@ -333,44 +333,44 @@ export const getAllSchedule = async () => {
 
 //Create Schedule
 
-// export const saveSchedule = async (sSch) => {
-// 	const result = await pool.query(
-// 		`
-//         INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
-//          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
-//     `,
-// 		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
-// 	);
-// 	return result;
-// };
+export const saveSchedule = async (sSch) => {
+	const result = await pool.query(
+		`
+        INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
+         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `,
+		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+	);
+	return result;
+};
 
 
 //Update Schedule
 
-// export const updateSchedule = async (uSch) => {
-// 	const result = await pool.query(
-// 		`
-//         UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
-//         WHERE id = ?
-//     `,
-// 		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date, uSch.id]
-// 	);
-// 	return result;
-// };
+export const updateSchedule = async (uSch) => {
+	const result = await pool.query(
+		`
+        UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
+        WHERE id = ?
+    `,
+		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date, uSch.id]
+	);
+	return result;
+};
 
 
 // //Delete Schedule
 
-// export const deleteSchedule = async (dSch) => {
-// 	const [row] = await pool.query(
-// 		`
-//         DELETE FROM meals_schedule
-//         WHERE id=?
-//     `,
-// 		[dSch]
-// 	);
-// 	return row;
-// };
+export const deleteSchedule = async (dSch) => {
+	const [row] = await pool.query(
+		`
+        DELETE FROM meals_schedule
+        WHERE id=?
+    `,
+		[dSch]
+	);
+	return row;
+};
 
 
 //Get Single Schedule

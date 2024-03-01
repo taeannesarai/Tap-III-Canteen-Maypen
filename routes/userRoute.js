@@ -1,5 +1,5 @@
 import express, { Router } from "express";
-import BodyParser from "body-parser";
+import BodyParser from "body-parser"; 
 // <<<<<<< HEAD
 import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
@@ -75,6 +75,15 @@ router.post("/new-user", async (req, res) => {
 
 	res.redirect("/");
 });
+
+//Create SCHEDULE
+
+router.post("/create-menu-item/:id", async (req, res) => {
+    const menu = {
+
+        //user_id, menu_id, drink_id, date
+    }
+})
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const userRoute = router;

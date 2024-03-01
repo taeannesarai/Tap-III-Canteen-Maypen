@@ -27,6 +27,9 @@ import {
 	updateDrinks,
 	deleteDrinks,
 	getSingleDrinks,
+	saveSchedule,
+	updateSchedule,
+	deleteSchedule,
 	getAllSchedule,
 	getSingleSchedule,
 	getAllUser,
@@ -203,6 +206,9 @@ router.get("/update-user", async (req, res) => {
 	res.render("admin_pages/user-update", { title: "Update User" });
 });
 
+///////////////////////////////////////////   ============ All of Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 // VIEW ALL MEAL SCHEDULE
 router.get("/schedules", async (req, res) => {
 	const allSchedules = await getAllSchedule();
@@ -226,6 +232,11 @@ router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
+
+
+
+
+
 
 // ============== DATABASE ACTIONS ==============
 // Create Menu Post
@@ -395,18 +406,18 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //Create Meal Schedule
 
-// router.post('/create-mealschedule', async (req, res) => {
-//     const menuItemData = {
-//         item_name: req.body.item_name,
-//         quantity: req.body.quantity,
-//         description: req.body.description,
-//         img: req.body.img
-//     }
+router.post('/create-mealschedule', async (req, res) => {
+    const menuItemData = {
+        item_name: req.body.item_name,
+        quantity: req.body.quantity,
+        description: req.body.description,
+        img: req.body.img
+    }
 
-//     console.log(menuItemData);
-//     await saveMenu(menuItemData);
-//     res.redirect('/');
-// });
+    console.log(menuItemData);
+    await saveMenu(menuItemData);
+    res.redirect('/');
+});
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;
