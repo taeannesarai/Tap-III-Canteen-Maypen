@@ -67,10 +67,10 @@ router.post("/signup/sumbit", async (req, res) => {
 		const uId = result.insertId;
 		const data = await getSingleUser(uId);
 
-		console.log(data);
+		console.log(newUser);
 
-		const email = new Email(data);
-		await email.sendMail("signup_email", "New User", data);
+		const email = new Email(newUser);
+		await email.sendMail("signup_email", "New User", newUser);
 	}
 
 	res.redirect("/tap-canteen");

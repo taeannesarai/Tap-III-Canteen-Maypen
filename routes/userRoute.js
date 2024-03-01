@@ -1,6 +1,8 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser"; 
 import { loginRoute } from "./loginRoute.js";
+import { Email } from "../util/email.js";
+
 // <<<<<<< HEAD
 import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule,getLastFour } from "../data/database.js";
 
@@ -83,9 +85,16 @@ router.get("/create-menu-schedule/:id", async (req, res) => {
     const schedule = {
         user_id: loginRoute.sessionData.user_id,
         menu_id: req.params.id,
-        date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
+        date: (new Date()).toISOString().split("T")[0] + ` 00:00:00`,
         //user_id, menu_id, drink_id, date
-    }
+    };
+
+    const userID = loginRoute.sessionData.user_id;
+    const data = await getSingleUser(userID);
+
+    const email = new Email(newUser);
+		await email.sendMail("_email_menu", "Meal Choice Confirmation", data);
+
     console.log(schedule)
     await saveSchedule(schedule)
     res.redirect("/tap-canteen/");
