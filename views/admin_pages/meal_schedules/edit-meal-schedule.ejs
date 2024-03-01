@@ -1,43 +1,41 @@
 <%- include('../../partials/header') %>
 <div class="page-body">
-    <h1 class="page-heading">Edit A Meal Schedule</h1>
+	<h1 class="page-heading">Edit A Meal Schedule</h1>
 
-    <form action="/tap-canteen/admin/edit-meal-schedule-submit" method="post">
+	<form action="/tap-canteen/admin/edit-meal-schedule-submit" method="post">
         <!-- id, user_id, menu_id, drink_id, date -->
         <div class="row">
             <div class="col">
                 <label for="">Student</label>
-                <input type="number" name="user_id" value="<%= mealSchedule.user_id %>" required>
+                <input type="number">
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <label for="">Meal</label>
-                <select name="menu_id" id="" required>
+                <select name="" id="">
                     <option value=""></option>
-                    <!-- Populate options based on your menu data -->
-                    <% menu.forEach(menuItem => { %>
-                        <option value="<%= menuItem.id %>" <%= mealSchedule.menu_id == menuItem.id ? 'selected' : '' %>><%= menuItem.name %></option>
-                    <% }); %>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <label for="">Drink</label>
-                <select name="drink_id" id="" required>
+                <select name="" id="">
                     <option value=""></option>
-                    <!-- Populate options based on your drink data -->
-                    <% drinks.forEach(drink => { %>
-                        <option value="<%= drink.id %>" <%= mealSchedule.drink_id == drink.id ? 'selected' : '' %>><%= drink.name %></option>
-                    <% }); %>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
                 </select>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <label for="">Date</label>
-                <input type="date" name="date" value="<%= mealSchedule.date %>" required>
+                <input type="date">
             </div>
         </div>
 
@@ -46,9 +44,6 @@
                 <input type="submit" value="Save Changes" class="btn btn-primary fill-container-btn">
             </div>
         </div>
-        <!-- Hidden input to send the meal schedule ID -->
-        <input type="hidden" name="id" value="<%= mealSchedule.id %>">
     </form>
 </div>
 <%- include('../../partials/footer') %>
-
