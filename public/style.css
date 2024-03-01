@@ -25,7 +25,7 @@ body {
 nav {
 	display: flex;
 	height: 50px;
-	margin: 50px 0;
+	margin: 30px 0 0;
 	justify-content: space-around;
 	align-items: center;
 	/* border-bottom: 1px solid var(--steel-blue); */
@@ -353,14 +353,14 @@ footer .footer-grid .input-container:last-of-type() {
 }
 
 /* hero image */
- .hero-section {
+.hero-section {
 	position: relative;
 	height: 70vh;
-	background: center/cover url('/public/lunchroom-hero\ image.jpg');
-	box-shadow: inset 0 0 1000px 1000px #0000007c;
- }
+	background: center/cover url("/public/lunchroom-hero\ image.jpg");
+	box-shadow: inset 0 0 1000px 1000px #000000a6;
+}
 
- .hero-img {
+.hero-img {
 	display: inline-block;
 	width: 100%;
 	height: 100%;
@@ -370,11 +370,11 @@ footer .footer-grid .input-container:last-of-type() {
 	right: 0;
 	bottom: 0;
 	z-index: 1;
- }
+}
 
- .z-10 {
+.z-10 {
 	z-index: 10;
- }
+}
 
 /*=============================== image container for star meals ============================*/
 .main-page-body {
@@ -393,12 +393,12 @@ footer .footer-grid .input-container:last-of-type() {
 	row-gap: 30px;
 	/* column-gap: 1%; */
 }
- 
+
 .main-image {
-    width: 200px;
-    height: 190px;
-    border: 3px solid #141313;
-    overflow: hidden;  
+	width: 200px;
+	height: 190px;
+	border: 3px solid #141313;
+	overflow: hidden;
 	margin-top: 5%;
 	margin-left: 5.5%;
 	margin-bottom: 5%;
@@ -406,9 +406,9 @@ footer .footer-grid .input-container:last-of-type() {
 }
 
 .main-image img {
-    width: 100%;
-    height: auto;
-    display: block;  
+	width: 100%;
+	height: auto;
+	display: block;
 	aspect-ratio: 5/5;
 	background-color: var(--dark-cyan-blue);
 	border-radius: 2px;
@@ -416,14 +416,12 @@ footer .footer-grid .input-container:last-of-type() {
 }
 /*for Hover Effect for main page images */
 .main-image img {
-    transition: transform 0.4s ease;
+	transition: transform 0.4s ease;
 }
 
 .main-image img:hover {
-    transform: scale(1.1);
- 
+	transform: scale(1.1);
 }
-
 
 /* login-in */
 .rounded-t-5 {
@@ -443,15 +441,14 @@ footer .footer-grid .input-container:last-of-type() {
 
 /*============================= form-container footer ========================== */
 .form-container-footer {
-  margin: 0 auto; 
-  width: 50%;
-    
+	margin: 0 auto;
+	width: 50%;
 }
 
 .page-body2 {
-	font-size: 15px;  
- 	height: 280px;
-    }
+	font-size: 15px;
+	height: 280px;
+}
 
 /* .send-a-message {
   display: block;
@@ -463,32 +460,30 @@ footer .footer-grid .input-container:last-of-type() {
 } */
 /*============================= form-container footer end ========================== */
 
- /*======== footer link style ============ */
+/*======== footer link style ============ */
 .footer2-information {
-  text-align: center;
-  margin-top: 5%;
+	text-align: center;
+	margin-top: 5%;
 }
 
 .footer2-information ul {
-  list-style: none;
-  padding: 0;
+	list-style: none;
+	padding: 0;
 }
 
 .footer2-information li {
-  display: inline-block;
-  margin: 0 8px; /* Adjust spacing between items */
+	display: inline-block;
+	margin: 0 8px; /* Adjust spacing between items */
 }
 
 .footer2-information li a {
-  text-decoration: none;
-  color: #000; /* Set the desired color */
+	text-decoration: none;
+	color: #000; /* Set the desired color */
 }
-hr{
+hr {
 	color: #000;
 	margin-top: 7%;
 }
- 
- 
 
 /*============================= footer links ========================== */
 
@@ -541,3 +536,22 @@ hr{
 }
 
 /* dfghjkl; */
+.hero-text {
+	line-height: 35px;
+	font-size: 45px;
+	font-weight: 700;
+	filter: drop-shadow(0 0 1rem rgb(0, 0, 0));
+}
+
+.hero-text .b-text {
+	font-weight: 900;
+	color: #8eb5ff;
+}
+
+.hero-text .u-text {
+	border-bottom: 10px solid var(--orange-peel);
+}
+
+.lunch-img {
+	aspect-ratio: 5/3;
+}

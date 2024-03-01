@@ -210,6 +210,7 @@ router.get("/schedules", async (req, res) => {
 
 	// allSchedules.date = date.toLocaleDateString().split("T")[0];
 
+	console.log('================================');
 	console.log(allSchedules);
 	res.render("admin_pages/all-schedules", {
 		title: "All Schedules",
@@ -250,13 +251,6 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-
-
-
-
-
-
-
 
 // ============== DATABASE ACTIONS ==============
 // Create Menu Post

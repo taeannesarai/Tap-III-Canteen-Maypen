@@ -47,6 +47,12 @@ function isPWMatch() {
 			signupBtn.setAttribute("disabled", "");
 			console.log("!Match");
 		}
+
+		if (userPW.value !== userPWConfirm.value) {
+			document.querySelector(".no-match").innerHTML = `<div class="alert alert-warning p-1 mt-2">Password fields doesn't match.</div>`;
+		} else {
+			document.querySelector(".no-match").innerHTML = '';
+		}
 	});
 }
 

@@ -101,8 +101,8 @@ router.post("/login-submit", async (req, res) => {
 	const username = req.body.userName;
 	const password = req.body.password;
 	const user = await getSingleUser(username);
-	// console.log(req.body);
-	// console.log(user);
+	console.log(req.body);
+	console.log(user);
 
 	if (!user) {
 		res.render("auth/login", {
