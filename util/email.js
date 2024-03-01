@@ -15,7 +15,9 @@ export class Email {
         this.to = user.email;
         this.first_name = user.first_name;
         this.last_name = user.last_name;
-        this.from = `[TAP III Lunch System User] <${process.env.EMAIL_FROM}>`;
+        this.trn = user.trn;
+        this.location = user.location;
+        this.from = `[TAP III Lunch System User] <${ process.env.EMAIL_FROM}>`;
     }
 
     // CONFIGURE NODE MAILER 
@@ -48,7 +50,7 @@ export class Email {
         
         const transport = this.createMailTransport();
 
-        const html = await ejs.renderFile(this.#templateURL + template + '.ejs', {
+        const html = await ejs.renderFile(this.#templateURL + template + 'signup_email.ejs', {
             subject: subject,
             logo: `${process.env.BASE_URL}/public/assets/logo.png`,
             user_f_name: this.first_name,
@@ -63,6 +65,25 @@ export class Email {
             to: `${this.to}, ${process.env.COPY_EMAIL}`,
             from: this.from,
             subject: subject,
+            html: html,
+            text: htmlToText(html),
+        });
+    }
+
+    async sendMealConfirmation(mealDetails) {
+        const transport = this.createMailTransport();
+
+        const html = await ejs.renderFile(this.#templateURL + '_email_menu.ejs', {
+            subject: 'Meal Confirmation',
+            logo: `${process.env.BASE_URL}/public/assets/logo.png`,
+            user_meal: this.item_name,
+            user_description: this.description,
+        });
+
+        return await transport.sendMail({
+            to: `${this.to}, ${process.env.COPY_EMAIL}`,
+            from: this.from,
+            subject: 'Meal Confirmation',
             html: html,
             text: htmlToText(html),
         });
