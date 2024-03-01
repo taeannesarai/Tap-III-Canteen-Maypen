@@ -1,7 +1,8 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser"; 
+import { loginRoute } from "./loginRoute.js";
 // <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -76,12 +77,22 @@ router.post("/new-user", async (req, res) => {
 
 //Create SCHEDULE
 
-router.post("/create-menu-item/:id", async (req, res) => {
+router.get("/create-menu-schedule/:id", async (req, res) => {
     const menu = {
-
+        user_id: loginRoute.sessionData.user_id,
+        menu_id: req.params.id,
+        drink_id:1,
+        date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
         //user_id, menu_id, drink_id, date
     }
+    console.log(menu)
+    await saveSchedule(menu)
+    res.redirect("/tap-canteen/");
 })
+
+
+
+//delete
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const userRoute = router;
