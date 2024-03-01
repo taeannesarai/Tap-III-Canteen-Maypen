@@ -78,15 +78,15 @@ router.post("/new-user", async (req, res) => {
 //Create SCHEDULE
 
 router.get("/create-menu-schedule/:id", async (req, res) => {
-    const menu = {
+    const schedule = {
         user_id: loginRoute.sessionData.user_id,
         menu_id: req.params.id,
         drink_id:1,
         date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
         //user_id, menu_id, drink_id, date
     }
-    console.log(menu)
-    await saveSchedule(menu)
+    console.log(schedule)
+    await saveSchedule(schedule)
     res.redirect("/tap-canteen/");
 })
 
