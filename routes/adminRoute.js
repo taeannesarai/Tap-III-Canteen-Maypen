@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import fileUpload from "express-fileupload";
 import multer from "multer";
 import findRemoveSync from "find-remove";
+import session from "express-session";
 
 let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" }); // generate a random string of characters to attach to name of files
 
@@ -27,10 +28,14 @@ import {
 	updateDrinks,
 	deleteDrinks,
 	getSingleDrinks,
+	saveSchedule,
+	updateSchedule,
+	deleteSchedule,
 	getAllSchedule,
 	getSingleSchedule,
+	// updateSchedule,
+	// deleteSchedule,
 	getAllUser,
-	saveUser,
 	updateUser,
 	deleteUser,
 	getSingleUser,
@@ -40,26 +45,35 @@ import {
 } from "../data/database.js";
 
 import cryptoRandomString from "crypto-random-string";
+import { loginRoute } from "./loginRoute.js";
 const router = express.Router();
 const app = express();
 
-app.use(express.urlencoded({ extended: true }));
-
-app.use(
-	fileUpload({
-		limits: {
-			fileSize: 50 * 1024 * 1024,
+router.use(
+	session({
+		secret: "tap canteen",
+		resave: true,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 60000 * 10,
 		},
-		abortOnLimit: true,
 	})
 );
 
-// ===============================================================================================================================================================================================
+router.use(express.urlencoded({ extended: true }));
 
-///////////////////////////////////////////   ============ All of Menu ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// router.use(
+// 	fileUpload({
+// 		limits: {
+// 			fileSize: 50 * 1024 * 1024,
+// 		},
+// 		abortOnLimit: true,
+// 	})
+// );
 
-// ===============================================================================================================================================================================================
-
+// =================================================================
+//   ============ All Menu ==============
+// =================================================================
 //Get Single Menu Item
 
 router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
@@ -75,7 +89,6 @@ router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
 router.get("/create-menu-item", async (req, res) => {
@@ -85,8 +98,6 @@ router.get("/create-menu-item", async (req, res) => {
 		prevUrl,
 	});
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
@@ -100,8 +111,6 @@ router.get("/update-menu-item/:id", async (req, res) => {
 	});
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //Delete Menu
 router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 	const [mealItem] = await getSingledMenu(req.params.id);
@@ -114,11 +123,8 @@ router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////   ============ All of Drinks ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All Drinks ==============  
 
 //Get Single Drink
 
@@ -136,7 +142,6 @@ router.get("/lunch-menu/view-drink-item/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Drink
 
@@ -148,7 +153,6 @@ router.get("/create-drink-item", async (req, res) => {
 		prevUrl,
 	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drinks
 router.get("/update-drink-item/:id", async (req, res) => {
@@ -162,10 +166,6 @@ router.get("/update-drink-item/:id", async (req, res) => {
 	});
 });
 
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //Delete Drink
 router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
@@ -177,11 +177,8 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////   ============ All of User ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All User ==============   
 
 //Get Single User
 
@@ -193,12 +190,8 @@ app.get("/users/user-person-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "User Detail" });
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create User
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update User
 
@@ -206,23 +199,26 @@ router.get("/update-user", async (req, res) => {
 	const mealItem = await getAllUser(req.params.id);
 	res.render("admin_pages/user-update", { title: "Update User" });
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//Delete User
+//   ============ All Schedule ==============  
 
-router.get("/delete-user-delete/:id", async (req, res) => {
-	const mealItem = await getAllUser(req.params.id);
-	res.render("admin_pages/user-delete", { title: "Confirm Deletion", id });
+
+// VIEW ALL MEAL SCHEDULE
+router.get("/schedules", async (req, res) => {
+	const allSchedules = await getAllSchedule();
+	// let date = allSchedules.date;
+
+	// allSchedules.date = date.toLocaleDateString().split("T")[0];
+
+	console.log(allSchedules);
+	res.render("admin_pages/all-schedules", {
+		title: "All Schedules",
+		allSchedules,
+	});
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////   ============ All of Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//Get Single Drink
-
-app.get("/schedules/schedule-item-view/:id", async (req, res) => {
+// VIEW SINGLE SCHEDULE
+router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
 	const id = req.params.id;
 	const results = await getSingleSchedule(id);
 	console.log("=====================================================");
@@ -231,22 +227,39 @@ app.get("/schedules/schedule-item-view/:id", async (req, res) => {
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//update schedule
+router.get("/update-meal-schedule-item/:id", async (req, res) => {
+	const [menuSchData] = await getSingleSchedule(req.params.id);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	res.render("admin_pages/update-schedule-item", {
+		title: "Update Schedule",
+		prevUrl,
+		menuSchData,
+	});
+}); 
 
-///////////////////////////////////////////   ============== DATABASE ACTIONS ==============   ///////////////////////////////////////////////////////////////////////////////////////////////////////////
+//delete schedule
+router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	const [menuSchData] = await getSingleSchedule(req.params.id);
+	console.log(menuSchData);
+	res.render("admin_pages/delete-schedule-item", {
+		title: "Delete schedule Item",
+		menuSchData,
+		prevUrl,
+	});
+});
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-///////////////////////////////////////////   ============ Post For  MENU ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+
+
+// ============== DATABASE ACTIONS ==============
 // Create Menu Post
-
 router.post("/create-menu-item/submit", upload.single("meal_img"), async (req, res) => {
 	const menuItemData = {
 		item_name: req.body.meal_name,
@@ -274,21 +287,15 @@ router.get("/create-menu-item", async (req, res) => {
 	res.render("admin_pages/create-menu-item", { title: "Create Menu Item" });
 });
 
-// id, beverage, quantity, img, description
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //Update Menu Post
-
-router.post("/update-menu-item-submit",upload.single("meal_img"), async (req, res) => {
+router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, res) => {
 	const mealData = {
 		id: req.body.id,
 		item_name: req.body.meal_name,
 		quantity: req.body.quantity,
 		description: req.body.desc,
 	};
- 
-	
+
 	if (req.body.desc.length > 255) {
 		mealData.description = req.body.desc.slice(0, 255);
 	} else {
@@ -301,23 +308,18 @@ router.post("/update-menu-item-submit",upload.single("meal_img"), async (req, re
 		mealData.img = "";
 	}
 
-
 	console.log(mealData);
 	await updateMenu(mealData);
 	res.redirect("/tap-canteen/lunch-menu");
 });
 
-
 // router.get("/update-menu/:id", async (req, res) => {
 // 	const id = req.params.id;
-// 	const [mealData] = await getSingledMenu(id); 
+// 	const [mealData] = await getSingledMenu(id);
 // 	res.render("admin_pages/menu-update",mealData,{ title: "Update Menu" });
 // });
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //Delete Menu Post
-
 router.get("/delete-menu-item/confirm/:id", async (req, res) => {
 	const id = req.params.id;
 	const [record] = await getSingledMenu(id);
@@ -329,10 +331,8 @@ router.get("/delete-menu-item/confirm/:id", async (req, res) => {
 	await deleteMenu(id);
 	res.redirect("/tap-canteen/lunch-menu");
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Get a Single Menu Post
-
 router.post("/get-single-menu-item/:id", async (req, res) => {
 	const menuId = req.body.id;
 
@@ -341,16 +341,9 @@ router.post("/get-single-menu-item/:id", async (req, res) => {
 	console.log("getting  menu item:", menuItem);
 	res.redirect("/");
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////   ============== Post For  Drinks ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+// ============== Post For  Drinks ==============
 // Create Drinks Post
-
 router.post("/create-drink-item/submit", upload.single("drink_img"), async (req, res) => {
 	const drinkItemData = {
 		beverage: req.body.drink_name,
@@ -373,41 +366,37 @@ router.post("/create-drink-item/submit", upload.single("drink_img"), async (req,
 	await saveDrink(drinkItemData);
 	res.redirect("/tap-canteen/lunch-menu");
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Drink Post
 router.post("/update-drink-item-submit", upload.single("img"), async (req, res) => {
-    const drinkItemData = {
-        id: req.body.id,
-        beverage: req.body.beverage,
-        quantity: req.body.quantity,
-        description: req.body.description,
-    };
+	const drinkItemData = {
+		id: req.body.id,
+		beverage: req.body.beverage,
+		quantity: req.body.quantity,
+		description: req.body.description,
+	};
 
-    // Check if description is provided and not null before updating
-    if (req.body.description && req.body.description.length > 255) {
-        drinkItemData.description = req.body.description.slice(0, 255);
-    }
+	// Check if description is provided and not null before updating
+	if (req.body.description && req.body.description.length > 255) {
+		drinkItemData.description = req.body.description.slice(0, 255);
+	}
 
-    // Check if there's a file attached to the request
-    if (req.file) {
-        drinkItemData.img = `${ranVal}_${req.file.originalname}`;
-    } else {
-        // No new image uploaded, retain the old image
-        const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
-        drinkItemData.img = oldDrinkItem.img;
-    }
+	// Check if there's a file attached to the request
+	if (req.file) {
+		drinkItemData.img = `${ranVal}_${req.file.originalname}`;
+	} else {
+		// No new image uploaded, retain the old image
+		const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
+		drinkItemData.img = oldDrinkItem.img;
+	}
 
-    console.log(drinkItemData);
+	console.log(drinkItemData);
 
-    // Update only the fields that are provided in the request
-    await updateDrinks(drinkItemData);
+	// Update only the fields that are provided in the request
+	await updateDrinks(drinkItemData);
 
-    res.redirect("/tap-canteen/lunch-menu");
+	res.redirect("/tap-canteen/lunch-menu");
 });
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Delete Drinks Post
 
@@ -423,7 +412,6 @@ router.get("/delete-drink-item/confirm/:id", async (req, res) => {
 	await deleteDrinks(id);
 	res.redirect("/tap-canteen/lunch-menu");
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Get a Single drink Post
 
@@ -435,29 +423,63 @@ router.post("/get-single-drink-item", async (req, res) => {
 	console.log("getting  menu item:", menuItem);
 	res.redirect("/");
 });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-///////////////////////////////////////////   ============== Post For  Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Meal Schedule
 
-// router.post('/create-mealschedule', async (req, res) => {
-//     const menuItemData = {
-//         item_name: req.body.item_name,
-//         quantity: req.body.quantity,
-//         description: req.body.description,
-//         img: req.body.img
-//     }
+router.post('/create-meal-schedule', async (req, res) => {
+    const menuItemData = {
+        item_name: req.body.item_name,
+        quantity: req.body.quantity,
+        description: req.body.description,
+        img: req.body.img
+    }
 
-//     console.log(menuItemData);
-//     await saveMenu(menuItemData);
-//     res.redirect('/');
-// });
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    console.log(menuItemData);
+    await saveMenu(menuItemData);
+    res.redirect('/');
+});
+
+
+//update 
+router.post("/update-schedule-item-submit", async (req, res) => {
+	const scheduleData = {
+		id:req.body.id,
+		user_id:req.body.user_id,
+        menu_id:req.body.menu_id,
+        drink_id:1,
+        date:( req.body.date).toISOString().split("T")[0] + ` 00:00:00`,
+	};
+
+	console.log(scheduleData);
+	await updateSchedule(scheduleData);
+	res.redirect("/");
+});
+
+
+
+
+//Delete Schedule Post
+router.get("/delete-Schedule-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingleSchedule(id);
+	
+	console.log("Deleting Schedule item with ID:", id);
+	console.log(record);
+	await deleteSchedule(id);
+	res.redirect("/tap-canteen/lunch-Schedule");
+});
+
+
+// Get a Single Menu Post
+router.post("/:id", async (req, res) => {
+	const scheduleId = req.body.id;
+
+	console.log("getting the schedule", schedule);
+	const schedule = await getSingleSchedule(scheduleId);
+	console.log("getting  schedule item:", schedule);
+	res.redirect("/");
+});
+
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;

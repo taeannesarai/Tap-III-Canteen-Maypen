@@ -1,29 +1,56 @@
 <%- include('./partials/header') %>
-<div class="p-5 text-center bg-image rounded-3" style="
-        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQIO7cx1MvDMEbtG3sB70q7jpxGfLsb9NiGYw&usqp=CAU');
-        height: 300px;
-      ">
-    <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);"> -->
-    <div class="d-flex justify-content-center align-items-center h-100">
-        <div class="text-black">
-            <h1 class="mb-3">WELCOME</h1>
-            <!-- <a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a> -->
+    <div class="p-5 text-center bg-image rounded-3 hero-section" ; height: 350px;>
+        <!-- <img src="/public/lunchroom-hero image.jpg" alt="" class="hero-img"> -->
+        <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);"> -->
+        <div class="d-flex justify-content-center align-items-center h-100 z-10">
+            <div class="text-white">
+                <h1 class="mb-3">WELCOME</h1>
+            </div>
         </div>
     </div>
-</div>
-</div>
-<!--end Hero -->
-
-
-<div class="header">
-    Our Star Meals 
-</div>
-
-<!-- card container -->
+    </div>
+    <!--end Hero -->
 
 
 
 
 
 
-<%- include('./partials/footer') %>
+    <!-- card container -->
+
+
+
+    <!-- thus -->
+    <!-- <div class="menu-card-container mb-4"> -->
+    <div class="page-body mt-3">
+        <div class="page-heading">
+            Our Star Meals
+        </div>
+        <% for( let i=0; i < lastFourMeal.length; i++ ) { %>
+            <div class="card" style="width: 18rem">
+                <img src="../uploads/<%= lastFourMeal[i].img %>" class="card-img-top"
+                    alt="<%= lastFourMeal[i].item_name %>_image" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= lastFourMeal[i].item_name %>
+                    </h5>
+                    <p class="card-text">
+                        <%= lastFourMeal[i].description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Qty: <%= lastFourMeal[i].quantity %>
+                    </li>
+                    <!-- <li class="list-group-item">A second item</li>
+    				<li class="list-group-item">A third item</li> -->
+                </ul>
+                <div class="card-body">
+
+                </div>
+            </div>
+            <% } %>
+
+    </div>
+
+
+    <%- include('./partials/footer') %>

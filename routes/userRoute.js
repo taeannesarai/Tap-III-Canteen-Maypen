@@ -1,9 +1,8 @@
 import express, { Router } from "express";
-import BodyParser from "body-parser";
+import BodyParser from "body-parser"; 
+import { loginRoute } from "./loginRoute.js";
 // <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, saveUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
-import { emit } from "nodemon";
-import { Email } from "../util/email.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule,getLastFour } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -13,9 +12,11 @@ app.use(BodyParser.urlencoded({ extended: true }));
 // Homepage
 router.get("/", async (req, res) => {
     // const lastFour = await lastFourMeal();
-    res.render("index", {
-        title: "Home",
-        // lastFourMealData: lastFour
+    const lastFourMeal = await getLastFour();
+    const meals = await getAllMenu();
+    console.log(lastFourMeal);
+    res.render("index", {lastFourMeal, title: "Home"
+       
     });
 });
 
@@ -48,10 +49,6 @@ router.get('/about', async (req, res) => {
     });
 });
 
-router.get("/auth/signup", async (req, res) => {
-	res.render("auth/signup", { title: "Create User" });
-});
-
 
 // user create
 
@@ -79,6 +76,25 @@ router.post("/new-user", async (req, res) => {
 
 	res.redirect("/");
 });
+
+//Create SCHEDULE
+
+router.get("/create-menu-schedule/:id", async (req, res) => {
+    const schedule = {
+        user_id: loginRoute.sessionData.user_id,
+        menu_id: req.params.id,
+        drink_id:1,
+        date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
+        //user_id, menu_id, drink_id, date
+    }
+    console.log(schedule)
+    await saveSchedule(schedule)
+    res.redirect("/tap-canteen/");
+})
+
+
+
+//delete
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const userRoute = router;
