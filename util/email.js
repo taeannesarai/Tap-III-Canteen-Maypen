@@ -6,7 +6,7 @@ import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const ___dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class Email {
     #templateURL = path.join(__dirname, '../views/emails/');
@@ -21,16 +21,16 @@ export class Email {
     // CONFIGURE NODE MAILER 
     createMailTransport() {
         // reference to credential for sending emails
-        if (process.env.NODE_ENV !== 'production') {
-            return nodemailer.createTransport({
-                host: 'sandbox.smtp.mailtrap.io',
-                port: 2525,
-                auth: {
-                    user: process.env.MAILTRAP_USER,
-                    pass: process.env.MAILTRAP_PASS
-                }
-            });
-        } else {
+		if (process.env.NODE_ENV != 'production') {
+			return nodemailer.createTransport({
+				host: 'sandbox.smtp.mailtrap.io',
+				port: 2525,
+				auth: {
+					user: process.env.MAILTRAP_USER,
+					pass: process.env.MAILTRAP_PASS,
+				},
+			});
+		} else {
             // USE VALID MAIL SERVER LIKE GMAIL
             return nodemailer.createTransport({
                 host: 'mail.somedomain.com', //AN ACTUAL MAIL SERVER

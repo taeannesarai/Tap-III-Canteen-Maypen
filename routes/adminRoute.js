@@ -45,14 +45,14 @@ const app = express();
 
 router.use(express.urlencoded({ extended: true }));
 
-router.use(
-	fileUpload({
-		limits: {
-			fileSize: 50 * 1024 * 1024,
-		},
-		abortOnLimit: true,
-	})
-);
+// router.use(
+// 	fileUpload({
+// 		limits: {
+// 			fileSize: 50 * 1024 * 1024,
+// 		},
+// 		abortOnLimit: true,
+// 	})
+// );
 
 const authenticate = (req, res, next) => {
     if (1 == 1) {
@@ -258,29 +258,31 @@ router.get("/create-menu-item", async (req, res) => {
 
 //Update Menu Post
 router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, res) => {
-	const mealData = {
-		id: req.body.id,
-		item_name: req.body.meal_name,
-		quantity: req.body.quantity,
-		description: req.body.desc,
-	};
+    const mealData = {
+        id: req.body.id,
+        item_name: req.body.meal_name,
+        quantity: req.body.quantity,
+        description: req.body.desc,
+    };
 
-	if (req.body.desc.length > 255) {
-		mealData.description = req.body.desc.slice(0, 255);
-	} else {
-		mealData.description = req.body.desc;
-	}
+    if (req.body.desc.length > 255) {
+        mealData.description = req.body.desc.slice(0, 255);
+    } else {
+        mealData.description = req.body.desc;
+    }
 
-	if (req.file) {
-		mealData.img = `${ranVal}_${req.file.originalname}`;
-	} else {
-		mealData.img = "";
-	}
+    if (req.file) {
+        mealData.img = `${ranVal}_${req.file.originalname}`;
+    } else {
+        // Retain the existing image if no new image is uploaded
+        mealData.img = req.body.current_img;
+    }
 
-	console.log(mealData);
-	await updateMenu(mealData);
-	res.redirect("/tap-canteen/lunch-menu");
+    console.log(mealData);
+    await updateMenu(mealData);
+    res.redirect("/tap-canteen/lunch-menu");
 });
+
 
 // router.get("/update-menu/:id", async (req, res) => {
 // 	const id = req.params.id;
@@ -356,7 +358,7 @@ router.post("/update-drink-item-submit", upload.single("img"), async (req, res) 
 	} else {
 		// No new image uploaded, retain the old image
 		const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
-		drinkItemData.img = oldDrinkItem.img;
+		drinkItemData.img = req.body.current_img;
 	}
 
 	console.log(drinkItemData);

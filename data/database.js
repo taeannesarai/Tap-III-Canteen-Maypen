@@ -227,7 +227,7 @@ export const getSingleUser = async (aID) => {
     `,
 		[aID]
 	);
-	return result[0];
+	return result;
 };
 
 

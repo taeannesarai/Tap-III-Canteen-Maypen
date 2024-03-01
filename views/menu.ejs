@@ -4,7 +4,7 @@
 	<div class="menu-card-container mb-4">
 		<% for( let i = 0; i < mealData.length; i++ ) { %>
 		<div class="card" style="width: 24rem">
-			<img src="../uploads/<%= mealData[i].img %>" class="card-img-top" alt="<%= mealData[i].item_name %>_image" />
+			<img src="../uploads/<%= mealData[i].img %>" class="card-img-top img-fluid" alt="<%= mealData[i].item_name %>_image" />
 			<div class="card-body">
 				<h5 class="card-title"><%= mealData[i].item_name %></h5>
 				<p class="card-text"><%= mealData[i].description %></p>
