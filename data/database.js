@@ -325,17 +325,11 @@ export const getAllSchedule = async () => {
         m.description AS menu_description,
         m.img AS menu_image,
         ms.drink_id,
-        d.beverage AS drink_name,
-        d.quantity AS drink_quantity,
-        d.description AS drink_description,
-        d.img AS drink_image,
         ms.date
     FROM
         meals_schedule AS ms
     JOIN
         menu AS m ON ms.menu_id = m.id
-    JOIN
-        drinks AS d ON ms.drink_id = d.id
     JOIN
         users AS u ON ms.user_id = u.id;`
 	);
