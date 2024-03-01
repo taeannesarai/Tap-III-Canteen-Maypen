@@ -4,7 +4,13 @@
         <!-- <div class="mask" style="background-color: rgba(0, 0, 0, 0.6);"> -->
         <div class="d-flex justify-content-center align-items-center h-100 z-10">
             <div class="text-white">
-                <h1 class="mb-3">WELCOME</h1>
+                <h1 class="mb-3">WELCOME to the <br> TAP Program Lunch App</h1>
+                <div class="row home-cta">
+                    <!-- <div class="col-2"></div> -->
+                    <div class="col-6 mx-auto">
+                        <a href="/tap-canteen/auth/signup" class="btn btn-primary px-5 signup-link">Signup</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -12,28 +18,50 @@
     <!--end Hero -->
 
 
-    <div class="home-header">
-        Our Star Meals
-    </div>
+
 
 
 
     <!-- card container -->
-    <div class="main-page-body">
-        <div class="menu-card-main">
-            <div class="main-image ">
-                <img src="/public/Student-registration-form.jpg">
 
-            </div>
+
+
+    <!-- thus -->
+    <!-- <div class="menu-card-container mb-4"> -->
+    <div class="page-body mt-3">
+        <div class="page-heading">
+            Our Star Meals
         </div>
+        <% for( let i=0; i < lastFourMeal.length; i++ ) { %>
+            <div class="card" style="width: 18rem">
+                <img src="../uploads/<%= lastFourMeal[i].img %>" class="card-img-top"
+                    alt="<%= lastFourMeal[i].item_name %>_image" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= lastFourMeal[i].item_name %>
+                    </h5>
+                    <p class="card-text">
+                        <%= lastFourMeal[i].description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Qty: <%= lastFourMeal[i].quantity %>
+                    </li>
+                    <!-- <li class="list-group-item">A second item</li>
+    				<li class="list-group-item">A third item</li> -->
+                </ul>
+                <div class="card-body">
+
+                </div>
+            </div>
+            <% } %>
+
+                <div class="row">
+                    <div class="col-2 mx-auto">
+                        <a href="/tap-canteen/lunch-menu" class="btn btn-secondary px-5 signup-link">View More</a>
+                    </div>
+                </div>
     </div>
-    </div>
-
-    <!-- card container -->
-
-
-
-
 
 
     <%- include('./partials/footer') %>

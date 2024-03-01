@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import BodyParser from "body-parser"; 
 import { loginRoute } from "./loginRoute.js";
 // <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule } from "../data/database.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule,getLastFour } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -12,9 +12,11 @@ app.use(BodyParser.urlencoded({ extended: true }));
 // Homepage
 router.get("/", async (req, res) => {
     // const lastFour = await lastFourMeal();
-    res.render("index", {
-        title: "Home",
-        // lastFourMealData: lastFour
+    const lastFourMeal = await getLastFour();
+    const meals = await getAllMenu();
+    console.log(lastFourMeal);
+    res.render("index", {lastFourMeal, title: "Home"
+       
     });
 });
 
@@ -78,14 +80,14 @@ router.post("/new-user", async (req, res) => {
 //Create SCHEDULE
 
 router.get("/create-menu-schedule/:id", async (req, res) => {
-    const menu = {
+    const schedule = {
         user_id: loginRoute.sessionData.user_id,
         menu_id: req.params.id,
         date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
         //user_id, menu_id, drink_id, date
     }
-    console.log(menu)
-    await saveSchedule(menu)
+    console.log(schedule)
+    await saveSchedule(schedule)
     res.redirect("/tap-canteen/");
 })
 

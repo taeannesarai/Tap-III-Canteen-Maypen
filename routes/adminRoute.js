@@ -33,6 +33,8 @@ import {
 	deleteSchedule,
 	getAllSchedule,
 	getSingleSchedule,
+	// updateSchedule,
+	// deleteSchedule,
 	getAllUser,
 	updateUser,
 	deleteUser,
@@ -198,7 +200,8 @@ router.get("/update-user", async (req, res) => {
 	res.render("admin_pages/user-update", { title: "Update User" });
 });
 
-///////////////////////////////////////////   ============ All of Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All Schedule ==============  
+
 
 // VIEW ALL MEAL SCHEDULE
 router.get("/schedules", async (req, res) => {
@@ -223,6 +226,37 @@ router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
+
+//update schedule
+router.get("/update-meal-schedule-item/:id", async (req, res) => {
+	const [menuSchData] = await getSingleSchedule(req.params.id);
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+
+	res.render("admin_pages/update-schedule-item", {
+		title: "Update Schedule",
+		prevUrl,
+		menuSchData,
+	});
+}); 
+
+//delete schedule
+router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	const [menuSchData] = await getSingleSchedule(req.params.id);
+	console.log(menuSchData);
+	res.render("admin_pages/delete-schedule-item", {
+		title: "Delete schedule Item",
+		menuSchData,
+		prevUrl,
+	});
+});
+
+
+
+
+
+
+
 
 // ============== DATABASE ACTIONS ==============
 // Create Menu Post
@@ -393,18 +427,60 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //Create Meal Schedule
 
-router.post("/create-mealschedule", async (req, res) => {
-	const menuItemData = {
-		item_name: req.body.item_name,
-		quantity: req.body.quantity,
-		description: req.body.description,
-		img: req.body.img,
+router.post('/create-meal-schedule', async (req, res) => {
+    const menuItemData = {
+        item_name: req.body.item_name,
+        quantity: req.body.quantity,
+        description: req.body.description,
+        img: req.body.img
+    }
+
+    console.log(menuItemData);
+    await saveMenu(menuItemData);
+    res.redirect('/');
+});
+
+
+//update 
+router.post("/update-schedule-item-submit", async (req, res) => {
+	const scheduleData = {
+		id:req.body.id,
+		user_id:req.body.user_id,
+        menu_id:req.body.menu_id,
+        drink_id:1,
+        date:( req.body.date).toISOString().split("T")[0] + ` 00:00:00`,
 	};
 
-	console.log(menuItemData);
-	await saveMenu(menuItemData);
+	console.log(scheduleData);
+	await updateSchedule(scheduleData);
 	res.redirect("/");
 });
+
+
+
+
+//Delete Schedule Post
+router.get("/delete-Schedule-item/confirm/:id", async (req, res) => {
+	const id = req.params.id;
+	const [record] = await getSingleSchedule(id);
+	
+	console.log("Deleting Schedule item with ID:", id);
+	console.log(record);
+	await deleteSchedule(id);
+	res.redirect("/tap-canteen/lunch-Schedule");
+});
+
+
+// Get a Single Menu Post
+router.post("/:id", async (req, res) => {
+	const scheduleId = req.body.id;
+
+	console.log("getting the schedule", schedule);
+	const schedule = await getSingleSchedule(scheduleId);
+	console.log("getting  schedule item:", schedule);
+	res.redirect("/");
+});
+
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;
