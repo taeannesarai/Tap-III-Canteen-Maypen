@@ -450,14 +450,6 @@ footer .footer-grid .input-container:last-of-type() {
 	height: 280px;
 }
 
-/* .send-a-message {
-  display: block;
-  color: white; 
-  font-size: 30px;
-  border: none;
-  border-radius: 5px;
-  text-align: center;  
-} */
 /*============================= form-container footer end ========================== */
 
 /*======== footer link style ============ */
@@ -485,9 +477,7 @@ hr {
 	margin-top: 7%;
 }
 
-/*============================= footer links ========================== */
-
-/* sign up form        */
+/*=============== sign up form        */
 .form-container {
 	width: 80%;
 	display: flex;
