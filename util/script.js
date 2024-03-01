@@ -29,9 +29,10 @@ function isPWMatch() {
 	let signupBtn = document.querySelector(".signup-submit-btn");
 
 	signupBtn.setAttribute("disabled", "");
+	userPWConfirm.setAttribute("disabled", "");
 
 	userPW.addEventListener("keyup", () => {
-		if (userPW.value.length < 7) {
+		if (userPW.value.length <= 7) {
 			userPWConfirm.setAttribute("disabled", "");
 		} else {
 			userPWConfirm.removeAttribute("disabled");

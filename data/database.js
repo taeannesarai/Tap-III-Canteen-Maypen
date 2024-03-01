@@ -29,6 +29,18 @@ export const getAllMenu = async () => {
 	const rows = result;
 	return rows;
 };
+// Get last 4 item Menu
+export const getLastFour = async () => {
+	const [result] = await pool.query(
+		`
+    SELECT * FROM menu
+ 	ORDER BY id
+	DESC LIMIT 0, 4;
+      `
+	);
+	const rows = result;
+	return rows;
+};
 
 
 // Create Menu
@@ -227,7 +239,7 @@ export const getSingleUser = async (aID) => {
     `,
 		[aID]
 	);
-	return result[0];
+	return result;
 };
 
 
@@ -248,7 +260,7 @@ export const createAdmin = async () => {
 	};
 	const result = await pool.query(
 		`
-        INSERT INTO user(first_name, last_name, email, location, phone_num, trn, roles, password)
+        INSERT INTO users(first_name, last_name, email, location, phone_num, trn, roles, password)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?)
     `,
 		[user.first_name, user.last_name, user.email, user.location, user.phone_num, user.trn, user.roles, user.password]
@@ -262,7 +274,7 @@ export const createAdmin = async () => {
 export const adminUserExists = async () => {
 	let bRet = false;
 	const result = await pool.query(`
-        SELECT * FROM user WHERE roles = 'ADMIN' AND email = 'admin@mail.com'
+        SELECT * FROM users WHERE roles = 'ADMIN' AND email = 'admin@mail.com'
     `);
 	console.log(result);
 	const rows = result[0];
@@ -298,7 +310,7 @@ export const isLoginCorrect = async (user, pass) => {
 // Get All schedule
 
 export const getAllSchedule = async () => {
-	const result = await pool.query(
+	const [result] = await pool.query(
 		`SELECT
         ms.id AS schedule_id,
         ms.user_id,
@@ -333,44 +345,44 @@ export const getAllSchedule = async () => {
 
 //Create Schedule
 
-// export const saveSchedule = async (sSch) => {
-// 	const result = await pool.query(
-// 		`
-//         INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
-//          VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
-//     `,
-// 		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
-// 	);
-// 	return result;
-// };
+export const saveSchedule = async (sSch) => {
+	const result = await pool.query(
+		`
+        INSERT INTO meals_schedule(user_id, menu_id, date)
+        VALUES(?, ?, ?)
+    `,
+		[sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+	);
+	return result;
+};
 
 
 //Update Schedule
 
-// export const updateSchedule = async (uSch) => {
-// 	const result = await pool.query(
-// 		`
-//         UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
-//         WHERE id = ?
-//     `,
-// 		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date, uSch.id]
-// 	);
-// 	return result;
-// };
+export const updateSchedule = async (uSch) => {
+	const result = await pool.query(
+		`
+        UPDATE meals_schedule SET user_id = ?, menu_id = ?, drink_id  = ?, date = ?
+        WHERE id = ?
+    `,
+		[uSch.user_id, uSch.menu_id, uSch.drink_id, uSch.date, uSch.id]
+	);
+	return result;
+};
 
 
 // //Delete Schedule
 
-// export const deleteSchedule = async (dSch) => {
-// 	const [row] = await pool.query(
-// 		`
-//         DELETE FROM meals_schedule
-//         WHERE id=?
-//     `,
-// 		[dSch]
-// 	);
-// 	return row;
-// };
+export const deleteSchedule = async (dSch) => {
+	const [row] = await pool.query(
+		`
+        DELETE FROM meals_schedule
+        WHERE id=?
+    `,
+		[dSch]
+	);
+	return row;
+};
 
 
 //Get Single Schedule

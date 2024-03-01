@@ -1,85 +1,81 @@
 <%- include('../partials/header'); %>
 
 <div class="page-body">
+	<h1 class="page-heading">Signup</h1>
 
-    <div class="form-container">
-        <div class="col-md-9 col-lg-5 col-xl-7 d-flex align-items-center order-3 order-lg-2 m-1">
-            <img src="/public/Student-registration-form.jpg" class="img-fluid" alt="Sample image">
-        </div>
+	<div class="form-container mx-auto mt-3">
+		<img src="/public/assets/Student-registration-form.jpg" class="signup-f0rm-img" alt="Sample image" />
+		<!-- <div class="col-md-9 col-lg-5 col-xl-7 d-flex align-items-center order-3 order-lg-2 m-1"></div> -->
 
-        <form class="container" action="/tap-canteen/auth/signup/sumbit" method="post">
-            <div class="row">
-                <div class="col">
-                    <label for="first_name" class="form-label">First Name </label>
-                    <input type="text" id="first_name" name="first_name" required class="form-control" />
-                </div>
+		<form class="" action="/tap-canteen/auth/signup/sumbit" method="post">
+			<div class="row">
+				<div class="col">
+					<label for="first_name" class="form-label">First Name </label>
+					<input type="text" id="first_name" name="first_name" required class="form-control" />
+				</div>
 
-                <div class="col">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" required class="form-control" />
-                </div>
-            </div>
+				<div class="col">
+					<label for="last_name" class="form-label">Last Name</label>
+					<input type="text" id="last_name" name="last_name" required class="form-control" />
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col">
-                    <label for="email" class="form-label"> Email </label>
-                    <input type="text" id="email" name="email" required class="form-control" />
-                </div>
+			<div class="row">
+				<div class="col">
+					<label for="email" class="form-label"> Email </label>
+					<input type="text" id="email" name="email" required class="form-control" />
+				</div>
 
-                <div class="col">
-                    <label for="phone_num" class="form-label">Phone Number</label>
-                    <input type="text" id="phone_num" name="phone_num" required class="form-control" />
-                </div>
-            </div>
+				<div class="col">
+					<label for="phone_num" class="form-label">Phone Number</label>
+					<input type="text" id="phone_num" name="phone_num" required class="form-control" />
+				</div>
+			</div>
 
+			<div class="row">
+				<div class="col m-1">
+					<label for="trn" class="form-label">TRN Number</label>
+					<input type="text" id="trn" name="trn" required class="form-control" />
+				</div>
 
-            <div class="row">
-                <div class="col m-1">
-                    <label for="trn" class="form-label">TRN Number</label>
-                    <input type="text" id="trn" name="trn" required class="form-control" />
-                </div>
+				<div class="col m-2">
+					<label class="form-label select-label">Select Location</label>
+					<select class="select form-select" name="location">
+						<option value="">Select Location</option>
+						<option value="MAY PEN">May Pen</option>
+						<option value="UTECH KINGSTON">UTECH Kingston</option>
+						<option value="UTECH MONTEGO BAY">UTECH Montego Bay</option>
+					</select>
+				</div>
+			</div>
 
-                <div class="col m-2">
-                    <label class="form-label select-label">Select Location</label>
-                    <select class="select form-select" name="location">
-                        <option value="">Select Location</option>
-                        <option value="MAY PEN">May Pen</option>
-                        <option value="UTECH KINGSTON">UTECH Kingston</option>
-                        <option value="UTECH MONTEGO BAY">UTECH Montego Bay</option>
-                    </select>
+			<div class="row">
+				<div class="col">
+					<label for="password" class="form-label">Password</label>
+					<input type="password" name="password" required class="form-control user-pw" />
+				</div>
 
-                </div>
-            </div>
+				<div class="col">
+					<label for="password" class="form-label">Confirm Password</label>
+					<input type="password" name="password-confirm" required class="form-control user-pw-confirm" />
+				</div>
+			</div>
 
+			<!-- check box -->
+			<!-- <div class="row">
+				<div class="col m-2">
+					<input class="form-check-input" type="checkbox" value="USER" checked disabled id="defaultCheck1" />
+					<label class="form-check-label" for="defaultCheck1"> Role(User) </label>
+				</div>
+			</div> -->
 
-            <div class="row">
-                <div class="col">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" id="" name="password" required class="form-control user-pw" />
-                </div>
-
-                <div class="col">
-                    <label for="password" class="form-label">Confirm Password</label>
-                    <input type="password" id="" name="password-confirm" required class="form-control user-pw-confirm" />
-                </div>
-            </div>
-
-            <!-- check box -->
-            <div class="row">
-                <div class="col m-2">
-                    <input class="form-check-input" type="checkbox" value="USER" checked disabled id="defaultCheck1">
-                    <label class="form-check-label" for="defaultCheck1">
-                        Role(User)
-                    </label>
-                </div>
-            </div>
-
-            <div class="d-grid gap-5 m-5 col-6 mx-auto">
-                <button class="btn btn-primary signup-submit-btn">Signup</button>
-            </div>
-
-        </form>
-    </div>
+			<div class="row mt-3">
+				<div class="col-6">
+					<button class="btn btn-primary signup-submit-btn fill-container-btn">Signup</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
 
 <%- include('../partials/footer'); %>

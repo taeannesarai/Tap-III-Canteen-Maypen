@@ -1,41 +1,36 @@
 <%- include('../partials/header'); %>
- 
-<div class="home-header">
-    Our Star Meals
-</div>
 
 <!-- login form -->
 <div class="page-body">
-    <h3>Sign In</h3>
-    <div class="form-container">
-        <div class="col-xl-4 d-none d-xl-block">
-            <img src="/public/Login.png" class="img-fluid" alt="Sample image">
-        </div>
+	<h1 class="page-heading mb-3">Sign In</h1>
 
-        <div class="container">
-            <form action="/tap-canteen/auth/login-submit" method="get">
-                <div class="row">
-                    <div class="col-5 m-3">
-                        <label for="userName" class="form-label">User Name</label>
-                        <input type="text" id="userName" name="userName" required class="form-control" />
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-5 m-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="text" id="password" name="password" required class="form-control" />
-                    </div>
-                </div>
-                
-                
-                <button class="btn btn-primary btn-block mb-6 m-3">Login</button>
+	<div class="<%= locals.classes ? classes : '' %>"><%= locals.message ? message : '' %></div>
 
-            </form>
-        </div>
-    </div>
+	<div class="form-container-login mx-auto mt-3">
+		<img src="/public/assets/pexels-photo-2882566.jpeg" class="" alt="Sample image" />
+
+		<form action="/tap-canteen/auth/login-submit" method="post">
+			<div class="row">
+				<div class="col">
+					<label for="userName" class="form-label">User Name</label>
+					<input type="text" id="userName" name="userName" required class="form-control" />
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col">
+					<label for="" class="form-label">Password</label>
+					<input type="password" id="" name="password" required class="form-control" />
+				</div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col">
+					<button class="btn btn-primary w-100">Login</button>
+				</div>
+			</div>
+		</form>
+	</div>
 </div>
-
-
 
 <%- include('../partials/footer'); %>
