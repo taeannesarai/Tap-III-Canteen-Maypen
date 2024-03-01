@@ -1,52 +1,53 @@
 <%- include('../partials/header'); %>
 
 <div class="page-body">
-    <h1 class="page-heading">Signup</h1>
+	<h1 class="page-heading">Signup</h1>
 
-    <div class="form-container mx-auto mt-3">
-        <img src="/public/assets/Student-registration-form.jpg" class="signup-f0rm-img" alt="Sample image" />
+	<div class="form-container mx-auto mt-3">
+		<img src="/public/assets/Student-registration-form.jpg" class="signup-f0rm-img" alt="Sample image" />
+		<!-- <div class="col-md-9 col-lg-5 col-xl-7 d-flex align-items-center order-3 order-lg-2 m-1"></div> -->
 
-        <form class="" action="/tap-canteen/auth/signup/sumbit" method="post">
-            <div class="row">
-                <div class="col">
-                    <label for="first_name" class="form-label">First Name </label>
-                    <input type="text" id="first_name" name="first_name" required class="form-control" />
-                </div>
+		<form class="" action="/tap-canteen/auth/signup/sumbit" method="post">
+			<div class="row">
+				<div class="col">
+					<label for="first_name" class="form-label">First Name </label>
+					<input type="text" id="first_name" name="first_name" required class="form-control" />
+				</div>
 
-                <div class="col">
-                    <label for="last_name" class="form-label">Last Name</label>
-                    <input type="text" id="last_name" name="last_name" required class="form-control" />
-                </div>
-            </div>
+				<div class="col">
+					<label for="last_name" class="form-label">Last Name</label>
+					<input type="text" id="last_name" name="last_name" required class="form-control" />
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col">
-                    <label for="email" class="form-label"> Email </label>
-                    <input type="text" id="email" name="email" required class="form-control" />
-                </div>
+			<div class="row">
+				<div class="col">
+					<label for="email" class="form-label"> Email </label>
+					<input type="text" id="email" name="email" required class="form-control" />
+				</div>
 
-                <div class="col">
-                    <label for="phone_num" class="form-label">Phone Number</label>
-                    <input type="text" id="phone_num" name="phone_num" required class="form-control" />
-                </div>
-            </div>
+				<div class="col">
+					<label for="phone_num" class="form-label">Phone Number</label>
+					<input type="text" id="phone_num" name="phone_num" required class="form-control" />
+				</div>
+			</div>
 
-            <div class="row">
-                <div class="col m-1">
-                    <label for="trn" class="form-label">TRN Number</label>
-                    <input type="text" id="trn" name="trn" required class="form-control" />
-                </div>
+			<div class="row">
+				<div class="col m-1">
+					<label for="trn" class="form-label">TRN Number</label>
+					<input type="text" id="trn" name="trn" required class="form-control" />
+				</div>
 
-                <div class="col m-2">
-                    <label class="form-label select-label">Select Location</label>
-                    <select class="select form-select" name="location">
-                        <option value="">Select Location</option>
-                        <option value="MAY PEN">May Pen</option>
-                        <option value="UTECH KINGSTON">UTECH Kingston</option>
-                        <option value="UTECH MONTEGO BAY">UTECH Montego Bay</option>
-                    </select>
-                </div>
-            </div>
+				<div class="col m-2">
+					<label class="form-label select-label">Select Location</label>
+					<select class="select form-select" name="location">
+						<option value="">Select Location</option>
+						<option value="MAY PEN">May Pen</option>
+						<option value="UTECH KINGSTON">UTECH Kingston</option>
+						<option value="UTECH MONTEGO BAY">UTECH Montego Bay</option>
+					</select>
+				</div>
+			</div>
 
 			<div class="row">
 				<div class="col">
@@ -60,42 +61,17 @@
 				</div>
 			</div>
 
-			<!-- check box -->
-			<!-- <div class="row">
-				<div class="col m-2">
-					<input class="form-check-input" type="checkbox" value="USER" checked disabled id="defaultCheck1" />
-					<label class="form-check-label" for="defaultCheck1"> Role(User) </label>
+			<div class="row">
+				<div class="col no-match"></div>
+			</div>
+
+			<div class="row mt-3">
+				<div class="col-6">
+					<button class="btn btn-primary signup-submit-btn fill-container-btn">Signup</button>
 				</div>
-			</div> -->
-
-            <div class="row mt-3">
-                <div class="col-6">
-                    <button class="btn btn-primary signup-submit-btn fill-container-btn">Signup</button>
-                </div>
-            </div>
-        </form>
-    </div>
+			</div>
+		</form>
+	</div>
 </div>
-
-<script>
-    document.getElementById('trn').addEventListener('input', function(e) {
-        let trn = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-
-        // Limit TRN input to 9 digits
-        trn = trn.slice(0, 9);
-
-        // Add dashes after every third character for display
-        const formattedTrn = trn.replace(/(\d{3})(?=\d)/g, '$1-');
-
-        e.target.value = formattedTrn;
-    });
-
-    // Before submitting the form, remove dashes from the TRN
-    document.querySelector('form').addEventListener('submit', function(e) {
-        const trnInput = document.getElementById('trn');
-        trnInput.value = trnInput.value.replace(/\D/g, ''); // Remove dashes
-    });
-</script>
-
 
 <%- include('../partials/footer'); %>
