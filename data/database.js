@@ -29,6 +29,18 @@ export const getAllMenu = async () => {
 	const rows = result;
 	return rows;
 };
+// Get last 4 item Menu
+export const getLastFour = async () => {
+	const [result] = await pool.query(
+		`
+    SELECT * FROM menu
+ 	ORDER BY id
+	DESC LIMIT 0, 4;
+      `
+	);
+	const rows = result;
+	return rows;
+};
 
 
 // Create Menu

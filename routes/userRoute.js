@@ -2,7 +2,7 @@ import express, { Router } from "express";
 import BodyParser from "body-parser"; 
 import { loginRoute } from "./loginRoute.js";
 // <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule } from "../data/database.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser,saveSchedule,getLastFour } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -12,9 +12,11 @@ app.use(BodyParser.urlencoded({ extended: true }));
 // Homepage
 router.get("/", async (req, res) => {
     // const lastFour = await lastFourMeal();
-    res.render("index", {
-        title: "Home",
-        // lastFourMealData: lastFour
+    const lastFourMeal = await getLastFour();
+    const meals = await getAllMenu();
+    console.log(lastFourMeal);
+    res.render("index", {lastFourMeal, title: "Home"
+       
     });
 });
 

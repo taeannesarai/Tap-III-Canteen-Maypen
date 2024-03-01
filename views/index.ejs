@@ -12,28 +12,45 @@
     <!--end Hero -->
 
 
-    <div class="home-header">
-        Our Star Meals
-    </div>
+
 
 
 
     <!-- card container -->
-    <div class="main-page-body">
-        <div class="menu-card-main">
-            <div class="main-image ">
-                <img src="/public/Student-registration-form.jpg">
 
-            </div>
+
+
+    <!-- thus -->
+    <!-- <div class="menu-card-container mb-4"> -->
+    <div class="page-body mt-3">
+        <div class="page-heading">
+            Our Star Meals
         </div>
+        <% for( let i=0; i < lastFourMeal.length; i++ ) { %>
+            <div class="card" style="width: 18rem">
+                <img src="../uploads/<%= lastFourMeal[i].img %>" class="card-img-top"
+                    alt="<%= lastFourMeal[i].item_name %>_image" />
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <%= lastFourMeal[i].item_name %>
+                    </h5>
+                    <p class="card-text">
+                        <%= lastFourMeal[i].description %>
+                    </p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Qty: <%= lastFourMeal[i].quantity %>
+                    </li>
+                    <!-- <li class="list-group-item">A second item</li>
+    				<li class="list-group-item">A third item</li> -->
+                </ul>
+                <div class="card-body">
+
+                </div>
+            </div>
+            <% } %>
+
     </div>
-    </div>
-
-    <!-- card container -->
-
-
-
-
 
 
     <%- include('./partials/footer') %>

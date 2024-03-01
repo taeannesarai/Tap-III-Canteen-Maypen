@@ -375,7 +375,7 @@ footer .footer-grid .input-container:last-of-type() {
 	z-index: 10;
  }
 
-/* image container for star meals */
+/*=============================== image container for star meals ============================*/
 .main-page-body {
 	margin: 0 30px;
 	border-radius: 10px;
@@ -402,8 +402,6 @@ footer .footer-grid .input-container:last-of-type() {
 	margin-left: 5.5%;
 	margin-bottom: 5%;
 	/* column-gap: 1%; */
-
-
 }
 
 .main-image img {
@@ -441,6 +439,57 @@ footer .footer-grid .input-container:last-of-type() {
 		border-bottom-left-radius: 0.5rem;
 	}
 }
+
+/*============================= form-container footer ========================== */
+.form-container-footer {
+  margin: 0 auto; 
+  width: 50%;
+    
+}
+
+.page-body2 {
+	font-size: 15px;  
+ 	height: 280px;
+    }
+
+/* .send-a-message {
+  display: block;
+  color: white; 
+  font-size: 30px;
+  border: none;
+  border-radius: 5px;
+  text-align: center;  
+} */
+/*============================= form-container footer end ========================== */
+
+ /*======== footer link style ============ */
+.footer2-information {
+  text-align: center;
+  margin-top: 5%;
+}
+
+.footer2-information ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer2-information li {
+  display: inline-block;
+  margin: 0 8px; /* Adjust spacing between items */
+}
+
+.footer2-information li a {
+  text-decoration: none;
+  color: #000; /* Set the desired color */
+}
+hr{
+	color: #000;
+	margin-top: 7%;
+}
+ 
+ 
+
+/*============================= footer links ========================== */
 
 /* sign up form        */
 .form-container {
@@ -489,3 +538,5 @@ footer .footer-grid .input-container:last-of-type() {
 .user-interactions > * {
 	margin: 0 10px;
 }
+
+/* dfghjkl; */
