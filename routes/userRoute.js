@@ -1,9 +1,7 @@
 import express, { Router } from "express";
 import BodyParser from "body-parser";
-// <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
-import { Email } from "../util/email.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -51,30 +49,6 @@ router.get('/about', async (req, res) => {
 
 // user create
 
-router.post("/new-user", async (req, res) => {
-	const newData = new Object();
-
-    (newData.first_name = req.body.first_name.toUpperCase()),
-        (newData.last_name = req.body.last_name.toUpperCase()),
-        (newData.email = req.body.email),
-        (newData.location = req.body.location),
-        (newData.phone_num = req.body.phone_num),
-        (newData.trn = req.body.trn),
-        (newData.roles = req.body.roles),
-        (newData.password = req.body.password);
-    
-	const result = await saveUser(newData);
-
-	if (result[0].insertId) {
-		const uId = result[0].insertId;
-		const data = await getSingleUser(uId);
-
-		const email = new Email (data[0]);
-		await email.sendMail("signup_email", "New User", data[0]);
-	}
-
-	res.redirect("/");
-});
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const userRoute = router;

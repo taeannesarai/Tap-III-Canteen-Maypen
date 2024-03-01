@@ -1,8 +1,8 @@
 import express from "express";
 import morgan from "morgan";
 
-import { decryptPW } from './util/auth.js';
-import { adminUserExists, createAdmin } from './data/database.js';
+import { decryptPW } from "./util/auth.js";
+import { adminUserExists, createAdmin } from "./data/database.js";
 
 //configuration
 const PORT = 4400;
@@ -32,9 +32,32 @@ app.use(morgan("dev"));
 // 	if (bRet == false) {
 // 		await createAdmin();
 // 	}
-	
+
 // 	res.redirect("/tap-canteen/");
 // });
+
+const authenticate = (req, res, next) => {
+	if (loginRoute.sessionData) {
+		// console.log("loginRoute.sessionData", loginRoute.sessionData);
+		return next();
+	} else {
+		return res.redirect("/tap-canteen/auth/login");
+	}
+};
+
+const sendSessionData = (req, res, next) => {
+	console.log("==========================================", loginRoute.sessionData);
+	res.locals.sessionData = loginRoute.sessionData;
+	return next();
+};
+
+app.all("/tap-canteen/*", sendSessionData, (req, res, next) => {
+	next();
+});
+
+app.all("/tap-canteen/admin*", authenticate, (req, res, next) => {
+	next();
+});
 
 //Route Middleware
 // route for login
