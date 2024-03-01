@@ -124,7 +124,7 @@ router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 	});
 });
 
-//   ============ All Drinks ==============  
+//   ============ All Drinks ==============
 
 //Get Single Drink
 
@@ -178,7 +178,7 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 	});
 });
 
-//   ============ All User ==============   
+//   ============ All User ==============
 
 //Get Single User
 
@@ -305,7 +305,8 @@ router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, r
 	if (req.file) {
 		mealData.img = `${ranVal}_${req.file.originalname}`;
 	} else {
-		mealData.img = "";
+		const [result] = await getSingledMenu(mealData.id);
+		mealData.img = result.img;
 	}
 
 	console.log(mealData);

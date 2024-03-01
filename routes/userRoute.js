@@ -83,7 +83,6 @@ router.get("/create-menu-schedule/:id", async (req, res) => {
     const schedule = {
         user_id: loginRoute.sessionData.user_id,
         menu_id: req.params.id,
-        drink_id:1,
         date:( new Date()).toISOString().split("T")[0] + ` 00:00:00`,
         //user_id, menu_id, drink_id, date
     }
