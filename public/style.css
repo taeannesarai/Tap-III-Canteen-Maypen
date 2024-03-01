@@ -355,8 +355,9 @@ footer .footer-grid .input-container:last-of-type() {
 /* hero image */
  .hero-section {
 	position: relative;
-	height: 60vh;
+	height: 70vh;
 	background: center/cover url('/public/lunchroom-hero\ image.jpg');
+	box-shadow: inset 0 0 1000px 1000px #0000007c;
  }
 
  .hero-img {
@@ -375,55 +376,7 @@ footer .footer-grid .input-container:last-of-type() {
 	z-index: 10;
  }
 
-/*=============================== image container for star meals ============================*/
-.main-page-body {
-	margin: 0 30px;
-	border-radius: 10px;
-	background-color: #28639628;
-	padding: 5px;
-	position: relative;
-	width: 96%;
-}
-
-.menu-card-main {
-	display: flex;
-	justify-content: flex-start;
-	flex-wrap: wrap;
-	row-gap: 30px;
-	/* column-gap: 1%; */
-}
  
-.main-image {
-    width: 200px;
-    height: 190px;
-    border: 3px solid #141313;
-    overflow: hidden;  
-	margin-top: 5%;
-	margin-left: 5.5%;
-	margin-bottom: 5%;
-	/* column-gap: 1%; */
-}
-
-.main-image img {
-    width: 100%;
-    height: auto;
-    display: block;  
-	aspect-ratio: 5/5;
-	background-color: var(--dark-cyan-blue);
-	border-radius: 2px;
-	position: relative;
-}
-/*for Hover Effect for main page images */
-.main-image img {
-    transition: transform 0.4s ease;
-}
-
-.main-image img:hover {
-    transform: scale(1.1);
- 
-}
-
-
 /* login-in */
 .rounded-t-5 {
 	border-top-left-radius: 0.2rem;
@@ -452,14 +405,6 @@ footer .footer-grid .input-container:last-of-type() {
  	height: 280px;
     }
 
-/* .send-a-message {
-  display: block;
-  color: white; 
-  font-size: 30px;
-  border: none;
-  border-radius: 5px;
-  text-align: center;  
-} */
 /*============================= form-container footer end ========================== */
 
  /*======== footer link style ============ */
@@ -486,12 +431,11 @@ hr{
 	color: #000;
 	margin-top: 7%;
 }
- 
- 
 
-/*============================= footer links ========================== */
+/*====================== footer links end ================ */
 
-/* sign up form        */
+
+/*=============== sign up form        */
 .form-container {
 	width: 80%;
 	display: flex;
@@ -539,4 +483,4 @@ hr{
 	margin: 0 10px;
 }
 
-/* dfghjkl; */
+ 

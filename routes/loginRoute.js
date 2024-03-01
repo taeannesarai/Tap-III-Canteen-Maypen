@@ -55,16 +55,22 @@ router.post("/signup/sumbit", async (req, res) => {
 	newUser.password = await encryptPW(req.body.password);
 	console.log(newUser);
 
-	const result = await createUserAcc(newUser);
+	const [result] = await createUserAcc(newUser);
 
 	console.log(result);
+
+	console.log('-====================================');
+	console.log('-====================================');
+	console.log(result.insertId);
 
 	if (result.insertId) {
 		const uId = result.insertId;
 		const data = await getSingleUser(uId);
 
+		console.log(data);
+
 		const email = new Email(data);
-		await email.sendMail("signup_email", "New User", data[0]);
+		await email.sendMail("signup_email", "New User", data);
 	}
 
 	res.redirect("/tap-canteen");
@@ -101,8 +107,8 @@ router.post("/login-submit", async (req, res) => {
 	const username = req.body.userName;
 	const password = req.body.password;
 	const user = await getSingleUser(username);
-	// console.log(req.body);
-	// console.log(user);
+	console.log(req.body);
+	console.log(user);
 
 	if (!user) {
 		res.render("auth/login", {
@@ -112,6 +118,7 @@ router.post("/login-submit", async (req, res) => {
 		});
 	} else {
 		const checkPW = await decryptPW(password, user.password);
+		// const checkPW = await decryptPW('$14$LqRR4qWT12w/Kco6Goc/m.WzWkSq.GBVf1YHnoWdHKl8ZbhEpqtda', 'shindigg');
 		// console.log(checkPW);
 
 		if (!checkPW) {

@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class Email {
-    #templateURL = path.join(__dirname, '../views/emails/');
+    #templateURL = path.join(__dirname, '../views/email/');
 
     constructor(user) {
         this.to = user.email;
@@ -21,16 +21,16 @@ export class Email {
     // CONFIGURE NODE MAILER 
     createMailTransport() {
         // reference to credential for sending emails
-        if (process.env.NODE_ENV !== 'production') {
-            return nodemailer.createTransport({
-                host: 'sandbox.smtp.mailtrap.io',
-                port: 2525,
-                auth: {
-                    user: process.env.MAILTRAP_USER,
-                    pass: process.env.MAILTRAP_PASS
-                }
-            });
-        } else {
+		if (process.env.NODE_ENV !== 'production') {
+			return nodemailer.createTransport({
+				host: 'sandbox.smtp.mailtrap.io',
+				port: 2525,
+				auth: {
+					user: process.env.MAILTRAP_USER,
+					pass: process.env.MAILTRAP_PASS,
+				}
+			});
+		} else {
             // USE VALID MAIL SERVER LIKE GMAIL
             return nodemailer.createTransport({
                 host: 'mail.somedomain.com', //AN ACTUAL MAIL SERVER
@@ -55,7 +55,7 @@ export class Email {
             user_l_name: this.last_name,
             user_trn: this.trn,
             user_location: this.location,
-            ...user,
+            ...user
             
         });
 

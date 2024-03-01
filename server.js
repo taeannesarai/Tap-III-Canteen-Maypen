@@ -24,13 +24,14 @@ import { adminRoute } from "./routes/adminRoute.js";
 app.use(morgan("dev"));
 
 // app.all("/tap-canteen/*", async (req, res) => {
-// 	if (1 != 1) {
-// 		loggedIn = true;
-// 		let session = req.session.username;
-// 	}
-// 	const bRet = await adminUserExists();
-// 	if (bRet == false) {
-// 		await createAdmin();
+// 	if (loginRoute.sessionData) {
+// 		console.log("USER EXIST");
+// 	} else {
+// 		const bRet = await adminUserExists();
+
+// 		if (bRet == false) {
+// 			await createAdmin();
+// 		}
 // 	}
 
 // 	res.redirect("/tap-canteen/");
