@@ -15,7 +15,12 @@ export const encryptPW = async (pw)=>{
     return encPW;
 }
 
-export const decryptPW = async (pw, dbPW) =>{
+export const decryptPW = async (pw, dbPW) => {
+    // Check if either pw or dbPW is undefined or not a string
+    if (typeof pw !== 'string' || typeof dbPW !== 'string') {
+        throw new Error('Invalid password or database password');
+    }
+
     const decPW = await bcrypt.compare(pw, dbPW);
     return decPW;    
 }
