@@ -337,9 +337,9 @@ export const saveSchedule = async (sSch) => {
 	const result = await pool.query(
 		`
         INSERT INTO meals_schedule(user_id, menu_id, drink_id, date)
-         VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)
+         VALUES(?, ?, ?, ?)
     `,
-		[sSch.id, sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+		[sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
 	);
 	return result;
 };
