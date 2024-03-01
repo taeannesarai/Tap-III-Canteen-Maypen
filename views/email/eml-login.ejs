@@ -1,0 +1,60 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <%- include('_style') -%>
+
+    <title>
+        <%= locals.subject ? subject : 'Registration Confirmation for TAP III Lunch System'  %>
+    </title>
+</head>
+
+<body>
+
+    <center class="wrapper">
+        <table class="main">
+            <tr>
+                <!-- padding cell space -->
+                <td class="padding"></td>
+                <td>
+    
+    <table width="100%">
+    <tr>
+        <!-- background color -->
+        <table style="background-color: #fff;">
+            <%- include('email_header')  %>
+            <tr>
+                <td style="line-height: 1.5;">
+                <h2> Dear <%= f_name %></h2>
+                <p>
+                    Thank you for registering with the TAP III Lunch System! We are excited to have you join us in selecting your meal
+                    options for the upcoming weeks.
+                </p>
+                <p>
+                    Your registration details have been successfully received, and you are now a member of our system. Here are your
+                    registration details:
+
+                </p>
+                <% var reservedDate=new Date(date).toLocaleDateString('en-US',{month: 'short' , day:'numeric', year:'numeric',
+                    timeZone: 'UTC' }); %>
+
+                <p>
+                    Name: <%= f_name  %> <%= l_name  %> <br>
+                    TRN: <%= trn  %> <br>
+                    Location: <%= location %>
+                </p>
+            </td>
+            </tr>
+    
+    </tr>
+    </table>
+
+</center>
+    
+</body>
+</html>
