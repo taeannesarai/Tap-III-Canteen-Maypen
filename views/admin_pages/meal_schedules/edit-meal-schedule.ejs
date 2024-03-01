@@ -1,0 +1,49 @@
+<%- include('../../partials/header') %>
+<div class="page-body">
+	<h1 class="page-heading">Edit A Meal Schedule</h1>
+
+	<form action="/tap-canteen/admin/edit-meal-schedule-submit" method="post">
+        <!-- id, user_id, menu_id, drink_id, date -->
+        <div class="row">
+            <div class="col">
+                <label for="">Student</label>
+                <input type="number">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="">Meal</label>
+                <select name="" id="">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="">Drink</label>
+                <select name="" id="">
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label for="">Date</label>
+                <input type="date">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <input type="submit" value="Save Changes" class="btn btn-primary fill-container-btn">
+            </div>
+        </div>
+    </form>
+</div>
+<%- include('../../partials/footer') %>

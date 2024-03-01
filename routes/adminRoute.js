@@ -122,7 +122,7 @@ router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 	});
 });
 
-//   ============ All Drinks ==============  
+//   ============ All Drinks ==============
 
 //Get Single Drink
 
@@ -176,7 +176,7 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 	});
 });
 
-//   ============ All User ==============   
+//   ============ All User ==============
 
 //Get Single User
 
@@ -199,7 +199,6 @@ router.get("/update-user", async (req, res) => {
 });
 
 ///////////////////////////////////////////   ============ All of Schedule ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 // VIEW ALL MEAL SCHEDULE
 router.get("/schedules", async (req, res) => {
@@ -224,11 +223,6 @@ router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	res.render("/", { data: results, title: "Schedule Detail" });
 });
-
-
-
-
-
 
 // ============== DATABASE ACTIONS ==============
 // Create Menu Post
@@ -277,7 +271,8 @@ router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, r
 	if (req.file) {
 		mealData.img = `${ranVal}_${req.file.originalname}`;
 	} else {
-		mealData.img = "";
+		const [result] = await getSingledMenu(mealData.id);
+		mealData.img = result.img;
 	}
 
 	console.log(mealData);
@@ -398,17 +393,17 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //Create Meal Schedule
 
-router.post('/create-mealschedule', async (req, res) => {
-    const menuItemData = {
-        item_name: req.body.item_name,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.body.img
-    }
+router.post("/create-mealschedule", async (req, res) => {
+	const menuItemData = {
+		item_name: req.body.item_name,
+		quantity: req.body.quantity,
+		description: req.body.description,
+		img: req.body.img,
+	};
 
-    console.log(menuItemData);
-    await saveMenu(menuItemData);
-    res.redirect('/');
+	console.log(menuItemData);
+	await saveMenu(menuItemData);
+	res.redirect("/");
 });
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
