@@ -73,5 +73,25 @@
 		</form>
 	</div>
 </div>
+<script>
+    document.getElementById('trn').addEventListener('input', function(e) {
+        let trn = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        // Limit TRN input to 9 digits
+        trn = trn.slice(0, 9);
+
+        // Add dashes after every third character for display
+        const formattedTrn = trn.replace(/(\d{3})(?=\d)/g, '$1-');
+
+        e.target.value = formattedTrn;
+    });
+
+    // Before submitting the form, remove dashes from the TRN
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const trnInput = document.getElementById('trn');
+        trnInput.value = trnInput.value.replace(/\D/g, ''); // Remove dashes
+    });
+</script>
+
 
 <%- include('../partials/footer'); %>
