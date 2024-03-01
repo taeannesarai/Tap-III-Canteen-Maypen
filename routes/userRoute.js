@@ -3,8 +3,6 @@ import BodyParser from "body-parser";
 // <<<<<<< HEAD
 import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser } from "../data/database.js";
 
-import { Email } from "../util/email.js";
-
 const router = express.Router();
 const app = express();
 

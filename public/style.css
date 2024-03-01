@@ -480,3 +480,12 @@ footer .footer-grid .input-container:last-of-type() {
 .w-100 {
 	width: 100%;
 }
+
+.user-interactions {
+	display: flex;
+	align-items: center;
+}
+
+.user-interactions > * {
+	margin: 0 10px;
+}

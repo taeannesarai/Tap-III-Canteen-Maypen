@@ -6,7 +6,7 @@ import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-const ___dirname = dirname(fileURLToPath(import.meta.url));
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class Email {
     #templateURL = path.join(__dirname, '../views/emails/');

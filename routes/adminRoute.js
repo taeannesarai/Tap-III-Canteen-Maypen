@@ -2,6 +2,7 @@ import express, { Router } from "express";
 import fileUpload from "express-fileupload";
 import multer from "multer";
 import findRemoveSync from "find-remove";
+import session from "express-session";
 
 let ranVal = cryptoRandomString({ length: 10, type: "alphanumeric" }); // generate a random string of characters to attach to name of files
 
@@ -46,36 +47,30 @@ import { loginRoute } from "./loginRoute.js";
 const router = express.Router();
 const app = express();
 
-router.use(express.urlencoded({ extended: true }));
-
 router.use(
-	fileUpload({
-		limits: {
-			fileSize: 50 * 1024 * 1024,
+	session({
+		secret: "tap canteen",
+		resave: true,
+		saveUninitialized: true,
+		cookie: {
+			maxAge: 60000 * 10,
 		},
-		abortOnLimit: true,
 	})
 );
 
-const authenticate = (req, res, next) => {
-    if (1 == 1) {
-		return next();
-    } else {
-		return res.redirect("/tap-canteen/auth/login");
-	}
-};
+router.use(express.urlencoded({ extended: true }));
 
-router.all("/*", authenticate, (req, res, next) => {
-	next();
-});
-
-// =================================================================================
-// =================================================================================
-// =================================================================================
-
+// router.use(
+// 	fileUpload({
+// 		limits: {
+// 			fileSize: 50 * 1024 * 1024,
+// 		},
+// 		abortOnLimit: true,
+// 	})
+// );
 
 // =================================================================
-//   ============ All of Menu ==============
+//   ============ All Menu ==============
 // =================================================================
 //Get Single Menu Item
 
@@ -92,7 +87,6 @@ router.get("/lunch-menu/menu-item-view/:id", async (req, res) => {
 		prevUrl,
 	});
 });
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Create Menu
 router.get("/create-menu-item", async (req, res) => {
@@ -102,8 +96,6 @@ router.get("/create-menu-item", async (req, res) => {
 		prevUrl,
 	});
 });
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Update Menu
 router.get("/update-menu-item/:id", async (req, res) => {
@@ -130,7 +122,7 @@ router.get("/lunch-menu/delete-menu-item/:id", async (req, res) => {
 	});
 });
 
-///////////////////////////////////////////   ============ All of Drinks ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All Drinks ==============  
 
 //Get Single Drink
 
@@ -184,7 +176,7 @@ router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
 	});
 });
 
-///////////////////////////////////////////   ============ All of User ==============   //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//   ============ All User ==============   
 
 //Get Single User
 
