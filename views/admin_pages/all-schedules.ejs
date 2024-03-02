@@ -16,13 +16,13 @@
 			<td><%= allSchedules[i].menu_item %></td>
 			<td><%= new Date(allSchedules[i].date).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %></td>
 			<td>
-				<a href="/tap-canteen/admin/schedules/single-schedule-view/<%= allSchedules[i].id %>" class="btn btn-info">View</a>
+				<a href="/tap-canteen/admin/schedules/single-schedule-view/<%= allSchedules[i].schedule_id %>" class="btn btn-info">View</a>
 			</td>
 			<td>
-				<a href="/tap-canteen/admin/schedules/single-schedule-edit/<%= allSchedules[i].id %>" class="btn btn-warning">Edit</a>
+				<a href="/tap-canteen/admin/schedules/single-schedule-edit/<%= allSchedules[i].schedule_id %>" class="btn btn-warning">Edit</a>
 			</td>
 			<td>
-				<a href="/tap-canteen/admin/schedules/single-schedule-delete/<%= allSchedules[i].id %>" class="btn btn-danger">Delete</a>
+				<a href="/tap-canteen/admin/schedules/single-schedule-delete/<%= allSchedules[i].schedule_id %>" class="btn btn-danger">Delete</a>
 			</td>
 			<% } %>
 		</tbody>
