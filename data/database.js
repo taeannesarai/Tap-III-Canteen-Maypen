@@ -335,6 +335,64 @@ export const getAllSchedule = async () => {
 	);
 	return result;
 };
+export const getSingleMealSchedule = async (id) => {
+	const result = await pool.query(
+		`SELECT
+        ms.id,
+        ms.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.location,
+        u.phone_num,
+        ms.menu_id,
+        m.item_name AS menu_item,
+        m.quantity AS menu_quantity,
+        m.description AS menu_description,
+        m.img AS menu_image,
+        ms.drink_id,
+        ms.date
+    FROM
+        meals_schedule AS ms
+    JOIN
+        menu AS m ON ms.menu_id = m.id
+    JOIN
+        users AS u ON ms.user_id = u.id
+		WHERE ms.id = ?
+		`,
+		[id]
+	);
+	return result;
+};
+export const getScheduleByDate = async (date) => {
+	const [result] = await pool.query(
+		`SELECT
+        ms.id,
+        ms.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.location,
+        u.phone_num,
+        ms.menu_id,
+        m.item_name AS menu_item,
+        m.quantity AS menu_quantity,
+        m.description AS menu_description,
+        m.img AS menu_image,
+        ms.drink_id,
+        ms.date
+    FROM
+        meals_schedule AS ms
+    JOIN
+        menu AS m ON ms.menu_id = m.id
+    JOIN
+        users AS u ON ms.user_id = u.id
+		WHERE ms.date = ?
+		`,
+		[date]
+	);
+	return result[0];
+};
 
 
 //Create Schedule
@@ -345,7 +403,7 @@ export const saveSchedule = async (sSch) => {
         INSERT INTO meals_schedule(user_id, menu_id, date)
         VALUES(?, ?, ?)
     `,
-		[sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+		[sSch.user_id, sSch.menu_id, sSch.date]
 	);
 	return result;
 };

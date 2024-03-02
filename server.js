@@ -25,7 +25,6 @@ app.use(morgan("dev"));
 
 // app.all("/tap-canteen/*", async (req, res) => {
 // 	if (loginRoute.sessionData) {
-// 		console.log("USER EXIST");
 // 	} else {
 // 		const bRet = await adminUserExists();
 
@@ -39,7 +38,6 @@ app.use(morgan("dev"));
 
 const authenticate = (req, res, next) => {
 	if (loginRoute.sessionData) {
-		// console.log("loginRoute.sessionData", loginRoute.sessionData);
 		return next();
 	} else {
 		return res.redirect("/tap-canteen/auth/login");
@@ -47,7 +45,6 @@ const authenticate = (req, res, next) => {
 };
 
 const sendSessionData = (req, res, next) => {
-	console.log("==========================================", loginRoute.sessionData);
 	res.locals.sessionData = loginRoute.sessionData;
 	return next();
 };
