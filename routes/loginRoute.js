@@ -77,39 +77,36 @@ router.post("/signup/sumbit", async (req, res) => {
 });
 
 
-// router.post("/new-user", async (req, res) => {
-// 	const newData = new Object();
+router.post("/new-user", async (req, res) => {
+	const newData = new Object();
 
-// 	(newData.first_name = req.body.first_name.toUpperCase()),
-// 		(newData.last_name = req.body.last_name.toUpperCase()),
-// 		(newData.email = req.body.email),
-// 		(newData.location = req.body.location),
-// 		(newData.phone_num = req.body.phone_num),
-// 		(newData.trn = req.body.trn),
-// 		(newData.roles = req.body.roles),
-// 		(newData.password = req.body.password);
+	(newData.first_name = req.body.first_name.toUpperCase()),
+		(newData.last_name = req.body.last_name.toUpperCase()),
+		(newData.email = req.body.email),
+		(newData.location = req.body.location.toUpperCase()),
+		(newData.phone_num = req.body.phone_num),
+		(newData.trn = req.body.trn),
+		(newData.roles = req.body.roles),
+		(newData.password = req.body.password);
 
-// 	const result = await saveUser(newData);
+	const result = await saveUser(newData);
 
-// 	if (result[0].insertId) {
-// 		const uId = result[0].insertId;
-// 		const data = await getSingleUser(uId);
+	if (result[0].insertId) {
+		const uId = result[0].insertId;
+		const data = await getSingleUser(uId);
 
-// 		const email = new Email(data[0]);
-// 		await email.sendMail("signup_email", "New User", data[0]);
-// 	}
+		const email = new Email(data[0]);
+		await email.sendMail("signup_email", "New User", data[0]);
+	}
 
-// 	res.redirect("/");
-// });
+	res.redirect("/");
+});
 
 // LOGIN USER OR ADMIN
 router.post("/login-submit", async (req, res) => {
 	const username = req.body.userName;
 	const password = req.body.password;
 	const user = await getSingleUser(username);
-	console.log(req.body);
-	console.log(user);
-
 	if (!user) {
 		res.render("auth/login", {
 			title: "Login",
@@ -118,8 +115,6 @@ router.post("/login-submit", async (req, res) => {
 		});
 	} else {
 		const checkPW = await decryptPW(password, user.password);
-		// const checkPW = await decryptPW('$14$LqRR4qWT12w/Kco6Goc/m.WzWkSq.GBVf1YHnoWdHKl8ZbhEpqtda', 'shindigg');
-		// console.log(checkPW);
 
 		if (!checkPW) {
 			res.render("auth/login", {
@@ -129,7 +124,6 @@ router.post("/login-submit", async (req, res) => {
 			});
 		} else {
 			isLoggedIn = true;
-			// req.session.isLoggedIn = true;
 			req.session.user = {
 				user_id: user.id,
 				name: `${user.first_name} ${user.last_name}`,
@@ -140,9 +134,7 @@ router.post("/login-submit", async (req, res) => {
 				role: user.roles,
 				isLoggedIn: true,
 			};
-			// console.log(req.session);
 			router.sessionData = req.session.user;
-			// console.log(router);
 			res.redirect("/tap-canteen/");
 		}
 	}
