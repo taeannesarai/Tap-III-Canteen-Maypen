@@ -221,13 +221,20 @@ router.get("/schedules", async (req, res) => {
 });
 
 // VIEW SINGLE SCHEDULE
-router.get("/schedules/single-schedule-item-view/:id", async (req, res) => {
+router.get("/schedules/single-schedule-view/:id", async (req, res) => {
 	const id = req.params.id;
-	const results = await getSingleSchedule(id);
+	const [results] = await getSingleSchedule(id);
 	console.log("=====================================================");
 	console.log(results);
 	console.log("=====================================================");
-	res.render("/", { data: results, title: "Schedule Detail" });
+	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
+	res.render("admin_pages/meal_schedules/view-meal-schedule", {
+		title:"schedule detail", 
+		data: results,
+		prevUrl,
+	 });
+
+
 });
 
 //update schedule
@@ -467,16 +474,6 @@ router.get("/delete-Schedule-item/confirm/:id", async (req, res) => {
 	res.redirect("/tap-canteen/lunch-Schedule");
 });
 
-
-// Get a Single Menu Post
-router.post("/:id", async (req, res) => {
-	const scheduleId = req.body.id;
-
-	console.log("getting the schedule", schedule);
-	const schedule = await getSingleSchedule(scheduleId);
-	console.log("getting  schedule item:", schedule);
-	res.redirect("/");
-});
 
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT

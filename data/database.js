@@ -442,8 +442,11 @@ export const deleteSchedule = async (dSch) => {
 export const getSingleSchedule = async (gSs) => {
 	const result = await pool.query(
 		`
-        SELECT * FROM meals_schedule WHERE id = ?
-    `,
+		SELECT users.first_name, users.last_name, menu.item_name, meals_schedule.date
+		FROM meals_schedule
+		JOIN users ON meals_schedule.user_id = users.id
+		JOIN menu ON meals_schedule.menu_id = menu.id;
+			`,
 		[gSs]
 	);
 	const rows = result[0];
