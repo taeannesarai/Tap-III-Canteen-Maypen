@@ -238,25 +238,25 @@ router.get("/schedules/single-schedule-view/:id", async (req, res) => {
 });
 
 //update schedule
-router.get("/update-meal-schedule-item/:id", async (req, res) => {
-	const [menuSchData] = await getSingleSchedule(req.params.id);
+router.get("/schedules/single-schedule-edit/:id", async (req, res) => {
+	const [results] = await getSingleSchedule(req.params.id);
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
-
-	res.render("admin_pages/update-schedule-item", {
+	console.log(results);
+	res.render("admin_pages/meal_schedules/edit-meal-schedule", {
 		title: "Update Schedule",
 		prevUrl,
-		menuSchData,
+		data: results,
 	});
 }); 
 
 //delete schedule
-router.get("/lunch-menu/delete-drink-item/:id", async (req, res) => {
+router.get("/schedules/single-schedule-delete/:id", async (req, res) => {
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
-	const [menuSchData] = await getSingleSchedule(req.params.id);
-	console.log(menuSchData);
-	res.render("admin_pages/delete-schedule-item", {
+	const [results] = await getSingleSchedule(req.params.id);
+	console.log(results);
+	res.render("admin_pages/meal_schedules/delete-meal-schedule", {
 		title: "Delete schedule Item",
-		menuSchData,
+		data: results,
 		prevUrl,
 	});
 });
