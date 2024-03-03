@@ -72,20 +72,20 @@ export class Email {
 
 	async sendMealConfirmation(template, subject, mealData) {
 		const transport = this.createMailTransport();
-
+	
 		const html = await ejs.renderFile(this.#templateURL + template + ".ejs", {
-			subject: "Meal Confirmation",
+			subject: subject, // Use the dynamic subject parameter
 			logo: `${process.env.BASE_URL}/public/assets/logo.png`,
-			user_meal: this.menu_item,
-			user_description: this.menu_description,
-			user_f_name: this.first_name,
-			user_l_name: this.last_name,
+			user_meal: mealData.menu_item, // Access mealData properties directly
+			user_description: mealData.menu_description,
+			user_f_name: mealData.first_name,
+			user_l_name: mealData.last_name,
 		});
-
+	
 		return await transport.sendMail({
 			to: `${this.to}, ${process.env.COPY_EMAIL}`,
 			from: this.from,
-			subject: "Meal Confirmation",
+			subject: subject, // Use the dynamic subject parameter
 			html: html,
 			text: htmlToText(html),
 		});
