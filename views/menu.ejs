@@ -10,7 +10,7 @@
 			<img src="../uploads/<%= mealData[i].img %>" class="card-img-top lunch-img" alt="<%= mealData[i].item_name %>_image" />
 			<div class="card-body">
 				<h5 class="card-title"><%= mealData[i].item_name %></h5>
-				<p class="card-text"><%= mealData[i].description %></p>
+				<p class="card-text" style="min-height: 100px;"><%= mealData[i].description %></p>
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item">Qty: <%= mealData[i].quantity %></li>
@@ -27,7 +27,12 @@
 
 				<% } else if ((locals.sessionData ? sessionData.isLoggedIn : false) && (locals.sessionData ? sessionData.role == 'USER' : false)) { %>
 				<div class="user-buttons my-2">
+					<!-- DISPLAY BUTTON IF USER HAVEN'T SELECTED MEAL FOR THE DAY AS YET -->
+					<% if (!isMealItemSelected) { %>
 					<a href="/tap-canteen/create-menu-schedule/<%= mealData[i].id %>" class="btn btn-primary">Select Meal</a>
+					<% } else { %>
+						<div class="alert alert-primary">Meal choice already selected for the day.</div>
+					<% } %>
 				</div>
 				<% } %>
 			</div>

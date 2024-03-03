@@ -94,6 +94,7 @@ nav .login-icon:hover a {
 /* ========================= MENU ITEM CARD STYLES ===================================== */
 .page-body {
 	margin: 0 50px;
+	margin-top: 30px;
 	border-radius: 10px;
 	background-color: #57759028;
 	padding: 10px;

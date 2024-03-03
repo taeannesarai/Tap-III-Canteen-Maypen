@@ -202,8 +202,7 @@ router.get("/update-user", async (req, res) => {
 	res.render("admin_pages/user-update", { title: "Update User" });
 });
 
-//   ============ All Schedule ==============  
-
+//   ============ All Schedule ==============
 
 // VIEW ALL MEAL SCHEDULE
 router.get("/schedules", async (req, res) => {
@@ -212,7 +211,7 @@ router.get("/schedules", async (req, res) => {
 
 	// allSchedules.date = date.toLocaleDateString().split("T")[0];
 
-	console.log('================================');
+	console.log("================================");
 	console.log(allSchedules);
 	res.render("admin_pages/all-schedules", {
 		title: "All Schedules",
@@ -229,12 +228,10 @@ router.get("/schedules/single-schedule-view/:id", async (req, res) => {
 	console.log("=====================================================");
 	const prevUrl = req.headers.referer.slice("http://localhost:4400".length);
 	res.render("admin_pages/meal_schedules/view-meal-schedule", {
-		title:"schedule detail", 
+		title: "schedule detail",
 		data: results,
 		prevUrl,
-	 });
-
-
+	});
 });
 
 //update schedule
@@ -247,7 +244,7 @@ router.get("/schedules/single-schedule-edit/:id", async (req, res) => {
 		prevUrl,
 		data: results,
 	});
-}); 
+});
 
 //delete schedule
 router.get("/schedules/single-schedule-delete/:id", async (req, res) => {
@@ -292,18 +289,18 @@ router.get("/create-menu-item", async (req, res) => {
 
 //Update Menu Post
 router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, res) => {
-    const mealData = {
-        id: req.body.id,
-        item_name: req.body.meal_name,
-        quantity: req.body.quantity,
-        description: req.body.desc,
-    };
+	const mealData = {
+		id: req.body.id,
+		item_name: req.body.meal_name,
+		quantity: req.body.quantity,
+		description: req.body.desc,
+	};
 
-    if (req.body.desc.length > 255) {
-        mealData.description = req.body.desc.slice(0, 255);
-    } else {
-        mealData.description = req.body.desc;
-    }
+	if (req.body.desc.length > 255) {
+		mealData.description = req.body.desc.slice(0, 255);
+	} else {
+		mealData.description = req.body.desc;
+	}
 
 	if (req.file) {
 		mealData.img = `${ranVal}_${req.file.originalname}`;
@@ -312,11 +309,10 @@ router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, r
 		mealData.img = result.img;
 	}
 
-    console.log(mealData);
-    await updateMenu(mealData);
-    res.redirect("/tap-canteen/lunch-menu");
+	console.log(mealData);
+	await updateMenu(mealData);
+	res.redirect("/tap-canteen/lunch-menu");
 });
-
 
 // router.get("/update-menu/:id", async (req, res) => {
 // 	const id = req.params.id;
@@ -431,28 +427,27 @@ router.post("/get-single-drink-item", async (req, res) => {
 
 //Create Meal Schedule
 
-router.post('/create-meal-schedule', async (req, res) => {
-    const menuItemData = {
-        item_name: req.body.item_name,
-        quantity: req.body.quantity,
-        description: req.body.description,
-        img: req.body.img
-    }
+router.post("/create-meal-schedule", async (req, res) => {
+	const menuItemData = {
+		item_name: req.body.item_name,
+		quantity: req.body.quantity,
+		description: req.body.description,
+		img: req.body.img,
+	};
 
-    console.log(menuItemData);
-    await saveMenu(menuItemData);
-    res.redirect('/');
+	console.log(menuItemData);
+	await saveMenu(menuItemData);
+	res.redirect("/");
 });
 
-
-//update 
+//update
 router.post("/update-schedule-item-submit", async (req, res) => {
 	const scheduleData = {
-		id:req.body.id,
-		user_id:req.body.user_id,
-        menu_id:req.body.menu_id,
-        drink_id:1,
-        date:( req.body.date).toISOString().split("T")[0] + ` 00:00:00`,
+		id: req.body.id,
+		user_id: req.body.user_id,
+		menu_id: req.body.menu_id,
+		drink_id: 1,
+		date: req.body.date.toISOString().split("T")[0] + ` 00:00:00`,
 	};
 
 	console.log(scheduleData);
@@ -460,21 +455,16 @@ router.post("/update-schedule-item-submit", async (req, res) => {
 	res.redirect("/");
 });
 
-
-
-
 //Delete Schedule Post
 router.get("/delete-Schedule-item/confirm/:id", async (req, res) => {
 	const id = req.params.id;
 	const [record] = await getSingleSchedule(id);
-	
+
 	console.log("Deleting Schedule item with ID:", id);
 	console.log(record);
 	await deleteSchedule(id);
 	res.redirect("/tap-canteen/lunch-Schedule");
 });
-
-
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
 export const adminRoute = router;

@@ -442,7 +442,7 @@ export const deleteSchedule = async (dSch) => {
 export const getSingleSchedule = async (gSs) => {
 	const result = await pool.query(
 		`
-		SELECT users.first_name, users.last_name, menu.item_name, meals_schedule.date
+		SELECT users.first_name, users.last_name, menu.item_name, meals_schedule.date, menu.img, menu.description, meals_schedule.id
 		FROM meals_schedule
 		JOIN users ON meals_schedule.user_id = users.id
 		JOIN menu ON meals_schedule.menu_id = menu.id;
@@ -453,6 +453,15 @@ export const getSingleSchedule = async (gSs) => {
 	return rows;
 };
 
+export const isMealSelected = async (date, user_id) => {
+	const [record] = await pool.query(`
+		SELECT * FROM meals_schedule 
+		WHERE user_id = ${user_id}
+		AND LOCATE('${date}', date) > 0; 
+	`);
+
+	return record[0];
+}
 
 //SELECT ADMIN
 export const doesAdminExist = async (username, password) => {
@@ -464,5 +473,5 @@ export const doesAdminExist = async (username, password) => {
 		[username, password]
 	);
 
-	return acc[0];
+	return acc[0];
 }

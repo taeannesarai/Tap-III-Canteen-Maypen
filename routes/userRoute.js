@@ -4,7 +4,7 @@ import { loginRoute } from "./loginRoute.js";
 import { Email } from "../util/email.js";
 
 // <<<<<<< HEAD
-import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser, saveSchedule, getLastFour, getSingleMealSchedule, getScheduleByDate } from "../data/database.js";
+import { getAllMenu, getAllDrinks, getAllUser, updateUser, getSingleUser, deleteUser, saveSchedule, getLastFour, getSingleMealSchedule, getScheduleByDate, isMealSelected } from "../data/database.js";
 
 const router = express.Router();
 const app = express();
@@ -22,11 +22,24 @@ router.get("/", async (req, res) => {
 // Menu
 router.get("/lunch-menu", async (req, res) => {
 	const meals = await getAllMenu();
-	const drinks = await getAllDrinks();
+    const drinks = await getAllDrinks();
+    let isMealItemSelected;
+
+    if (loginRoute.sessionData) {
+        isMealItemSelected = await isMealSelected(new Date().toISOString().split("T")[0], loginRoute.sessionData.user_id);
+        console.log(new Date().toISOString().split("T")[0]);
+        console.log(loginRoute.sessionData.user_id);
+    } else {
+        isMealItemSelected = undefined;
+    }
+
+    console.log(isMealItemSelected);
+
 	res.render("menu", {
 		title: "Menu",
 		mealData: meals,
 		drinkData: drinks,
+		isMealItemSelected,
 	});
 });
 
@@ -74,27 +87,31 @@ router.post("/new-user", async (req, res) => {
 //Create SCHEDULE
 
 router.get("/create-menu-schedule/:id", async (req, res) => {
-	const schedule = {
-		user_id: loginRoute.sessionData.user_id,
-		menu_id: req.params.id,
-		date: new Date().toISOString().replace("T", " ").split(".")[0],
-		//user_id, menu_id, drink_id, date
-	};
-
-	const newSchedule = await saveSchedule(schedule);
-	const mealSchedule = await getScheduleByDate(schedule.date);
-
-	console.log("=====================================================");
-	console.log(schedule);
-	console.log("=====================================================");
-	console.log(mealSchedule);
-
-	const user = await getSingleUser(loginRoute.sessionData.email);
-	if (newSchedule) {
-		const email = new Email(mealSchedule);
-		await email.sendMealConfirmation("_email_menu", "Meal Choice Confirmation", mealSchedule);
-		res.redirect("/tap-canteen/");
-	}
+    if (loginRoute.sessionData) {
+        const schedule = {
+            user_id: loginRoute.sessionData.user_id,
+            menu_id: req.params.id,
+            date: new Date().toISOString().replace("T", " ").split(".")[0],
+            //user_id, menu_id, drink_id, date
+        };
+        
+        const newSchedule = await saveSchedule(schedule);
+        const mealSchedule = await getScheduleByDate(schedule.date);
+        
+        console.log("=====================================================");
+        console.log(schedule);
+        console.log("=====================================================");
+        console.log(mealSchedule);
+        
+        const user = await getSingleUser(loginRoute.sessionData.email);
+        if (newSchedule) {
+            const email = new Email(mealSchedule);
+            await email.sendMealConfirmation("_email_menu", "Meal Choice Confirmation", mealSchedule);
+            res.redirect("/tap-canteen/");
+        }
+    } else {
+        res.redirect("/tap-canteen/auth/login");
+    }
 });
 
 //! DO NOT CREATE ANY ROUTES BELOW THIS EXPORT
