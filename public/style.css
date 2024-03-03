@@ -546,3 +546,15 @@ hr {
 .lunch-img {
 	aspect-ratio: 5/3;
 }
+
+.prev-page {
+	display: inline-block;
+	text-decoration: none;
+	color: #5c636a;
+}
+
+.prev-page:hover {
+	color: #3f3f3f;
+	transform: scale(1.05);
+	font-weight: 500;
+}

@@ -53,21 +53,12 @@ router.post("/signup/sumbit", async (req, res) => {
 
 	// To encrypt
 	newUser.password = await encryptPW(req.body.password);
-	console.log(newUser);
 
 	const [result] = await createUserAcc(newUser);
-
-	console.log(result);
-
-	console.log('-====================================');
-	console.log('-====================================');
-	console.log(result.insertId);
 
 	if (result.insertId) {
 		const uId = result.insertId;
 		const data = await getSingleUser(uId);
-
-		console.log(newUser);
 
 		const email = new Email(newUser);
 		await email.sendMail("signup_email", "New User", newUser);

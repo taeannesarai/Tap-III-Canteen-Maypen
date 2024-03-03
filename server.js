@@ -45,7 +45,10 @@ const authenticate = (req, res, next) => {
 };
 
 const sendSessionData = (req, res, next) => {
+	const previousUrl = req.headers.referer.slice("http://localhost:4400".length);
+
 	res.locals.sessionData = loginRoute.sessionData;
+	res.locals.prevUrl = previousUrl;
 	return next();
 };
 

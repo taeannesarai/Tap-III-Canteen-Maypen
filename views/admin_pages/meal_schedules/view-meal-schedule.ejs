@@ -1,6 +1,7 @@
 <%- include('../../partials/header') %>
 <div class="page-body">
-	<a href="">Back</a>
+	<a href="<%= prevUrl %>" class="prev-page"><span>Back</span></a>
+
 	<h1 class="page-heading">View A Meal Schedule</h1>
 
 	<div class="card mx-auto" style="width: 30rem">
@@ -16,7 +17,6 @@
 			<div class="admin-buttons">
 				<a href="/tap-canteen/admin/schedules/single-schedule-edit/<%= data.id %>" class="btn btn-warning">Edit Item</a>
 				<a href="/tap-canteen/admin/schedules/single-schedule-delete/<%= data.id %>" class="btn btn-danger">Delete Item</a>
-
 			</div>
 		</div>
 	</div>
