@@ -245,10 +245,13 @@ router.post("/update-menu-item-submit", upload.single("meal_img"), async (req, r
 		mealData.description = req.body.desc;
 	}
 
+	const [result] = await getSingledMenu(mealData.id);
+
 	if (req.file) {
 		mealData.img = `${ranVal}_${req.file.originalname}`;
+		const remove = findRemoveSync("./uploads", { files: result.img });
+		console.log(remove);
 	} else {
-		const [result] = await getSingledMenu(mealData.id);
 		mealData.img = result.img;
 	}
 
@@ -383,7 +386,7 @@ router.get("/delete-Schedule-item/confirm/:id", async (req, res) => {
 	const id = req.params.id;
 	const [record] = await getSingleSchedule(id);
 
-	await deleteSchedule(id);
+	const del = await deleteSchedule(id);
 	res.redirect("/tap-canteen/admin/schedules");
 });
 
