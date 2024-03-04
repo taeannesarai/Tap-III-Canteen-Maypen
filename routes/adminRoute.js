@@ -33,8 +33,6 @@ import {
 	deleteSchedule,
 	getAllSchedule,
 	getSingleSchedule,
-	// updateSchedule,
-	// deleteSchedule,
 	getAllUser,
 	updateUser,
 	deleteUser,
@@ -117,10 +115,8 @@ router.get("/lunch-menu/view-drink-item/:id", async (req, res) => {
 //Create Drink
 
 router.get("/create-drink-item", async (req, res) => {
-
 	res.render("admin_pages/create-drink-item", {
 		title: "Create Drink Item",
-
 	});
 });
 
@@ -324,7 +320,6 @@ router.post("/update-drink-item-submit", upload.single("img"), async (req, res) 
 		const oldDrinkItem = await getSingleDrinks(req.body.id); // Assuming you have a function to retrieve the drink item from the database
 		drinkItemData.img = req.body.current_img;
 	}
-
 
 	// Update only the fields that are provided in the request
 	await updateDrinks(drinkItemData);

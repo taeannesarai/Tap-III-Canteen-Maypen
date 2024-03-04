@@ -1,95 +1,126 @@
 <%-include('./partials/header'); %>
 
 <section class="page-body">
-    <h1 class="page-heading">Contact Us </h1>
+	<h1 class="page-heading">Contact Us</h1>
 
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<th>Location Name</th>
+				<th>Address</th>
+				<th>Email</th>
+				<th>Phone</th>
+				<th class="action">View on Map</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>Clarendon Youth Information Centre</td>
+				<td>9 Trenton Rd, May Pen</td>
+				<td>yicmaypen@gmail.com</td>
+				<td>876-902-5608</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1341.8826190440411!2d-77.23925763309269!3d17.959316846371344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb9f0d69fdec9b%3A0xa0fa4db4001acc52!2sClarendon%20YIC!5e0!3m2!1sen!2sjm!4v1709322403624!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
+			<tr>
+				<td>Petersfield Vocational Training Center</td>
+				<td>Shrewsbury Rd, Westmoreland</td>
+				<td>info@heart-nsta.org</td>
+				<td>876-955-5148</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3788.6406145294172!2d-78.07042392407651!3d18.272289376709715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ed97ae232604607%3A0xd793198dd8b1f781!2sPetersfield%20Vocational%20Training%20Center%20(HEART%2FNSTA%20Trust)!5e0!3m2!1sen!2sjm!4v1708573505955!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Location Name</th>
-                <th>Address</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th class="action">View on Map</th>
-            </tr>
-        </thead>
-        <tbody>
-                    <tr>                        
-                        <td>Clarendon Youth Information Centre</td>
-                        <td>9 Trenton Rd, May Pen</td>
-                        <td>yicmaypen@gmail.com</td>
-                        <td>876-902-5608</td>
-                <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1341.8826190440411!2d-77.23925763309269!3d17.959316846371344!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb9f0d69fdec9b%3A0xa0fa4db4001acc52!2sClarendon%20YIC!5e0!3m2!1sen!2sjm!4v1709322403624!5m2!1sen!2sjm')">View</button></td>                        
-                    </tr>
-                    <tr>                        
-                        <td>Petersfield Vocational Training Center</td>
-                        <td>Shrewsbury Rd, Westmoreland	</td>
-                        <td>info@heart-nsta.org</td>
-                        <td>876-955-5148</td>
-                <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3788.6406145294172!2d-78.07042392407651!3d18.272289376709715!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8ed97ae232604607%3A0xd793198dd8b1f781!2sPetersfield%20Vocational%20Training%20Center%20(HEART%2FNSTA%20Trust)!5e0!3m2!1sen!2sjm!4v1708573505955!5m2!1sen!2sjm')">View</button></td>                        
-            </tr>
+			<tr>
+				<td>University of Technology, Jamaica</td>
+				<td>237 Old Hope Road, Kingston</td>
+				<td>theutechacademy@utech.edu.jm</td>
+				<td>876-927-1680</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.1512823117073!2d-76.74615342408029!3d18.018181484325737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3ed77252d65f%3A0xbe483695dda08fef!2sUniversity%20of%20Technology%2C%20Jamaica!5e0!3m2!1sen!2sjm!4v1708573683810!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
+			<tr>
+				<td>University of Technology, Jamaica - Western Campus</td>
+				<td>17 Dome Street Montego Bay, St. James</td>
+				<td>theutechacademy@utech.edu.jm</td>
+				<td>876-927-1680</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.2202986178486!2d-77.9202766240733!3d18.473677870603595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eda2a7b3937a36b%3A0x76d1d3b5a53423b!2sUniversity%20of%20Technology%2C%20Jamaica%20-%20Western%20Campus!5e0!3m2!1sen!2sjm!4v1708573373022!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
 
-            <tr>                        
-                        <td>University of Technology, Jamaica</td>
-                        <td>237 Old Hope Road, Kingston</td>
-                        <td>theutechacademy@utech.edu.jm </td>
-                        <td>876-927-1680</td>
-                        <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.1512823117073!2d-76.74615342408029!3d18.018181484325737!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb3ed77252d65f%3A0xbe483695dda08fef!2sUniversity%20of%20Technology%2C%20Jamaica!5e0!3m2!1sen!2sjm!4v1708573683810!5m2!1sen!2sjm')">View</button></td>                        
-                    </tr>
-                    <tr>                        
-                        <td>University of Technology, Jamaica - Western Campus</td>
-                        <td>17 Dome Street Montego Bay, St. James</td>
-                        <td>theutechacademy@utech.edu.jm </td>
-                        <td>876-927-1680</td>
-                        <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3784.2202986178486!2d-77.9202766240733!3d18.473677870603595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8eda2a7b3937a36b%3A0x76d1d3b5a53423b!2sUniversity%20of%20Technology%2C%20Jamaica%20-%20Western%20Campus!5e0!3m2!1sen!2sjm!4v1708573373022!5m2!1sen!2sjm')">View</button></td>                        
-                    </tr>
+			<tr>
+				<td>CAP Windsor Castle</td>
+				<td>Saint Margaret's Bay, Portland</td>
+				<td>info@usf.gov.jm</td>
+				<td>876-815-1759</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d796.9428085243286!2d-76.53062252047599!3d18.167588162958666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb2d198d4f28cd%3A0xd4401d4f0429e7d8!2sRock%20hall%20and%20Industry%20Community%20Center!5e0!3m2!1sen!2sjm!4v1709322299605!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
 
-                    <tr>                        
-                        <td>CAP Windsor Castle</td>
-                        <td>Saint Margaret's Bay, Portland</td>
-                        <td>info@usf.gov.jm </td>
-                        <td>876-815-1759</td>
-                        <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d796.9428085243286!2d-76.53062252047599!3d18.167588162958666!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb2d198d4f28cd%3A0xd4401d4f0429e7d8!2sRock%20hall%20and%20Industry%20Community%20Center!5e0!3m2!1sen!2sjm!4v1709322299605!5m2!1sen!2sjm')">View</button></td>                        
-                    </tr>
+			<tr>
+				<td>Ridgemount United Church</td>
+				<td>53 Main Street, Mandeville</td>
+				<td>www.ridgemountunited.org</td>
+				<td>876-962-0441</td>
+				<td>
+					<button
+						class="btn btn-info"
+						onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3793.5785769810796!2d-77.50860792584255!3d18.044751083537655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edbbe486a9c6033%3A0xb0e732f2d878b4f8!2sRidgemount%20United%20Church!5e0!3m2!1sen!2sjm!4v1709322159588!5m2!1sen!2sjm')">
+						View
+					</button>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-                    <tr>                        
-                        <td>Ridgemount United Church</td>
-                        <td>53 Main Street, Mandeville</td>
-                        <td>www.ridgemountunited.org</td>
-                        <td>876-962-0441</td>
-                        <td><button class="btn btn-info" onclick="navigateTo('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3793.5785769810796!2d-77.50860792584255!3d18.044751083537655!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edbbe486a9c6033%3A0xb0e732f2d878b4f8!2sRidgemount%20United%20Church!5e0!3m2!1sen!2sjm!4v1709322159588!5m2!1sen!2sjm')">View</button></td>                        
-                    </tr>
-
-                </tbody>
-            </table>
-
-    
-      
-<iframe id="myFrame" src="https://www.google.com/maps/d/embed?mid=1o8tpz4PAhP-aaUZLGKbq6XX750QF5bE&ehbc=2E312F&noprof=1"></iframe>
-
-  </section>
+	<iframe id="myFrame" src="https://www.google.com/maps/d/embed?mid=1o8tpz4PAhP-aaUZLGKbq6XX750QF5bE&ehbc=2E312F&noprof=1"></iframe>
+</section>
 <script>
-    // Function to navigate the iframe to a specific location
-    function navigateTo(location) {
-        // Get the iframe element
-        var iframe = document.getElementById('myFrame');
-        
-        // Check if the iframe exists
-        if (iframe) {
-            // Get the content window of the iframe
-            var iframeWindow = iframe.contentWindow;
-            
-            // Check if the content window is accessible
-            if (iframeWindow) {
-                // Use the content window's location property to navigate
-                iframeWindow.location.href = location + '.html'; // Adjust the file extension as needed
-            } else {
-                console.error('Unable to access iframe content window.');
-            }
-        } else {
-            console.error('Unable to find iframe element.');
-        }
-    }
+	// Function to navigate the iframe to a specific location
+	function navigateTo(location) {
+		// Get the iframe element
+		var iframe = document.getElementById("myFrame");
+
+		// Check if the iframe exists
+		if (iframe) {
+			// Get the content window of the iframe
+			var iframeWindow = iframe.contentWindow;
+
+			// Check if the content window is accessible
+			if (iframeWindow) {
+				// Use the content window's location property to navigate
+				iframeWindow.location.href = location + ".html"; // Adjust the file extension as needed
+			} else {
+				console.error("Unable to access iframe content window.");
+			}
+		} else {
+			console.error("Unable to find iframe element.");
+		}
+	}
 </script>
 <%-include('./partials/footer'); %>
