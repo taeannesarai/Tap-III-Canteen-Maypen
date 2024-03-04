@@ -26,7 +26,6 @@ app.use(BodyParser.urlencoded({ extended: true }));
 
 // Homepage
 router.get("/", async (req, res) => {
-	// const lastFour = await lastFourMeal();
 	const lastFourMeal = await getLastFour();
 	const meals = await getAllMenu();
 	res.render("index", { lastFourMeal, title: "Home" });
@@ -109,7 +108,6 @@ router.get("/create-menu-schedule/confirm/:id", async (req, res) => {
 			user_id: loginRoute.sessionData.user_id,
 			menu_id: req.params.id,
 			date: new Date().toISOString().replace("T", " ").split(".")[0],
-			//user_id, menu_id, drink_id, date
 		};
 
 		const newSchedule = await saveSchedule(schedule);
