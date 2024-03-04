@@ -1,54 +1,50 @@
 <%- include('../../partials/header') %>
 <div class="page-body">
-    <h1 class="page-heading">Edit A Meal Schedule</h1>
+	<a href="<%= prevUrl %>" class="prev-page"><span>Back</span></a>
 
-    <form action="/tap-canteen/admin/edit-meal-schedule-submit" method="post">
-        <!-- id, user_id, menu_id, drink_id, date -->
-        <div class="row">
-            <div class="col">
-                <label for="">Student</label>
-                <input type="number" name="user_id" value="<%= mealSchedule.user_id %>" required>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="">Meal</label>
-                <select name="menu_id" id="" required>
-                    <option value=""></option>
-                    <!-- Populate options based on your menu data -->
-                    <% menu.forEach(menuItem => { %>
-                        <option value="<%= menuItem.id %>" <%= mealSchedule.menu_id == menuItem.id ? 'selected' : '' %>><%= menuItem.name %></option>
-                    <% }); %>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="">Drink</label>
-                <select name="drink_id" id="" required>
-                    <option value=""></option>
-                    <!-- Populate options based on your drink data -->
-                    <% drinks.forEach(drink => { %>
-                        <option value="<%= drink.id %>" <%= mealSchedule.drink_id == drink.id ? 'selected' : '' %>><%= drink.name %></option>
-                    <% }); %>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <label for="">Date</label>
-                <input type="date" name="date" value="<%= mealSchedule.date %>" required>
-            </div>
-        </div>
+	<h1 class="page-heading mb-3">Edit A Meal Schedule</h1>
 
-        <div class="row">
-            <div class="col">
-                <input type="submit" value="Save Changes" class="btn btn-primary fill-container-btn">
-            </div>
-        </div>
-        <!-- Hidden input to send the meal schedule ID -->
-        <input type="hidden" name="id" value="<%= mealSchedule.id %>">
-    </form>
+	<form action="/tap-canteen/admin/schedules/edit-meal-schedule-submit" method="post">
+		<div class="row mt-3">
+			<div class="col">
+				<img src="/uploads/<%= data.img %>" alt="" width="400px" />
+			</div>
+			<div class="col">
+				<div class="row">
+					<div class="col">
+						<input type="number" name="id" value="<%= data.id %>" hidden />
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<h4><%= data.first_name %> <%= data.last_name %></h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<h5>Date: <%= new Date(data.date).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %></h5>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label for="" class="form-label">Change Meal</label>
+						<select name="" id="" class="form-control">
+							<% for( let i = 0; i < menuList.length; i++ ) { %> <% if (menuList[i].item_name == data.item_name) { %>
+							<option value="<%= menuList[i].id %>" selected><%= menuList[i].item_name %></option>
+							<% } %>
+							<option value="<%= menuList[i].id %>"><%= menuList[i].item_name %></option>
+							<% } %>
+						</select>
+					</div>
+				</div>
+
+				<div class="row mt-3">
+					<div class="col">
+						<input type="submit" value="Save Changes" class="btn btn-primary fill-container-btn" />
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
 </div>
 <%- include('../../partials/footer') %>
-

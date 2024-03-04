@@ -57,7 +57,7 @@ nav .nav-menu-links {
 
 nav .nav-menu-links li a {
 	display: inline-block;
-	padding: 15px 50px;
+	padding: 13px 50px;
 	text-decoration: none;
 	color: #000000;
 }
@@ -94,6 +94,7 @@ nav .login-icon:hover a {
 /* ========================= MENU ITEM CARD STYLES ===================================== */
 .page-body {
 	margin: 0 50px;
+	margin-top: 30px;
 	border-radius: 10px;
 	background-color: #57759028;
 	padding: 10px;
@@ -335,9 +336,9 @@ footer .footer-grid .input-container:last-of-type() {
 /* =================================== CONTACT PAGE STYLES =================================== */
 
 #myFrame {
-	width: 95%;
+	width: 100%;
 	height: 450px;
-	margin: 0 50px;
+	/* margin: 0 50px; */
 	padding: 15px;
 }
 
@@ -544,4 +545,16 @@ hr {
 
 .lunch-img {
 	aspect-ratio: 5/3;
+}
+
+.prev-page {
+	display: inline-block;
+	text-decoration: none;
+	color: #5c636a;
+}
+
+.prev-page:hover {
+	color: #3f3f3f;
+	transform: scale(1.05);
+	font-weight: 500;
 }
