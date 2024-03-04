@@ -27,9 +27,9 @@
 <div class="page-body mt-3">
 	<div class="page-heading">Our Star Meals</div>
 
-	<div class="menu-card-container mb-4">
+	<div class="menu-card-container mb-4 justify-content-between">
 		<% for( let i=0; i < lastFourMeal.length; i++ ) { %>
-		<div class="card" style="width: 18rem">
+		<div class="card" style="width: 24rem">
 			<img src="../uploads/<%= lastFourMeal[i].img %>" class="card-img-top" alt="<%= lastFourMeal[i].item_name %>_image" />
 			<div class="card-body">
 				<h5 class="card-title"><%= lastFourMeal[i].item_name %></h5>
