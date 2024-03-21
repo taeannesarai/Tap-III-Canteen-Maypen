@@ -335,6 +335,64 @@ export const getAllSchedule = async () => {
 	);
 	return result;
 };
+export const getSingleMealSchedule = async (id) => {
+	const result = await pool.query(
+		`SELECT
+        ms.id,
+        ms.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.location,
+        u.phone_num,
+        ms.menu_id,
+        m.item_name AS menu_item,
+        m.quantity AS menu_quantity,
+        m.description AS menu_description,
+        m.img AS menu_image,
+        ms.drink_id,
+        ms.date
+    FROM
+        meals_schedule AS ms
+    JOIN
+        menu AS m ON ms.menu_id = m.id
+    JOIN
+        users AS u ON ms.user_id = u.id
+		WHERE ms.id = ?
+		`,
+		[id]
+	);
+	return result;
+};
+export const getScheduleByDate = async (date) => {
+	const [result] = await pool.query(
+		`SELECT
+        ms.id,
+        ms.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        u.location,
+        u.phone_num,
+        ms.menu_id,
+        m.item_name AS menu_item,
+        m.quantity AS menu_quantity,
+        m.description AS menu_description,
+        m.img AS menu_image,
+        ms.drink_id,
+        ms.date
+    FROM
+        meals_schedule AS ms
+    JOIN
+        menu AS m ON ms.menu_id = m.id
+    JOIN
+        users AS u ON ms.user_id = u.id
+		WHERE ms.date = ?
+		`,
+		[date]
+	);
+	return result[0];
+};
 
 
 //Create Schedule
@@ -345,7 +403,7 @@ export const saveSchedule = async (sSch) => {
         INSERT INTO meals_schedule(user_id, menu_id, date)
         VALUES(?, ?, ?)
     `,
-		[sSch.user_id, sSch.menu_id, sSch.drink_id, sSch.date]
+		[sSch.user_id, sSch.menu_id, sSch.date]
 	);
 	return result;
 };
@@ -384,14 +442,26 @@ export const deleteSchedule = async (dSch) => {
 export const getSingleSchedule = async (gSs) => {
 	const result = await pool.query(
 		`
-        SELECT * FROM meals_schedule WHERE id = ?
-    `,
+		SELECT users.first_name, users.last_name, menu.item_name, meals_schedule.date, menu.img, menu.description, meals_schedule.id
+		FROM meals_schedule
+		JOIN users ON meals_schedule.user_id = users.id
+		JOIN menu ON meals_schedule.menu_id = menu.id;
+			`,
 		[gSs]
 	);
 	const rows = result[0];
 	return rows;
 };
 
+export const isMealSelected = async (date, user_id) => {
+	const [record] = await pool.query(`
+		SELECT * FROM meals_schedule 
+		WHERE user_id = ${user_id}
+		AND LOCATE('${date}', date) > 0; 
+	`);
+
+	return record[0];
+}
 
 //SELECT ADMIN
 export const doesAdminExist = async (username, password) => {
@@ -403,5 +473,5 @@ export const doesAdminExist = async (username, password) => {
 		[username, password]
 	);
 
-	return acc[0];
+	return acc[0];
 }

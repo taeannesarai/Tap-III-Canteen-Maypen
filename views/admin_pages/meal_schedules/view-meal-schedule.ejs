@@ -1,15 +1,23 @@
 <%- include('../../partials/header') %>
 <div class="page-body">
-    <a href="">Back</a>
+	<a href="<%= prevUrl %>" class="prev-page"><span>Back</span></a>
+
 	<h1 class="page-heading">View A Meal Schedule</h1>
 
 	<div class="card mx-auto" style="width: 30rem">
-		<div class="card-header">Featured</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">An item</li>
-			<li class="list-group-item">A second item</li>
-			<li class="list-group-item">A third item</li>
-		</ul>
+		<img src="/uploads/<%= data.img %>" class="card-img-top" alt="<%= data.menu_item %>_image" />
+
+		<div class="card-body">
+			<h5 class="card-title my-1"><%= data.first_name %> <%= data.last_name %></h5>
+			<p class="card-text my-1"><%= data.item_name %></p>
+			<p class="card-text my-1"><%= new Date(data.date).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %></p>
+		</div>
+
+		<div class="card-body">
+			<div class="admin-buttons">
+				<a href="/tap-canteen/admin/schedules/single-schedule-delete/<%= data.id %>" class="btn btn-danger">Delete Item</a>
+			</div>
+		</div>
 	</div>
 </div>
-<%- include('../../partials/footer') %>
+<%- include('../../partials/footer') %> /tap-canteen/admin/schedules/single-schedule-view/

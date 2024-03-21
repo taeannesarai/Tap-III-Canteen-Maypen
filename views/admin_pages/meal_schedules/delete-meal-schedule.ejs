@@ -1,16 +1,22 @@
 <%- include('../../partials/header') %>
-<div class="page-body">
-	<h1 class="page-heading">Delete Meal Schedule</h1>
+<section class="page-body">
+	<a href="<%= prevUrl %>" class="prev-page"><span>Back</span></a>
 
-	<div class="card mx-auto" style="width: 30rem">
-		<div class="card-header">Featured</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item">An item</li>
-			<li class="list-group-item">A second item</li>
-			<li class="list-group-item">A third item</li>
-		</ul>
+	<h1 class="page-heading">Delete Meal Schedule</h1>
+	<div class="alert alert-warning" role="alert">
+		<div class="row">
+			<div class="col warning-icon">
+				<i class="fi fi-ss-diamond-exclamation"></i>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<p>You are about to delete meal Schedule: <%= data.item_name %>! Select Cancel to abort or Delete to continue.</p>
+			</div>
+		</div>
 	</div>
 
+<<<<<<< HEAD
     <div class="row">
         <div class="col">
             <a href="#" class="btn btn-secondary">Cancel</a>
@@ -18,6 +24,27 @@
         </div>
     </div>
 </div>
+=======
+	<div class="card mx-auto" style="width: 40rem">
+		<img src="/uploads/<%= data.img %>" class="card-img-top" alt="<%= data.item_name %>_image" />
+		<div class="card-body">
+			<h5 class="card-text"><%= data.first_name %> <%= data.last_name %></h5>
+			<p class="card-title"><%= data.item_name %></p>
+		</div>
+		<ul class="list-group list-group-flush">
+			<li class="list-group-item">Date: <%= new Date(data.date).toLocaleDateString('en-US',{month: 'short', day:'numeric', year:'numeric', timeZone: 'UTC'}) %></li>
+		</ul>
+		<div class="card-body"></div>
+	</div>
+
+	<div class="row mt-3">
+		<div class="col cancel-delete">
+			<a href="<%= prevUrl %>" class="btn btn-secondary mx-3">Cancel</a>
+			<a href="/tap-canteen/admin/delete-Schedule-item/confirm/<%= data.id %>" class="btn btn-danger">Delete</a>
+		</div>
+	</div>
+</section>
+>>>>>>> c7855cf80730850580882804a29840e00e227b86
 
 <%- include('../../partials/footer') %>
 

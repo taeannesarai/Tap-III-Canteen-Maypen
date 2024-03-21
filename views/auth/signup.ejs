@@ -5,7 +5,6 @@
 
 	<div class="form-container mx-auto mt-3">
 		<img src="/public/assets/Student-registration-form.jpg" class="signup-f0rm-img" alt="Sample image" />
-		<!-- <div class="col-md-9 col-lg-5 col-xl-7 d-flex align-items-center order-3 order-lg-2 m-1"></div> -->
 
 		<form class="" action="/tap-canteen/auth/signup/sumbit" method="post">
 			<div class="row">
@@ -42,9 +41,12 @@
 					<label class="form-label select-label">Select Location</label>
 					<select class="select form-select" name="location">
 						<option value="">Select Location</option>
-						<option value="MAY PEN">May Pen</option>
-						<option value="UTECH KINGSTON">UTECH Kingston</option>
-						<option value="UTECH MONTEGO BAY">UTECH Montego Bay</option>
+						<option value="Clarendon Youth Information Centre - MAY PEN">Clarendon Youth Information Centre (May Pen)</option>
+						<option value="UTECH KINGSTON">University of Technology, Jamaica</option>
+						<option value="Petersfield Vocational Training Center">Petersfield Vocational Training Center</option>
+						<option value="University of Technology, Jamaica - Western Campus">University of Technology, Jamaica - Western Campus</option>
+						<option value="CAP Windsor Castle (Portland)">CAP Windsor Castle (Portland)</option>
+						<option value="Ridgemount United Church (Mandeville)">Ridgemount United Church (Mandeville)</option>
 					</select>
 				</div>
 			</div>
@@ -73,5 +75,25 @@
 		</form>
 	</div>
 </div>
+<script>
+    document.getElementById('trn').addEventListener('input', function(e) {
+        let trn = e.target.value.replace(/\D/g, ''); // Remove non-numeric characters
+
+        // Limit TRN input to 9 digits
+        trn = trn.slice(0, 9);
+
+        // Add dashes after every third character for display
+        const formattedTrn = trn.replace(/(\d{3})(?=\d)/g, '$1-');
+
+        e.target.value = formattedTrn;
+    });
+
+    // Before submitting the form, remove dashes from the TRN
+    document.querySelector('form').addEventListener('submit', function(e) {
+        const trnInput = document.getElementById('trn');
+        trnInput.value = trnInput.value.replace(/\D/g, ''); // Remove dashes
+    });
+</script>
+
 
 <%- include('../partials/footer'); %>
